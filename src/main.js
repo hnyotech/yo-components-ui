@@ -3,7 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+/* ui plguin */
+import ElementUI from 'element-ui'
+// 引用element-ui
+import 'element-ui/lib/theme-chalk/index.css'
+//初始化elementui
+Vue.use(ElementUI, {})
+import '@/assets/css/theme.css'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

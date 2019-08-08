@@ -1,0 +1,17 @@
+#yoMenu .el-menu{
+    background-color: #365FA4;
+}
+.el-submenu__title,.el-menu-item {
+    color: #ffffff;
+}
+.el-submenu .el-menu-item{
+    background-color: #253044;
+}
+.el-submenu__title:hover,.el-menu-item:hover {
+    background-color: #3B70C2;
+    color: #ffffff;
+}
+.el-menu-item.is-active{
+    background-color: #1F4989;
+    color: #ffffff;
+}

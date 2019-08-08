@@ -2,7 +2,7 @@ import Vue from 'vue';
 
 import MyHeader from '../packages/header/src/main';
 import MyContent from '../packages/content/src/main';
-import MyToolbar from '../packages/toolbar/src/main';
+import YoToolBar from '../packages/YoToolBar/src/main';
 import MyQueryContainer from '../packages/query/src/main';
 import MyGrid from '../packages/grid/src/main';
 import MyEnumSelector from '../packages/picklist/src/main';
@@ -12,23 +12,23 @@ import MyNavItem from '../packages/nav/src/nav-item';
 import MyEntityLookup from '../packages/lookup/src/lookup';
 import MyEntitySelectDialog from '../packages/lookup/src/lookup-dialog';
 import MyMultiEntitySelectDialog from '../packages/lookup/src/lookup-multi-dialog';
-import AsiasFile from '../packages/asiasfile/src/main';
+import YoFile from '../packages/YoFile/src/main';
 // import MyEnum from '@/components/common/MyEnum';
 // import AsiasEditor from '../packages/asiaseditor/src/main';
 import AsiasDetailCol from '../packages/asiasdetailcol/src/main';
-import AsiasImg from '../packages/asiasimg/src/main';
+import YoImg from '../packages/YoImg/src/main';
 import AsiasApproveRecord from '../packages/asiasapproverecord/src/main';
 import MyCity from '../packages/city/src/main';
-import AsButton from '../packages/asiasbutton/src/main';
-import NewGrid from '../packages/newgrid/src/main';
+import YoButton from '../packages/YoButton/src/main';
+import YoGrid from '../packages/YoGrid/src/main';
 import CheckRecord from '../packages/checkrecord/src/main';
-import DetailCol from '../packages/detailcol/src/main';
+import YoDetailCol from '../packages/YoDetailCol/src/main';
 import ComplateGrid from '../packages/complategrid/src/main';
 const components = [
-  AsButton,
+  YoButton,
   MyHeader,
   MyContent,
-  MyToolbar,
+  YoToolBar,
   MyQueryContainer,
   MyGrid,
   MyEnumSelector,
@@ -39,15 +39,15 @@ const components = [
   MyEntitySelectDialog,
   MyMultiEntitySelectDialog,
   // MyEnum,np
-  AsiasFile,
+  YoFile,
   // AsiasEditor,
   AsiasDetailCol,
-  AsiasImg,
+  YoImg,
   AsiasApproveRecord,
   MyCity,
-  NewGrid,
+  YoGrid,
   CheckRecord,
-  DetailCol,
+  YoDetailCol,
   ComplateGrid
 ];
 const install = function(Vue, opts = {}) {
