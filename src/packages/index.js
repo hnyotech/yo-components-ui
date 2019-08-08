@@ -61,10 +61,10 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 const yoComponents ={
   install,
-  AsButton,
+  YoButton,
   MyHeader,
   MyContent,
-  MyToolbar,
+  YoToolBar,
   MyQueryContainer,
   MyGrid,
   MyEnumSelector,
@@ -75,15 +75,15 @@ const yoComponents ={
   MyEntitySelectDialog,
   MyMultiEntitySelectDialog,
   // MyEnum,np
-  AsiasFile,
+  YoFile,
   // AsiasEditor,
   AsiasDetailCol,
-  AsiasImg,
+  YoImg,
   AsiasApproveRecord,
   MyCity,
-  NewGrid,
+  YoGrid,
   CheckRecord,
-  DetailCol,
+  YoDetailCol,
   ComplateGrid
 }
 export default yoComponents;
