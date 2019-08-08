@@ -1,0 +1,140 @@
+<template>
+  <div>
+    <div :class="classname" v-show="showToolbar">
+      <button title="加粗" class="ql-bold"></button>
+      <button title="斜体" class="ql-italic"></button>
+      <button title="下划线" class="ql-underline"></button>
+      <button title="删除线" class="ql-strike"></button>
+      <button title="引用" class="ql-blockquote"></button>
+      <button title="代码块" class="ql-code-block"></button>
+      <select title="字体大小" class="ql-size">
+        <option value="small">小</option>
+        <option selected>正常字体</option>
+        <option value="large">大</option>
+        <option value="huge">巨大</option>
+      </select>
+      <select title="标题" class="ql-header">
+        <option selected>正文</option>
+        <option value="1">1级标题</option>
+        <option value="2">2级标题</option>
+        <option value="3">3级标题</option>
+        <option value="4">4级标题</option>
+      </select>
+      <button title="有序列表" class="ql-list" value="ordered"></button>
+      <button title="无序列表" class="ql-list" value="bullet"></button>
+      <button title="上标" class="ql-script" value="sub"></button>
+      <button title="下标" class="ql-script" value="super"></button>
+      <button title="减少缩进" class="ql-indent" value="-1"></button>
+      <button title="增加缩进" class="ql-indent" value="+1"></button>
+      <button title="文本方向" class="ql-direction" value="rtl"></button>
+      <select title="字体颜色" class="ql-color"></select>
+      <select title="背景颜色" class="ql-background"></select>
+      <select title="字体" class="ql-font"></select>
+      <select title="对齐方式" class="ql-align"></select>
+      <button v-if="ShowPic" title="图片" class="ql-image"></button>
+      <button v-if="ShowVideo" title="视频" class="ql-video"></button>
+      <button title="清除样式" class="ql-clean"></button>
+    </div>
+    <quill-editor
+      v-model="contentValue"
+      :options="editorOption"
+      @blur="onEditorBlur($event)"
+      @focus="onEditorFocus($event)"
+      @change="onEditorChange($event)"
+    ></quill-editor>
+  </div>
+</template>
+<script type="text/javascript">
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
+import { quillEditor } from "vue-quill-editor";
+export default {
+  name: "AsiasEditor",
+  props: {
+    content: {
+      type: String,
+      required: false,
+      default: null
+    },
+    ShowPic: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    ShowVideo: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    placeholder: {
+      type: String,
+      required: false,
+      default: "请输入内容..."
+    },
+    readOnly: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    showToolbar: {
+      type: Boolean,
+      required: false,
+      default: true
+    }
+  },
+  data: function() {
+    return {};
+  },
+  created: function() {
+    // console.log("created:" + this.ids);
+  },
+  mounted: function() {},
+  watch: {
+    content: function(val) {
+      //监控到 内容变化
+      //   console.log("watch content:" + val);
+    }
+  },
+  //计算属性
+  computed: {
+    contentValue: {
+      get: function() {
+        return this.content;
+      },
+      set: function(newValue) {
+        this.$emit("update:content", newValue); //双向绑定ids
+        // this.content=newValue;
+      }
+    },
+    classname: function() {
+      return "mytoolbar" + new Date().getTime();
+    },
+    editorOption: function() {
+      return {
+        placeholder: this.placeholder,
+        readOnly: this.readOnly,
+        modules: {
+          toolbar: "." + this.classname
+        }
+      };
+    }
+  },
+  methods: {
+    onEditorReady(editor) {}, // 准备编辑器
+    onEditorBlur() {}, // 失去焦点事件
+    onEditorFocus(editor) {
+      // 获得焦点事件
+      // debugger;
+      // console.log(this.readOnly)
+      editor.enable(!this.readOnly);
+    },
+    onEditorChange() {} // 内容改变事件
+  },
+  components: {
+    quillEditor
+  }
+};
+</script>
+<style>
+</style>
