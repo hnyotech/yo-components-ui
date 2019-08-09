@@ -15,7 +15,8 @@
     </el-row> -->
     <div class="flexpic">
       <div v-for="file in fileList" :key="file.id" style="margin-right:3px;" >
-        <img :src="file.url" width="200px" height="123px" style="margin-bottom:10px;border:1px solid #ccc;" :title="file.name" @click="handlePreview(file.orgurl,file.name)" alt="暂无图片">
+        <!-- <img    alt="暂无图片"> -->
+        <el-image :src="file.url" width="200px" height="123px" style="margin-bottom:10px;border:1px solid #ccc;" :title="file.name" @click="handlePreview(file.orgurl,file.name)"></el-image>
       </div>
     </div>
     <el-dialog :visible.sync="dialogVisible" :title="dialogTitle" top="20px">

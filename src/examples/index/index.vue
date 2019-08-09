@@ -1,21 +1,21 @@
 <template>
     <div id="examples">
-        <el-row>
-            <el-col :span="4">
+        <yo-header title="标题">
+            <yo-toolbar :showAutoback="true">
                 <yo-button :type="type2">默认按钮</yo-button>
-            </el-col>
-            <el-col :span="4">
                 <yo-button :type="type1">主要按钮</yo-button>
-            </el-col>
-            <el-col :span="4">
                 <yo-button :type="type6">危险按钮</yo-button>
-            </el-col>
-        </el-row>
+            </yo-toolbar>
+        </yo-header>
+        
         <yo-menu :width="250"></yo-menu>
         <yo-detail-col :rowData="rowData" :label_width='100'></yo-detail-col>
         <yo-file :uploadType="1"></yo-file>
+        <yo-img></yo-img>
         <yo-enum EnumName="sssss"></yo-enum>
-        <yo-grid ref="YoGrid"
+        
+      <yo-content>
+          <yo-grid ref="YoGrid"
             :quicksearchPlaceholder="'快速搜索公告编号'"
             :requireData.sync="requireData"
             :gridData="gridData"
@@ -25,53 +25,62 @@
             :unitGroup="true"
             :unitAlign="'right'"
             :needtabs="false">
-        <el-table ref="multipleTable" :data="requireData.Items" style="width: 100%">
-            <el-table-column
-            v-for="item in gridData.table"
-            :key="item.key"
-            :align="item.align"
-            :prop="item.key"
-            :label="item.label"
-            :min-width="item.width"
-            :show-overflow-tooltip="item.tooltip"
-            ></el-table-column>
-            <el-table-column align="center" label="操作">
-            <template slot-scope="scope">
-                <el-button
-                size="small"
-                type="info"
-                icon="el-icon-edit"
-                @click="addNewOrg(scope.$index, scope.row)"
-                >编辑</el-button>
-                <el-button
-                size="small"
-                type="danger"
-                icon="el-icon-delete"
-                v-if="scope.row.Id.length>20"
-                @click="handleDelete(scope.$index, scope.row)"
-                >删除</el-button>
-            </template>
-            </el-table-column>
-        </el-table>
-      </yo-grid>
+            <el-table ref="multipleTable" :data="requireData.Items" style="width: 100%">
+                <el-table-column
+                v-for="item in gridData.table"
+                :key="item.key"
+                :align="item.align"
+                :prop="item.key"
+                :label="item.label"
+                :min-width="item.width"
+                :show-overflow-tooltip="item.tooltip"
+                ></el-table-column>
+                <el-table-column align="center" label="操作">
+                <template slot-scope="scope">
+                    <el-button
+                    size="small"
+                    type="info"
+                    icon="el-icon-edit"
+                    @click="addNewOrg(scope.$index, scope.row)"
+                    >编辑</el-button>
+                    <el-button
+                    size="small"
+                    type="danger"
+                    icon="el-icon-delete"
+                    v-if="scope.row.Id.length>20"
+                    @click="handleDelete(scope.$index, scope.row)"
+                    >删除</el-button>
+                </template>
+                </el-table-column>
+            </el-table>
+        </yo-grid>
+      </yo-content>
     </div>
 </template>
 <script>
 import YoButton from '@/packages/YoButton/src/main.vue'
+import YoHeader from '@/packages/YoHeader/src/main.vue'
+import YoToolbar from '@/packages/YoToolBar/src/main.vue'
 import YoMenu from '@/packages/YoMenu/src/main.vue'
 import YoDetailCol from '@/packages/YoDetailCol/src/main.vue'
 import YoFile from '@/packages/YoFile/src/main.vue'
+import YoImg from '@/packages/YoImg/src/main.vue'
 import YoEnum from '@/packages/YoEnum/src/main.vue'
-import YoGrid from '@/packages/ComplateGrid/src/main.vue'
+import YoGrid from '@/packages/YoGrid/src/main.vue'
+import YoContent from '@/packages/YoContent/src/main.vue'
 export default {
     name: 'examples',
     components: {
+        YoHeader,
         YoButton,
         YoMenu,
         YoDetailCol,
         YoFile,
+        YoImg,
         YoEnum,
-        YoGrid
+        YoGrid,
+        YoContent,
+        YoToolbar
     },
     data () {
         return {
@@ -112,6 +121,24 @@ export default {
                     name: '名称',
                     type: 'input',
                     span: 8
+                },
+                {
+                    value: 'Name',
+                    name: '枚举',
+                    type: 'select',
+                    span: 8,
+                    options: [{
+                        Name:'3444',
+                        Value:'Value',
+                        Description:'Description date',
+                    }]
+                },
+                {
+                    value: 'Name',
+                    name: '时间',
+                    type: 'date',
+                    span: 8,
+                    format: 'yyyy-MM-dd'
                 }
                 ],
                 table: [

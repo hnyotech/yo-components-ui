@@ -1,10 +1,7 @@
 <template>
-<div>
   <el-button :type="type" :icon="icon" :size="size" :disabled="disabledComputed" @click="clickHandler">
        <slot></slot>
   </el-button>
-  
-</div>
 </template>
 <script type="text/javascript">
 export default {
@@ -12,7 +9,7 @@ export default {
   props: {
     type: {
       type: String,
-      default: "info"
+      default: "default"
     },
     icon: {
       type: String,

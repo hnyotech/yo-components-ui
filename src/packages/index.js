@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
-import MyHeader from '../packages/header/src/main';
-import MyContent from '../packages/content/src/main';
+import YoHeader from '../packages/YoHeader/src/main';
+import YoContent from '../packages/YoContent/src/main';
 import YoToolBar from '../packages/YoToolBar/src/main';
 import MyQueryContainer from '../packages/query/src/main';
 import MyGrid from '../packages/grid/src/main';
@@ -24,11 +24,10 @@ import YoGrid from '../packages/YoGrid/src/main';
 import CheckRecord from '../packages/checkrecord/src/main';
 import YoDetailCol from '../packages/YoDetailCol/src/main';
 import YoEnum from '../packages/YoEnum/src/main';
-import ComplateGrid from '../packages/complategrid/src/main';
 const components = [
   YoButton,
-  MyHeader,
-  MyContent,
+  YoHeader,
+  YoContent,
   YoToolBar,
   MyQueryContainer,
   MyGrid,
@@ -50,7 +49,6 @@ const components = [
   CheckRecord,
   YoDetailCol,
   YoEnum,
-  ComplateGrid
 ];
 const install = function(Vue, opts = {}) {
   components.forEach(component => {
@@ -64,8 +62,8 @@ if (typeof window !== 'undefined' && window.Vue) {
 const yoComponents ={
   install,
   YoButton,
-  MyHeader,
-  MyContent,
+  YoHeader,
+  YoContent,
   YoToolBar,
   MyQueryContainer,
   MyGrid,
@@ -87,6 +85,5 @@ const yoComponents ={
   CheckRecord,
   YoDetailCol,
   YoEnum,
-  ComplateGrid
 }
 export default yoComponents;

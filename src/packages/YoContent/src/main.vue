@@ -12,7 +12,7 @@
 
 <script>
 export default {
-    name: "MyContent",
+    name: "YoContent",
     props: {
         title:{
              type: String,

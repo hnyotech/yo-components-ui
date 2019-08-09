@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "MyHeader",
+  name: "YoHeader",
   props: {
     title: {
       type: String,

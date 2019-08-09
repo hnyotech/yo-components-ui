@@ -2,15 +2,19 @@
     <div class="my-toolbar">
         <slot></slot>
         <template v-if="showAutoback">
-            <div class="my-divider"></div>            
-            <el-button  icon="el-icon-back"  type="info"  size="small" @click="handleBackClick">返回</el-button>
+            <div class="my-divider"></div>
+            <yo-button  icon="el-icon-back"  type="default"  size="small" @click="handleBackClick">返回</yo-button>
         </template>
     </div>
 </template>
 
 <script>
+import YoButton from '@/packages/YoButton/src/main.vue'
 export default {
   name: "MyToolbar",
+  components: {
+    YoButton
+  },
   props: {
     showAutoback: {
       type: Boolean,
