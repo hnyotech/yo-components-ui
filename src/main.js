@@ -7,6 +7,9 @@ import router from './router'
 import ElementUI from 'element-ui'
 // 引用element-ui
 import 'element-ui/lib/theme-chalk/index.css'
+// 导入阻止elementUIselect重复点击崩溃的js
+import visibleChange from '@/assets/js/visibleChange.js'
+Vue.prototype.visibleChange = visibleChange
 //初始化elementui
 Vue.use(ElementUI, {})
 import '@/assets/css/theme.css'

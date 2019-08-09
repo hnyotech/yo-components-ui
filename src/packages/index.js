@@ -23,6 +23,7 @@ import YoButton from '../packages/YoButton/src/main';
 import YoGrid from '../packages/YoGrid/src/main';
 import CheckRecord from '../packages/checkrecord/src/main';
 import YoDetailCol from '../packages/YoDetailCol/src/main';
+import YoEnum from '../packages/YoEnum/src/main';
 import ComplateGrid from '../packages/complategrid/src/main';
 const components = [
   YoButton,
@@ -48,6 +49,7 @@ const components = [
   YoGrid,
   CheckRecord,
   YoDetailCol,
+  YoEnum,
   ComplateGrid
 ];
 const install = function(Vue, opts = {}) {
@@ -84,6 +86,7 @@ const yoComponents ={
   YoGrid,
   CheckRecord,
   YoDetailCol,
+  YoEnum,
   ComplateGrid
 }
 export default yoComponents;

@@ -15,3 +15,72 @@
     background-color: #1F4989;
     color: #ffffff;
 }
+/* button */
+.el-button {
+border-color: #365FA4;
+color: #365FA4;
+}
+.el-button:focus, .el-button:hover {
+border-color: #365FA4;
+background-color: #365FA4;
+color: #FEFEFE;
+}
+.el-button:active {
+color: #FEFEFE;
+border-color: #3B70C2;
+background-color: #3B70C2;
+outline: 0;
+}
+
+.el-button--primary {
+color: #FEFEFE;
+background-color: #365FA4;
+border-color: #365FA4;
+}
+.el-button--primary:focus, .el-button--primary:hover {
+background: #3B70C2;
+border-color: #3B70C2;
+color: #FFF;
+}
+.el-button--primary:active {
+outline: 0;
+}
+.el-button--primary.is-active, .el-button--primary:active {
+background: #365FA4;
+border-color: #365FA4;
+color: #FFF;
+}
+
+.el-button--danger {
+color: #F16062;
+background: #FFF;
+border-color: #F16062;
+}
+.el-button--danger:focus, .el-button--danger:hover {
+background: #F16062;
+border-color: #F16062;
+color: #FFF;
+}
+.el-button--danger:active {
+outline: 0;
+}
+.el-button--danger.is-active, .el-button--danger:active {
+background: #F16062;
+border-color: #F16062;
+color: #FFF;
+}
+
+/* Enum */
+.el-select .el-input.is-focus .el-input__inner {
+    border-color: #365FA4;
+}
+.el-select:hover .el-input__inner {
+    border-color: #3B70C2;
+}
+.el-input__inner:hover {
+    border-color: #3B70C2;
+}
+.el-select-dropdown__item.selected {
+    color: #365FA4;
+    font-weight: 700;
+}

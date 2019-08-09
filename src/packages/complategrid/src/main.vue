@@ -4,12 +4,12 @@
             <my-toolbar v-if="$slots.toolbar">
                 <slot name="toolbar"></slot>
             </my-toolbar>
-            <el-button type="primary" size="small" @click="handleCollapse"
+            <el-button type="primary" size="medium" @click="handleCollapse"
               style="float: right;margin-left: 20px;margin-top: 6px;">
               <i class="el-icon-arrow-down" style="font-size:10px;"></i>
               高级搜索
             </el-button>
-            <el-input :placeholder="quicksearchPlaceholder"  v-model="realData.params[quickSearch]" style="float:right;width:20%;margin-top: 6px;" @keyup.enter="handleQuickSearchFromInput" :clearable="true">
+            <el-input :placeholder="quicksearchPlaceholder" size="medium" v-model="realData.params[quickSearch]" style="float:right;width:20%;margin-top: 6px;" @keyup.enter="handleQuickSearchFromInput" :clearable="true">
               <el-button slot="append" icon="el-icon-search" @click="handleQuickSearch"></el-button>
             </el-input>
         </div>
