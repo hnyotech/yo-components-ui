@@ -1,16 +1,16 @@
 <template>
     <div class="my-grid" @keyup.enter="handleSearch" @submit.native.prevent>
         <div class="my-grid__header" v-if="defaultShowHidden">
-            <my-toolbar v-if="$slots.toolbar">
+            <YoToolBar v-if="$slots.toolbar">
                 <slot name="toolbar"></slot>
-            </my-toolbar>
-            <el-button type="primary" size="medium" @click="handleCollapse"
+            </YoToolBar>
+            <YoButton type="primary" size="medium" @click="handleCollapse"
               style="float: right;margin-left: 20px;margin-top: 6px;">
               <i class="el-icon-arrow-down" style="font-size:10px;"></i>
               高级搜索
-            </el-button>
+            </YoButton>
             <el-input :placeholder="quicksearchPlaceholder" size="medium" v-model="realData.params[quickSearch]" style="float:right;width:20%;margin-top: 6px;" @keyup.enter="handleQuickSearchFromInput" :clearable="true">
-              <el-button slot="append" icon="el-icon-search" @click="handleQuickSearch"></el-button>
+              <YoButton slot="append" icon="el-icon-search" @click="handleQuickSearch"></YoButton>
             </el-input>
         </div>
         <div v-show="!defaultShowHidden" class="cos_hide_box"><span class="cos_hide" @click="handleCollapse">收起<i class="el-icon-arrow-up"></i></span></div>
@@ -31,8 +31,8 @@
             </el-form>
             <el-row :gutter="40" type="flex">
                 <el-col v-bind:span="24" style="float:right;text-align:right;">
-                    <yo-button icon="el-icon-setting" class="my-query__reset" @click="reset()">重置</yo-button>
-                    <yo-button type="primary"  icon="el-icon-search" @click="searchTableData()">搜索</yo-button>
+                    <YoButton icon="el-icon-setting" class="my-query__reset" @click="reset()">重置</YoButton>
+                    <YoButton type="primary"  icon="el-icon-search" @click="searchTableData()">搜索</YoButton>
                 </el-col>
             </el-row>
             
@@ -59,6 +59,7 @@
 
 <script>
 import YoButton from '@/packages/YoButton/src/main.vue'
+import YoToolBar from '@/packages/YoToolBar/src/main.vue'
 export default {
     name: "YoGrid",
     components: {
@@ -171,6 +172,7 @@ export default {
         searchTableData(){
             // console.log(this.realData);
             this.search();
+            this.$emit('search')
         },
         reset(){
             for(var key in this.realData.params){
