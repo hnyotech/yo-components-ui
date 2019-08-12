@@ -31,7 +31,7 @@
 </template>
 <script type="text/javascript">
 export default {
-  name: "AsiasImg",
+  name: "YoImg",
   props: ['ids'],
   data: function() {
     return {

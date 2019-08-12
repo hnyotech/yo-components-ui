@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
 export default {
-    name: "MyEnumSelector",
+    name: "MyEnum",
     props: {
         value: [String, Number],
         EnumName: {

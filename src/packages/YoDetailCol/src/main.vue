@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-    name: 'DetailCol',
+    name: 'YoDetailCol',
     data() {
         return{
             l_w: this.label_width + 'px'

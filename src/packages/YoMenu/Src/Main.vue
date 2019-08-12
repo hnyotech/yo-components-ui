@@ -27,7 +27,7 @@
 </template>
 <script>
 export default {
-  name: "yoMenu",
+  name: "YoMenu",
   props: {
     width: {
         type: Number,

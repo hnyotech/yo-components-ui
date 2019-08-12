@@ -11,7 +11,7 @@
 <script>
 import YoButton from '@/packages/YoButton/src/main.vue'
 export default {
-  name: "MyToolbar",
+  name: "YoToolbar",
   components: {
     YoButton
   },

@@ -57,7 +57,7 @@
 </template>
 <script type="text/javascript">
 export default {
-  name: "AsiasFile",
+  name: "YoFile",
   props: {
     ids: {
       type: String,
