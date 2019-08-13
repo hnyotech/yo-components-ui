@@ -1,9 +1,11 @@
 <template>
+<el-form-item :label="label" :prop="prop">
     <el-select v-model="selectedValue" clearable :disabled="disabled" @change="handleChange" @visible-change="visibleChange">
         <el-option v-for="item in options" :key="item.Value" :label="item.Name" :value="item.Value">
             {{item.Name}}
         </el-option>
     </el-select>
+</el-form-item>
 </template>
 
 <script type="text/javascript">
@@ -19,6 +21,14 @@ export default {
             type: Boolean,
             default: false,
             required: false
+        },
+        label: {
+            type: String,
+            required: true
+        },
+        prop: {
+            type: String,
+            required: true
         }
     },
     data() {

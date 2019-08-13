@@ -18,7 +18,7 @@ import YoFile from '../packages/YoFile/src/main';
 import AsiasDetailCol from '../packages/asiasdetailcol/src/main';
 import YoImg from '../packages/YoImg/src/main';
 import AsiasApproveRecord from '../packages/asiasapproverecord/src/main';
-import YoCity from '../packages/city/src/main';
+import YoCity from '../packages/YoCity/src/main';
 import YoButton from '../packages/YoButton/src/main';
 import YoGrid from '../packages/YoGrid/src/main';
 import CheckRecord from '../packages/checkrecord/src/main';

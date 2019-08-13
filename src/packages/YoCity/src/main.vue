@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: "MyCity",
+  name: "YoCity",
   data() {
     return {
       allData: [],

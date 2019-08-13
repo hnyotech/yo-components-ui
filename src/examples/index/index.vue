@@ -12,7 +12,10 @@
         <yo-detail-col :rowData="rowData" :label_width='100'></yo-detail-col>
         <yo-file :uploadType="1"></yo-file>
         <yo-img></yo-img>
-        <yo-enum EnumName="sssss"></yo-enum>
+        <el-form>
+            
+        <yo-enum EnumName="sssss" label="123" prop="234"></yo-enum>
+        </el-form>
         <yo-city></yo-city>
         
       <yo-content>
