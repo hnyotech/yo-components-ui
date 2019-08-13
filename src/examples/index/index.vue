@@ -13,6 +13,7 @@
         <yo-file :uploadType="1"></yo-file>
         <yo-img></yo-img>
         <yo-enum EnumName="sssss"></yo-enum>
+        <yo-city></yo-city>
         
       <yo-content>
           <yo-grid ref="YoGrid"
@@ -68,6 +69,7 @@ import YoImg from '@/packages/YoImg/src/main.vue'
 import YoEnum from '@/packages/YoEnum/src/main.vue'
 import YoGrid from '@/packages/YoGrid/src/main.vue'
 import YoContent from '@/packages/YoContent/src/main.vue'
+import YoCity from '@/packages/YoCity/src/main.vue'
 export default {
     name: 'examples',
     components: {
@@ -80,7 +82,8 @@ export default {
         YoEnum,
         YoGrid,
         YoContent,
-        YoToolbar
+        YoToolbar,
+        YoCity
     },
     data () {
         return {

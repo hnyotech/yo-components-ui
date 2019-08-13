@@ -147,7 +147,7 @@ export default {
     },
     onLoadAllData() {
       let that = this;
-      let apiUrl = "/api/City/QueryList";
+      let apiUrl = "/api/City/All";
       this.$http
         .post(apiUrl, {})
         .then(res => {
