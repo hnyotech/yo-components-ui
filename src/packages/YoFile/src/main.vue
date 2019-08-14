@@ -115,7 +115,8 @@ export default {
   },
   data: function() {
     return {
-      action:process.env.API + "/api/Attach/SaveAttach", //上传附件接口地址
+      // action:process.env.API + "/api/Attach/SaveAttach", //上传附件接口地址
+      action:"/api/Attach/SaveAttach", //上传附件接口地址
       autoupload: true, //自动上传
       imageUrl: "", //uploadType=1时候 显示图片  //"http://wx3.sinaimg.cn/large/006nLajtly1fpi9ikmj1kj30dw0dwwfq.jpg"
       fileList: [], //附件列表(本次上传的)
@@ -290,12 +291,13 @@ export default {
            return false
         };
       var newIds=loadId.join(',');
-      console.log(process.env.API);
+      // console.log(process.env.API);
 
       var param = {};
       param["ids"] = newIds;
       that.$http
-        .post(process.env.API + "/api/Attach/GetAttachs", param)
+        // .post(process.env.API + "/api/Attach/GetAttachs", param)
+        .post("/api/Attach/GetAttachs", param)
         .then(resp => {
           resp.forEach(function(file) {
             var item = new Object();
@@ -307,7 +309,7 @@ export default {
             item.type = file.type;
             if (that.isImgType(item.type)) {
               item.orgurl =
-               process.env.API +
+              //  process.env.API +
                 "/api/Attach/ShowImage?id=" +
                 file.id +
                 "&sign=" +
@@ -315,7 +317,7 @@ export default {
                 "&timestamp=" +
                 file.timestamp;
               item.url =
-               process.env.API +
+              //  process.env.API +
                 "/api/Attach/ShowThumbImage?id=" +
                 file.id +
                 "&sign=" +
@@ -325,7 +327,7 @@ export default {
             } else {
               //非图片
               item.orgurl =
-               process.env.API +
+              //  process.env.API +
                 "/api/Attach/Download?id=" +
                 file.id +
                 "&sign=" +
@@ -382,7 +384,7 @@ export default {
       //从服务器端删除
       that.$http
         .post(
-         process.env.API +
+        //  process.env.API +
             "/api/Attach/Delete?id=" +
             delFile.id +
             "&sign=" +
@@ -469,7 +471,7 @@ export default {
           item.type = response.type;
           if (that.isImgType(item.type)) {
             item.orgurl =
-             process.env.API
+            //  process.env.API
               "/api/Attach/ShowImage?id=" +
               response.id +
               "&sign=" +
@@ -477,7 +479,7 @@ export default {
               "&timestamp=" +
               response.timestamp;
             item.url =
-             process.env.API
+            //  process.env.API
               "/api/Attach/ShowThumbImage?id=" +
               response.id +
               "&sign=" +
@@ -487,7 +489,7 @@ export default {
           } else {
             //非图片
             item.orgurl =
-             process.env.API
+            //  process.env.API
               "/api/Attach/Download?id=" +
               response.id +
               "&sign=" +
