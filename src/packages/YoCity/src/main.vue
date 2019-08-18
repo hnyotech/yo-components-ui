@@ -48,11 +48,11 @@ export default {
     },
     label: {
       type: String,
-      default: ''
+      default: '地址：'
     },
     labelWidth: {
-      type: String,
-      default: ""
+      type: Number,
+      default: 120
     }
   },
   watch: {
