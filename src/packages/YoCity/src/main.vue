@@ -1,8 +1,8 @@
 <template>
   <div class="my-city">
     <el-form :model="mycityForm" ref="mycityForm" :label-width="labelWidth" label-position="left">
-      <el-row :gutter="40">
-        <el-col :span="8">
+      <el-row>
+        <el-col :span="24">
           <el-form-item :label="label">
             <el-select v-model="mycityForm.provinceCode" @change="onProvinceChange" placeholder="请选择省">
               <el-option v-for="item in provinces" :key="item.Code" :label="item.Name" :value="item.Code"></el-option>
@@ -51,8 +51,8 @@ export default {
       default: '地址：'
     },
     labelWidth: {
-      type: Number,
-      default: 120
+      type: String,
+      default: '120'
     }
   },
   watch: {
