@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     clickHandler: function () {
-      console.log("clickHandler");
+      // console.log("clickHandler");
        this.$emit('click')
     }
   }

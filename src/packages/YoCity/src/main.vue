@@ -4,7 +4,7 @@
       <el-row :gutter="40">
         <el-col :span="8">
           <el-form-item label="省">
-            <el-select v-model="mycityForm.provinceCode" @change="onProvinceChange" placeholder="请选择省" @visible-change="visibleChange">
+            <el-select v-model="mycityForm.provinceCode" @change="onProvinceChange" placeholder="请选择省">
               <el-option v-for="item in provinces" :key="item.Code" :label="item.Name" :value="item.Code"></el-option>
             </el-select>
           </el-form-item>
@@ -12,7 +12,7 @@
 
         <el-col :span="8">
           <el-form-item label="市">
-            <el-select v-model="mycityForm.cityCode" @change="onCityChange" placeholder="请选择省市" @visible-change="visibleChange">
+            <el-select v-model="mycityForm.cityCode" @change="onCityChange" placeholder="请选择省市">
               <el-option v-for="item in citys" :key="item.Code" :label="item.Name" :value="item.Code"></el-option>
             </el-select>
           </el-form-item>
@@ -20,7 +20,7 @@
 
         <el-col :span="8">
           <el-form-item label="区" prop="CountyName">
-            <el-select v-model="mycityForm.countyCode" @change="onCountyChange" placeholder="请选择区" @visible-change="visibleChange">
+            <el-select v-model="mycityForm.countyCode" @change="onCountyChange" placeholder="请选择区">
               <el-option v-for="item in countys" :key="item.Code" :label="item.Name" :value="item.Code"></el-option>
             </el-select>
           </el-form-item>
