@@ -84,3 +84,14 @@ color: #FFF;
     color: #365FA4;
     font-weight: 700;
 }
+.my-city .el-form-item{
+    float: left;
+}
+.my-city .el-form-item__content{
+    margin-right: 20px;
+}
+.my-city .el-form-item__content .el-select{
+    float: left;
+    width: 114px;
+    margin-right: 14px;
+}
