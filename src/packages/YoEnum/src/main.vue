@@ -1,6 +1,6 @@
 <template>
-<el-form-item :label="label" :prop="prop">
-    <el-select v-model="selectedValue" clearable :disabled="disabled" @change="handleChange">
+<el-form-item :label="label + ':'" :prop="prop">
+    <el-select v-model="selectedValue" :placeholder="'请选择' + label" clearable :disabled="disabled" @change="handleChange">
         <el-option v-for="item in options" :key="item.Value" :label="item.Description" :value="item.Value"></el-option>
     </el-select>
 </el-form-item>
