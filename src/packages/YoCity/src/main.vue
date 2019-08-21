@@ -53,6 +53,10 @@ export default {
     labelWidth: {
       type: String,
       default: '120'
+    },
+    api: {
+      type: String,
+      default: ''
     }
   },
   watch: {
@@ -99,8 +103,6 @@ export default {
             this.loadData(selItem.Code, 1);//市
           }
         }
-
-
       }
     }
   },
@@ -145,7 +147,7 @@ export default {
     },
     onLoadAllData() {
       let that = this;
-      let apiUrl = "/api/City/QueryList";
+      let apiUrl = this.api;
       this.$http
         .post(apiUrl, {})
         .then(res => {
@@ -167,7 +169,7 @@ export default {
       this.mycityForm.selCityCode = this.mycityForm.provinceCode;
       this.mycityForm.provinceName = provinceItem.Name;
       this.$emit("selectchange", this.mycityForm);
-      console.log("选省:" + this.provinces.length + "---" + this.citys.length + "---" + this.countys.length);
+      // console.log("选省:" + this.provinces.length + "---" + this.citys.length + "---" + this.countys.length);
     },
     // 选市
     onCityChange() {
@@ -178,7 +180,7 @@ export default {
       this.mycityForm.selCityCode = this.mycityForm.cityCode;
       this.mycityForm.cityName = cityItem.Name;
       this.$emit("selectchange", this.mycityForm);
-      console.log("选市:" + this.provinces.length + "---" + this.citys.length + "---" + this.countys.length);
+      // console.log("选市:" + this.provinces.length + "---" + this.citys.length + "---" + this.countys.length);
     },
     onCountyChange() {
       this.mycityForm.selCityCode = this.mycityForm.countyCode;
@@ -186,7 +188,7 @@ export default {
         item => item.Code === this.mycityForm.countyCode
       )["Name"];
       this.$emit("selectchange", this.mycityForm);
-      console.log("选区:" + this.provinces.length + "---" + this.citys.length + "---" + this.countys.length);
+      // console.log("选区:" + this.provinces.length + "---" + this.citys.length + "---" + this.countys.length);
     }
   },
   created: function () {

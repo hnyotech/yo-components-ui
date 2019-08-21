@@ -16,7 +16,7 @@
             
         <yo-enum EnumName="sssss" label="123" prop="234"></yo-enum>
         </el-form>
-        <yo-city :labelWidth="'120'" :label="'地址：'"></yo-city>
+        <yo-city :api="''" :labelWidth="'120'" :label="'地址：'" @selectchange="selectchange()"></yo-city>
         
       <yo-content>
           <yo-grid ref="YoGrid"

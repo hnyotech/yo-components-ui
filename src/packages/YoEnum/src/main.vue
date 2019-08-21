@@ -1,7 +1,7 @@
 <template>
 <el-form-item :label="label" :prop="prop">
-    <el-select v-model="selectedValue" clearable :disabled="disabled" @change="handleChange" @visible-change="visibleChange">
-        <el-option v-for="item in options" :key="item.Value" :label="item.Name" :value="item.Value">
+    <el-select v-model="selectedValue" clearable :disabled="disabled" @change="handleChange">
+        <el-option v-for="item in options" :key="item.Value" :label="item.Description" :value="item.Value">
             {{item.Name}}
         </el-option>
     </el-select>
