@@ -1,5 +1,5 @@
 <template>
-<el-form-item :label="label + ':'" :prop="prop">
+<el-form-item :label="label + '：'" :prop="prop">
     <el-select v-model="selectedValue" :placeholder="'请选择' + label" clearable :disabled="disabled" @change="handleChange">
         <el-option v-for="item in options" :key="item.Value" :label="item.Description" :value="item.Value"></el-option>
     </el-select>
@@ -31,7 +31,7 @@ export default {
     },
     data() {
         return {
-            selectedValue: null,
+            selectedValue: this.prop,
             options: [{
                 Name:'张三',
                 Value:2,
