@@ -15,8 +15,9 @@
         <el-form>
             
         <yo-enum EnumName="sssss" label="123" prop="234"></yo-enum>
-        </el-form>
         <yo-city :api="''" :labelWidth="'120'" :label="'地址：'" @selectchange="selectchange()"></yo-city>
+        </el-form>
+        
         
       <yo-content>
           <yo-grid ref="YoGrid"
@@ -180,6 +181,11 @@ export default {
                 api: '/api/SysSubSystem/Query',
                 methods: 'post'
             },
+        }
+    },
+    methods: {
+        selectchange (val) {
+            console.log(val)
         }
     }
 }

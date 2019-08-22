@@ -1,22 +1,16 @@
 <template>
   <div class="my-city">
-    <el-form :model="mycityForm" ref="mycityForm" :label-width="labelWidth" label-position="left">
-      <el-row>
-        <el-col :span="24">
-          <el-form-item :label="label">
-            <el-select v-model="mycityForm.provinceCode" @change="onProvinceChange" placeholder="请选择省">
-              <el-option v-for="item in provinces" :key="item.Code" :label="item.Name" :value="item.Code"></el-option>
-            </el-select>
-            <el-select v-model="mycityForm.cityCode" @change="onCityChange" placeholder="请选择市">
-              <el-option v-for="item in citys" :key="item.Code" :label="item.Name" :value="item.Code"></el-option>
-            </el-select>
-            <el-select v-model="mycityForm.countyCode" @change="onCountyChange" placeholder="请选择区">
-              <el-option v-for="item in countys" :key="item.Code" :label="item.Name" :value="item.Code"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-      </el-row>
-    </el-form>
+    <el-form-item :label="label" :prop="CityCode">
+      <el-select v-model="mycityForm.provinceCode" @change="onProvinceChange" placeholder="请选择省">
+        <el-option v-for="item in provinces" :key="item.Code" :label="item.Name" :value="item.Code"></el-option>
+      </el-select>
+      <el-select v-model="mycityForm.cityCode" @change="onCityChange" placeholder="请选择市">
+        <el-option v-for="item in citys" :key="item.Code" :label="item.Name" :value="item.Code"></el-option>
+      </el-select>
+      <el-select v-model="mycityForm.countyCode" @change="onCountyChange" placeholder="请选择区">
+        <el-option v-for="item in countys" :key="item.Code" :label="item.Name" :value="item.Code"></el-option>
+      </el-select>
+    </el-form-item>
   </div>
 </template>
 
