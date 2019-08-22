@@ -27,7 +27,7 @@ export default {
         provinceCode: "",
         provinceName: "",
         cityName: "",
-        cityCode: "",
+        cityCode: this.CityCode,
         countyName: "",
         countyCode: "",
         selCityCode: ""
