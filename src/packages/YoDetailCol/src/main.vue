@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="yo-detail-col">
         <el-row :gutter="40" v-for="(item,index) in rowData" :key="index">
             <el-col :span="8" v-for="li in item" :key="li.value">
                 <div class="col_content_box">
@@ -42,16 +42,5 @@ export default {
 }
 </script>
 <style scoped>
-    .col_content_box{
-        display: flex;
-    }
-    .detail_label,.value_w{
-        line-height: 40px;
-        color: #666;
-        font-size: 14px;
-    }
-    .value_w{
-        color: #222;
-        border-bottom: 1px solid #ccc;
-    }
+    
 </style>

@@ -29,12 +29,10 @@
                     </el-col>
                 </el-row>
             </el-form>
-            <el-row :gutter="40" type="flex">
-                <el-col v-bind:span="24" style="float:right;text-align:right;">
-                    <YoButton icon="el-icon-setting" class="my-query__reset" @click="reset()">重置</YoButton>
-                    <YoButton type="primary"  icon="el-icon-search" @click="searchTableData()">搜索</YoButton>
-                </el-col>
-            </el-row>
+            <div style="padding:0 20px;text-align:right;">
+              <YoButton icon="el-icon-setting" size="medium" class="my-query__reset" @click="reset()">重置</YoButton>
+              <YoButton type="primary" size="medium" icon="el-icon-search" @click="searchTableData()">搜索</YoButton>
+            </div>
             
         </div>
         <div class="my-grid__body">
