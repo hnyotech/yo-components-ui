@@ -121,16 +121,16 @@ color: #FFF;
 .el-radio-button__orig-radio:disabled:checked + .el-radio-button__inner {
     background-color: var(--main-bg-color);
 }
-
-.yo-detail-col .col_content_box{
+/* 详情 */
+.col_content_box{
     display: flex;
 }
-.yo-detail-col .detail_label,.value_w{
+.detail_label,.value_w{
     line-height: 40px;
     color: #666;
     font-size: 14px;
 }
-.yo-detail-col .value_w{
+.value_w{
     color: #222;
     border-bottom: 1px solid #ccc;
 }
