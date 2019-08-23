@@ -99,19 +99,33 @@ export default {
             type6: 'danger',
             rowData: [
                 [{
-                    title: '标题1',
-                    value: '内容1'
+                    title: '默认显示',
+                    value: '没有定义span 和是否显示的 默认是显示 默认列宽：span=8',
                 },{
                     title: '标题2',
-                    value: '内容2'
+                    value: '默认 是 {title: "标题",value "内容"}'
                 },{
                     title: '标题3',
                     value: '内容3'
                 }],
                 [{
+                    title: '定制列宽=16',
+                    value: '需要加上 span字段 默认 是 {title: "标题",value "内容", span:"16"}',
+                    span: 16,
+                },
+                {
                     title: '标题4',
-                    value: '内容4'
-                }],
+                    value: '内容4',
+                    span: 8,
+                    isVisiable: false
+                }],[
+                    {
+                    title: '控制显示隐藏',
+                    value: '需要加上 isVisiable字段 默认 是 {title: "标题",value "内容", span:"16",isVisiable: true} 当不传该字段的时候是默认显示，true显示，false隐藏',
+                    span: 24,
+                    isVisiable: true
+                    }
+                ]
             ],
             requireData: {
                 Item:[]

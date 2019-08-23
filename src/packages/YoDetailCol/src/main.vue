@@ -1,8 +1,8 @@
 <template>
     <div class="yo-detail-col">
         <el-row :gutter="40" v-for="(item,index) in rowData" :key="index">
-            <el-col :span="8" v-for="(li,index) in item" :key="index">
-                <div class="col_content_box" v-if="li.isVisiable">
+            <el-col v-for="(li,index) in item" :span="li.span === undefined ? 8 : li.span" :key="index">
+                <div class="col_content_box" v-if="li.isVisiable === undefined || li.isVisiable === true">
                     <label class="detail_label" :style="{width: l_w}">{{li.title}}：</label>
                     <div class="value_w" :style="{'width': 'calc(100% - ' + l_w + ' )'}">&nbsp;{{li.value}}</div>
                 </div>
