@@ -24,6 +24,11 @@ import YoGrid from '../packages/YoGrid/src/main';
 import CheckRecord from '../packages/checkrecord/src/main';
 import YoDetailCol from '../packages/YoDetailCol/src/main';
 import YoEnum from '../packages/YoEnum/src/main';
+import YoCheck from '../packages/YoControlsCheck/src/main';
+import YoInput from '../packages/YoControlsInput/src/main';
+import YoLt from '../packages/YoControlsLt/src/main';
+import YoDate from '../packages/YoControlsDate/src/main';
+import YoTime from '../packages/YoControlsTime/src/main';
 const components = [
   YoButton,
   YoHeader,
@@ -49,6 +54,11 @@ const components = [
   CheckRecord,
   YoDetailCol,
   YoEnum,
+  YoCheck, // 添加标的动态控件 1
+  YoInput,
+  YoLt,
+  YoDate,
+  YoTime // 添加标的动态控件 5
 ];
 const install = function(Vue, opts = {}) {
   components.forEach(component => {
@@ -85,5 +95,10 @@ const yoComponents ={
   CheckRecord,
   YoDetailCol,
   YoEnum,
+  YoCheck, // 添加标的动态控件 1
+  YoInput,
+  YoLt,
+  YoDate,
+  YoTime // 添加标的动态控件 5
 }
 export default yoComponents;
