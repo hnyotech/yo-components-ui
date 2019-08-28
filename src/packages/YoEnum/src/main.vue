@@ -57,8 +57,7 @@ export default {
         })
     },
     handleChange (val) {
-      this.$emit('selectchange', val)
-      console.log(val)
+      this.$emit('selectChange', val)
     }
   },
   mounted: function () {
