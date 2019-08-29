@@ -1,7 +1,7 @@
 <template>
 <el-col :span='proteyValue.ColPer' >
    <i class="el-icon-error dynaattr"  @click.stop="closez" v-if="isedit"></i>
- <el-form-item :label="proteyValue.Name" :prop="itemsname + '.' + datakey + '.property.AttributeValue'"
+ <el-form-item :label="proteyValue.Name" :prop="itemsname + datakey + '.property.AttributeValue'"
        :rules="[{ required: proteyValue.Required, message: '不能为空',trigger: 'submit'}]" >
    
    <el-select v-model="proteyValue.AttributeValue" clearable placeholder="请选择" @visible-change="visibleChange">
