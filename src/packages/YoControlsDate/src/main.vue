@@ -16,7 +16,7 @@
 <script>
 
 export default {
-    name: "cus",
+    name: "YoDate",
     props:{
       itemsname: {
       
