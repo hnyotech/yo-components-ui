@@ -2,13 +2,13 @@
   <div class="my-city">
     <el-form-item :label="label" prop="CityCode">
       <el-select v-model="mycityForm.provinceCode" @change="onProvinceChange" placeholder="请选择省" @visible-change="visibleChange">
-        <el-option v-for="item in provinces" :key="item.Code + item.Level" :label="item.Name" :value="item.Code"></el-option>
+        <el-option v-for="(item,index) in provinces" :key="item.Level + index" :label="item.Name" :value="item.Code"></el-option>
       </el-select>
       <el-select v-model="mycityForm.cityCode" @change="onCityChange" placeholder="请选择市" @visible-change="visibleChange">
-        <el-option v-for="item in citys" :key="item.Code + item.Level" :label="item.Name" :value="item.Code"></el-option>
+        <el-option v-for="(item,index) in citys" :key="item.Level + index" :label="item.Name" :value="item.Code"></el-option>
       </el-select>
       <el-select v-model="mycityForm.countyCode" @change="onCountyChange" placeholder="请选择区" @visible-change="visibleChange">
-        <el-option v-for="item in countys" :key="item.Code + item.Level" :label="item.Name" :value="item.Code"></el-option>
+        <el-option v-for="(item,index) in countys" :key="item.Level + index" :label="item.Name" :value="item.Code"></el-option>
       </el-select>
     </el-form-item>
   </div>
