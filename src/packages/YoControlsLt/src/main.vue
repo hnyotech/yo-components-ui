@@ -1,10 +1,10 @@
 <template>
 <el-col :span='proteyValue.ColPer' >
    <i class="el-icon-error dynaattr"  @click.stop="closez" v-if="isedit"></i>
- <el-form-item :label="proteyValue.Name" 
-       :rules="[{ required: proteyValue.Required, message: '不能为空',trigger: 'submit'}]" >
+ <el-form-item :label="proteyValue.Name" :prop="proteyValue.AttributeValue"
+       :rules="[{ required: proteyValue.Required, message: proteyValue.Name + '不能为空',trigger: 'submit'}]" >
    
-   <el-select v-model="proteyValue.AttributeValue" clearable placeholder="请选择" @visible-change="visibleChange">
+   <el-select v-model="proteyValue.AttributeValue" clearable :placeholder="'请选择' + proteyValue.Name" @visible-change="visibleChange" style="width:100%">
       <el-option v-for="item in lstoptions" :key="item.value" :label="item.label" :value="item.value"   ></el-option>
     </el-select>
 

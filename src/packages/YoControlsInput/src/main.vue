@@ -2,13 +2,13 @@
 <el-col :span='proteyValue.ColPer' >
      <i class="el-icon-error dynaattr"  @click.stop="closez" v-if="isedit"></i>
  <el-form-item :label="proteyValue.Name" 
-       :rules="[{ required: proteyValue.Required, message: '参数名不能为空',trigger: 'submit'}
+       :rules="[{ required: proteyValue.Required, message: proteyValue.Name + '不能为空',trigger: 'submit'}
        ,{max: proteyValue.MaxLength, message: '字符超限制', trigger: 'submit'}
        ,{validator:validateRegex2,trigger:'submit'}]"
        >
  
   <el-input class="user-input" :type="proteyValue.AttributeType==1?'textarea':'text'" 
-  placeholder="请输入内容" :rows="proteyValue.InputRowCount"  v-model="proteyValue.AttributeValue" ></el-input>
+  :placeholder="'请输入' + proteyValue.Name" :rows="proteyValue.InputRowCount"  v-model="proteyValue.AttributeValue" ></el-input>
  </el-form-item>
 </el-col>
 </template>
@@ -42,7 +42,7 @@ export default {
         }
     },
     mounted(){
-      console.log(this.datakey);
+      // console.log(this.datakey);
     },
     data() {
     
