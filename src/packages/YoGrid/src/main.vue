@@ -167,13 +167,8 @@ export default {
     },
 
     methods: {
-        searchTableData(){
-            // console.log(this.realData);
-            this.search();
-            this.$emit('search')
-        },
-        reset(){
-            for(var key in this.realData.params){
+        resetParam(){
+             for(var key in this.realData.params){
                 if(key == 'PageIndex'){
                     this.realData.params[key] = 1;
                 }else if(key == 'PageSize'){
@@ -182,6 +177,16 @@ export default {
                     this.realData.params[key] = '';
                 };
             };
+        },
+        searchTableData(){
+            // console.log(this.realData);
+            this.realData.params.pageSize = 10;
+            this.realData.params.pageIndex = 1;
+            this.search();
+            this.$emit('search')
+        },
+        reset(){
+           this.resetParam();
             this.search();
         },
         //table数据搜索函数
@@ -241,7 +246,10 @@ export default {
         // },
 
         handleQuickSearch() {
-           this.search();
+             var queickVal=this.realData.params[this.quickSearch];
+             this.resetParam();
+             this.realData.params[this.quickSearch]=queickVal;
+             this.search();
         },
 
         handleQuickSearchFromInput() {
