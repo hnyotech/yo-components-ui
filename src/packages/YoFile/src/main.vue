@@ -300,14 +300,15 @@ export default {
       };
       var newIds = loadId.join(',')
       // console.log(process.env.API);
-      console.log(this.apiUrl)
+      // console.log(this.apiUrl)
 
       var param = {}
       param['ids'] = newIds
-      that.$http
-        // .post(process.env.API + "/api/Attach/GetAttachs", param)
-        .post('/api/Attach/GetAttachs', param)
-        .then(resp => {
+      that.$axios({
+        methods: 'post',
+        url: that.apiUrl + '/api/Attach/GetAttachs',
+        data: param
+      }).then(resp => {
           resp.forEach(function (file) {
             var item = {}
             item.id = file.id
