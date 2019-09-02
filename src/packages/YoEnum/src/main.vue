@@ -1,9 +1,12 @@
 <template>
 <el-form-item :label="label" :prop="prop">
-    <el-select v-model="selectedValue" clearable :disabled="disabled" :placeholder="'请选择' + label" @change="handleChange" @visible-change="visibleChange" style="width:100%">
+    <el-select v-model="selectedValue" v-if="isDrop" clearable :disabled="disabled" :placeholder="'请选择' + label" @change="handleChange" @visible-change="visibleChange" style="width:100%">
         <el-option v-for="item in options" :key="item.Value" :label="item.Description" :value="item.Value">
         </el-option>
     </el-select>
+    <el-radio-group v-else v-model="selectedValue" @change="handleChange">
+      <el-radio v-for="item in options" :key="item.Value" :label="item.Value">{{item.Description}}</el-radio>
+    </el-radio-group>
 </el-form-item>
 </template>
 
@@ -32,6 +35,11 @@ export default {
     prop: {
       type: String,
       required: true
+    },
+    isDrop: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   data () {

@@ -82,7 +82,7 @@ export default {
           this.provinces.push(item)
         }
       }
-      if (this.CityCode != '' || this.CityCode != null) {
+      if (this.CityCode != '' && this.CityCode != null) {
         if (this.allData.length > 0) {
           var selItem = this.loadData(this.CityCode, 0)
           if (selItem.Level != 1) {
