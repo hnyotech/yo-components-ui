@@ -1,13 +1,13 @@
 <template>
 <el-col :span='proteyValue.ColPer' >
    <i class="el-icon-error dynaattr"  @click.stop="closez" v-if="isedit"></i>
- <el-form-item :label="proteyValue.Name"  :prop="itemsname + '.' + datakey + '.property.AttributeValue'"
-       :rules="[{ required: proteyValue.Required, message: '不能为空',trigger: 'submit'}]"  >
+ <el-form-item :label="proteyValue.Name" 
+       :rules="[{ required: proteyValue.Required, message: '请选择' + proteyValue.Name ,trigger: 'submit'}]"  >
    <el-date-picker
       v-model="proteyValue.AttributeValue"
       align="left" style="width:100%;"
       :type="newproteyValue.AttributeType==4?'date':'datetime'"
-      placeholder="选择日期">
+      :placeholder="'请选择' + proteyValue.Name">
     </el-date-picker>
  </el-form-item>
 </el-col>
@@ -16,7 +16,7 @@
 <script>
 
 export default {
-    name: "cus",
+    name: "YoDate",
     props:{
       itemsname: {
       
@@ -42,7 +42,7 @@ export default {
         }
     },
     mounted(){
-      console.log('add testinput');
+      // console.log('add testinput');
     },
     data() {
       return {

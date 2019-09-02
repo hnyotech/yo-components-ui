@@ -11,7 +11,7 @@
 <script>
 
 export default {
-    name: "cus",
+    name: "YoCheck",
     props:{
       itemsname: {
       

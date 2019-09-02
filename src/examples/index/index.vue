@@ -12,6 +12,8 @@
         <yo-detail-col :rowData="rowData" :label_width='100'></yo-detail-col>
         <yo-file :uploadType="1"></yo-file>
         <yo-img></yo-img>
+        <yo-input></yo-input>
+        
         <el-form>
             
         <yo-enum EnumName="sssss" label="123" prop="234"></yo-enum>
@@ -74,6 +76,7 @@ import YoEnum from '@/packages/YoEnum/src/main.vue'
 import YoGrid from '@/packages/YoGrid/src/main.vue'
 import YoContent from '@/packages/YoContent/src/main.vue'
 import YoCity from '@/packages/YoCity/src/main.vue'
+import YoInput from '@/packages/YoControlsInput/src/main.vue'
 export default {
     name: 'examples',
     components: {
@@ -87,7 +90,8 @@ export default {
         YoGrid,
         YoContent,
         YoToolbar,
-        YoCity
+        YoCity,
+        YoInput
     },
     data () {
         return {
