@@ -304,11 +304,7 @@ export default {
 
       var param = {}
       param['ids'] = newIds
-      that.$axios({
-        methods: 'post',
-        url: that.apiUrl + '/api/Attach/GetAttachs',
-        data: param
-      }).then(resp => {
+      that.$http.post('api/Attach/GetAttachs', param).then(resp => {
           resp.forEach(function (file) {
             var item = {}
             item.id = file.id
