@@ -33,7 +33,6 @@
               <YoButton icon="el-icon-setting" size="medium" class="my-query__reset" @click="reset()">重置</YoButton>
               <YoButton type="primary" size="medium" icon="el-icon-search" @click="searchTableData()">搜索</YoButton>
             </div>
-            
         </div>
         <div class="my-grid__body">
             <div>
@@ -92,10 +91,16 @@ export default {
                 this.realData.params = paramsList[i][this.$route.name]
             };
         };
-         
-        this.search()
+        for (let j = 0;j<this.realData.params.length;j++) {
+            if (this.realData.params[i].hasOwnProperty('YoGridCollapse')) {
+                this.defaultShowHidden = this.realData.params[i]['YoGridCollapse']
+            } else {
+                this.realData.params[i]['YoGridCollapse'] = false
+                this.defaultShowHidden = false
+            }
+        }
+        this.search('isPage')
     },
-    
     props: {
         quicksearchPlaceholder: String,
         showQuick: {
@@ -168,7 +173,7 @@ export default {
 
     methods: {
         resetParam(){
-             for(var key in this.realData.params){
+            for(var key in this.realData.params){
                 if(key == 'PageIndex'){
                     this.realData.params[key] = 1;
                 }else if(key == 'PageSize'){
@@ -190,50 +195,62 @@ export default {
             this.search();
         },
         //table数据搜索函数
-        search(){
+        search(data){
             var that = this;
             this.loading = true;
             var paramsList = that.$store.getters.paramsList;
+            if (!data) {
+                that.realData.params.PageIndex = 1
+            }
             // return new Promise(function(resolve,reject){
                 // console.log(that.params)
-                if(that.realData.api){
-                    that.$http({
-                        method: that.realData.methods,
-                        url: that.realData.api,
-                        data: that.realData.params
-                    }).then(res=>{
-                        var key = that.$route.name;
-                        // console.log(key)
-                        var obj = new Object;
-                        obj[key] = that.realData.params;
-                        if(paramsList.length === 0){
-                            paramsList.push(obj);
-                        }else{
-                            var flag = false;
-                            for(var val in paramsList){
-                                if(paramsList[val].hasOwnProperty(key)){
-                                    paramsList[val][key] = that.gridData.params;
-                                    flag = true;
-                                }
-                            };
-                            if(!flag){
-                                paramsList.push(obj);
+            if(that.realData.api){
+                that.$http({
+                    method: that.realData.methods,
+                    url: that.realData.api,
+                    data: that.realData.params
+                }).then(res=>{
+                    var key = that.$route.name;
+                    // console.log(key)
+                    var obj = new Object;
+                    obj[key] = that.realData.params;
+                    if(paramsList.length === 0){
+                        paramsList.push(obj);
+                    }else{
+                        var flag = false;
+                        for(var val in paramsList){
+                            if(paramsList[val].hasOwnProperty(key)){
+                                paramsList[val][key] = that.gridData.params;
+                                flag = true;
                             }
-                            
                         };
-                        that.TotalCount = res.TotalCount;
-                        that.requireData = res;
-                        // sessionStorage.setItem('paramsList',JSON.stringify(paramsList))
-                        that.$store.commit("UPDATE_PARAMSlIST", paramsList);
-                        // resolve(res);
-                        that.$emit('update:requireData',res)
-                        this.loading = false;
-                    })
-                }
+                        if(!flag){
+                            paramsList.push(obj);
+                        }
+                        
+                    };
+                    that.TotalCount = res.TotalCount;
+                    that.requireData = res;
+                    // sessionStorage.setItem('paramsList',JSON.stringify(paramsList))
+                    that.$store.commit("UPDATE_PARAMSlIST", paramsList);
+                    // resolve(res);
+                    that.$emit('update:requireData',res)
+                    this.loading = false;
+                })
+            }
             // })
             
         },
         handleCollapse() {
+            for (var key in this.realData.params) {
+                if (key === 'PageIndex') {
+                this.realData.params[key] = 1
+                } else if (key === 'PageSize') {
+                this.realData.params[key] = 10
+                } else {
+                this.realData.params[key] = ''
+                };
+            };
             this.defaultShowHidden = !this.defaultShowHidden;
         },
         // handleReset() {
@@ -258,7 +275,7 @@ export default {
 
         handleSizeChange(val) {
             this.realData.params.PageSize =val;
-            this.search();
+            this.search('isPage');
             // console.log("handleSizeChange val=" + val);
             // let needEmit = false;
 
@@ -285,7 +302,7 @@ export default {
         },
         handleIndexChange(val) {
             this.realData.params.PageIndex =val;
-            this.search();
+            this.search('isPage');
             // console.log("handleIndexChange val=" + val);
             // let needEmit = false;
             // if (this.pageIndex) {
