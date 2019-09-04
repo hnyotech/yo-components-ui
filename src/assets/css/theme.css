@@ -134,3 +134,10 @@ color: #FFF;
     color: #222;
     border-bottom: 1px solid #ccc;
 }
+.el-checkbox__input.is-checked .el-checkbox__inner {
+    background-color:  var(--main-bg-color);
+    border-color:  var(--main-bg-color);
+}
+.el-checkbox__input.is-checked + .el-checkbox__label {
+    color:  var(--main-bg-color);
+}
