@@ -110,7 +110,15 @@ export default {
           if (item.Level == 3) {
             this.countys.push(item)
           } else if (item.Level == 2) {
-            this.citys.push(item)
+            if (this.citys.length == 0) {
+              this.citys.push(item)
+            } else {
+              for (let i = 0; i< this.citys.length; i++) {
+                if (this.citys[i].Code != item.Code) {
+                  this.citys.push(item)
+                }
+              }
+            }
           }
         }
         if (item.Level == nowItem.Level && item.ParentId == nowItem.ParentId && direction == '0') {
@@ -121,7 +129,15 @@ export default {
               this.mycityForm.countyCode = item.Code
             }
           } else if (item.Level == 2) {
-            this.citys.push(item)
+            if (this.citys.length == 0) {
+              this.citys.push(item)
+            } else {
+              for (let i = 0; i< this.citys.length; i++) {
+                if (this.citys[i].Code != item.Code) {
+                  this.citys.push(item)
+                }
+              }
+            }
             if (nowItem.Code == item.Code) {
               this.mycityForm.cityName = item.Name
               this.mycityForm.cityCode = item.Code
