@@ -27,6 +27,7 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
+                    <slot name="inputSel"></slot>
                 </el-row>
             </el-form>
             <div style="padding:0 20px;text-align:right;">
