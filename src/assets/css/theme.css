@@ -76,6 +76,25 @@ border-color: var(--danger);
 color: #FFF;
 }
 
+.el-button--text {
+color: var(--main-bg-color);
+background: #FFF;
+border-color: transparent;
+}
+.el-button--text:focus, .el-button--text:hover {
+background: transparent;
+border-color: transparent;
+color: var(--hover);
+}
+.el-button--text:active {
+outline: 0;
+}
+.el-button--text.is-active, .el-button--text:active {
+background: transparent;
+border-color: transparent;
+color: var(--active);
+}
+
 /* Enum */
 .el-select .el-input.is-focus .el-input__inner {
     border-color: var(--main-bg-color);
