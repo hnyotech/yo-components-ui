@@ -114,8 +114,11 @@ color: var(--active);
 }
 .my-city .el-form-item__content .el-select{
     float: left;
-    width: 114px;
-    margin-right: 14px;
+    width: 32%;
+    margin-right: 2%;
+}
+.my-city .el-form-item__content .el-select:nth-of-type(3){
+    margin-right: 0;
 }
 /* 单选框 */
 .el-radio-button__orig-radio:checked + .el-radio-button__inner {
