@@ -163,3 +163,71 @@ color: var(--active);
 .el-checkbox__input.is-checked + .el-checkbox__label {
     color:  var(--main-bg-color);
 }
+
+/* 文件上传组件样式 */
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+    .avatar-uploader .el-upload:hover {
+      border-color: #3B70C2;
+    }
+
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 148px;
+    height: 148px;
+    line-height: 148px !important;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 148px;
+    height: 148px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    /* display: block; */
+  }
+
+  .el-icon-document {
+    height: auto !important;
+  }
+
+  .el-upload-act:hover {
+    opacity: 0.7;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    border-radius: 6px;
+  }
+
+  .el-upload-act {
+    position: absolute;
+    width: 148px;
+    height: 148px;
+    line-height: 148px;
+    left: 0;
+    top: 0;
+    cursor: default;
+    text-align: center;
+    color: #fff;
+    opacity: 0;
+    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .el-upload-act-preview {
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  .el-upload-act-delete {
+    cursor: pointer;
+  }
+  /*.el-progress{
+  top: -136px;
+}*/
