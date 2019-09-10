@@ -1,7 +1,7 @@
 <template>
 <el-col :span='proteyValue.ColPer' >
      <i class="el-icon-error dynaattr"  @click.stop="closez" v-if="isedit"></i>
- <el-form-item :label="proteyValue.Name" 
+ <el-form-item :label="proteyValue.Name" :prop="proteyValue.Code"
        :rules="[{ required: proteyValue.Required, message: proteyValue.Name + '不能为空',trigger: 'submit'}
        ,{max: proteyValue.MaxLength, message: '字符超限制', trigger: 'submit'}
        ,{validator:validateRegex2,trigger:'submit'}]"

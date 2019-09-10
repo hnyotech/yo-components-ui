@@ -231,3 +231,11 @@ color: var(--active);
   /*.el-progress{
   top: -136px;
 }*/
+
+/* textarea样式 */
+.el-textarea__inner:hover {
+    border-color: var(--hover);
+}
+.el-textarea__inner:focus {
+    border-color: var(--active);
+}
