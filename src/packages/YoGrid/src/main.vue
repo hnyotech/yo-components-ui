@@ -16,7 +16,7 @@
         <div v-show="!defaultShowHidden" class="cos_hide_box"><span class="cos_hide" @click="handleCollapse">收起<i class="el-icon-arrow-up"></i></span></div>
         <div class="divider_cos"></div>
         <div v-show="!defaultShowHidden" class="my-grid__moresearch">
-            <el-form :model="realData.params" class="detail-form" ref="form" label-width="100px" label-position="left">
+            <el-form :model="realData.params" class="detail-form" ref="form" label-width="100px" size="medium" label-position="left">
                 <el-row :gutter="40">
                     <el-col  v-for="item in realData.formLabel" :key="item.name" :span="item.span">
                         <el-form-item :label="item.name + ':'" :prop="item.value">
@@ -27,6 +27,7 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
+                    <slot name="inputSel"></slot>
                 </el-row>
             </el-form>
             <div style="padding:0 20px;text-align:right;">

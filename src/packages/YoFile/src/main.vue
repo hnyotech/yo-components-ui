@@ -8,7 +8,7 @@
           <i class="el-icon-zoom-in" @click.stop="handlePreview(imageUrl,dialogTitle)"></i>
         </span>
         <span class="el-upload-act-delete">
-          <i class="el-icon-delete" @click.stop="handleRemove(fileList[0])"></i>
+          <i class="el-icon-delete" @click.stop="handleRemove(singleFile)"></i>
         </span>
       </span>
     </div>
@@ -134,7 +134,8 @@ export default {
       dialogVisible: false, // 显示预览
       dialogTitle: '', // 预览标题
       showFileList: [], // 需要提交的文件列表
-      delInd: ''// 待删除的文件索引
+      delInd: '', // 待删除的文件索引
+      singleFile: '' // 单个文件
     }
   },
   created: function () {
@@ -284,6 +285,7 @@ export default {
         that.fileList = []
         that.fileListOrg = []
         that.imageUrl = ''
+        that.singleFile = {}
         return false
       }
       //   debugger;
@@ -305,16 +307,16 @@ export default {
       var param = {}
       param['ids'] = newIds
       that.$http.post('api/Attach/GetAttachs', param).then(resp => {
-          resp.forEach(function (file) {
-            var item = {}
-            item.id = file.id
-            item.sign = file.sign
-            item.timestamp = file.timestamp
-            item.name = file.name
-            item.size = file.size
-            item.type = file.type
-            if (that.isImgType(item.type)) {
-              item.orgurl =
+        resp.forEach(function (file) {
+          var item = {}
+          item.id = file.id
+          item.sign = file.sign
+          item.timestamp = file.timestamp
+          item.name = file.name
+          item.size = file.size
+          item.type = file.type
+          if (that.isImgType(item.type)) {
+            item.orgurl =
               //  process.env.API +
                 that.apiUrl + '/api/Attach/ShowImage?id=' +
                 file.id +
@@ -322,7 +324,7 @@ export default {
                 file.sign +
                 '&timestamp=' +
                 file.timestamp
-              item.url =
+            item.url =
               //  process.env.API +
                 that.apiUrl + '/api/Attach/ShowThumbImage?id=' +
                 file.id +
@@ -330,9 +332,9 @@ export default {
                 file.sign +
                 '&timestamp=' +
                 file.timestamp
-            } else {
-              // 非图片
-              item.orgurl =
+          } else {
+            // 非图片
+            item.orgurl =
               //  process.env.API +
                 that.apiUrl + '/api/Attach/Download?id=' +
                 file.id +
@@ -340,13 +342,17 @@ export default {
                 file.sign +
                 '&timestamp=' +
                 file.timestamp
-              item.url = item.orgurl
-            }
+            item.url = item.orgurl
+          }
+          if (that.uploadType === 1) {
+            that.singleFile = item
+          } else {
             that.fileList.push(item)
             that.showFileList.push(item)
-            that.handleId()
-          })
+          }
+          that.handleId()
         })
+      })
         .catch(err => {
           console.error(err)
           astec.showErrorToast(err.Message)
@@ -512,6 +518,7 @@ export default {
         param.onSuccess()
         // 显示
         if (that.uploadType === 1) {
+          that.singleFile = item
           that.imageUrl = item.orgurl
           that.dialogTitle = item.name
         }
@@ -522,7 +529,7 @@ export default {
       })
     },
     handleRemove: function (file) {
-      //  console.log(file);
+      console.log(file)
       var that = this
       astec
         .showConfirmDialog('警告', '确认要删除文件吗?', '', '')

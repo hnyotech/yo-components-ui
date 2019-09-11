@@ -54,6 +54,9 @@ export default {
   watch: {
     selValue: function (val) {
       this.selectedValue = val
+    },
+    EnumName: function (val) {
+      this.bindEnumlist()
     }
   },
   methods: {

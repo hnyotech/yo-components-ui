@@ -1,7 +1,7 @@
 <template>
 <el-col :span='proteyValue.ColPer' >
    <i class="el-icon-error dynaattr"  @click.stop="closez" v-if="isedit"></i>
- <el-form-item :label="proteyValue.Name" 
+ <el-form-item :label="proteyValue.Name" :prop="itemsname + '.' + datakey + '.property.AttributeValue'"
        :rules="[{ required: proteyValue.Required, message: '请选择' + proteyValue.Name ,trigger: 'submit'}]"  >
    <el-date-picker
       v-model="proteyValue.AttributeValue"

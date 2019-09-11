@@ -76,6 +76,25 @@ border-color: var(--danger);
 color: #FFF;
 }
 
+.el-button--text {
+color: var(--main-bg-color);
+background: #FFF;
+border-color: transparent;
+}
+.el-button--text:focus, .el-button--text:hover {
+background: transparent;
+border-color: transparent;
+color: var(--hover);
+}
+.el-button--text:active {
+outline: 0;
+}
+.el-button--text.is-active, .el-button--text:active {
+background: transparent;
+border-color: transparent;
+color: var(--active);
+}
+
 /* Enum */
 .el-select .el-input.is-focus .el-input__inner {
     border-color: var(--main-bg-color);
@@ -95,8 +114,11 @@ color: #FFF;
 }
 .my-city .el-form-item__content .el-select{
     float: left;
-    width: 114px;
-    margin-right: 14px;
+    width: 32%;
+    margin-right: 2%;
+}
+.my-city .el-form-item__content .el-select:nth-of-type(3){
+    margin-right: 0;
 }
 /* 单选框 */
 .el-radio-button__orig-radio:checked + .el-radio-button__inner {
@@ -140,4 +162,80 @@ color: #FFF;
 }
 .el-checkbox__input.is-checked + .el-checkbox__label {
     color:  var(--main-bg-color);
+}
+
+/* 文件上传组件样式 */
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+    .avatar-uploader .el-upload:hover {
+      border-color: #3B70C2;
+    }
+
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 148px;
+    height: 148px;
+    line-height: 148px !important;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 148px;
+    height: 148px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    /* display: block; */
+  }
+
+  .el-icon-document {
+    height: auto !important;
+  }
+
+  .el-upload-act:hover {
+    opacity: 0.7;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    border-radius: 6px;
+  }
+
+  .el-upload-act {
+    position: absolute;
+    width: 148px;
+    height: 148px;
+    line-height: 148px;
+    left: 0;
+    top: 0;
+    cursor: default;
+    text-align: center;
+    color: #fff;
+    opacity: 0;
+    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .el-upload-act-preview {
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  .el-upload-act-delete {
+    cursor: pointer;
+  }
+  /*.el-progress{
+  top: -136px;
+}*/
+
+/* textarea样式 */
+.el-textarea__inner:hover {
+    border-color: var(--hover);
+}
+.el-textarea__inner:focus {
+    border-color: var(--active);
 }

@@ -1,7 +1,7 @@
 <template>
 <el-col :span='proteyValue.ColPer' >
   <i class="el-icon-error dynaattr"  @click.stop="closez" v-if="isedit"></i>
- <el-form-item  >
+ <el-form-item  :prop="itemsname + '.' + datakey + '.property.AttributeValue'">
   
     <el-checkbox  v-model="proteyValue.AttributeValue" true-label="true" false-label="false" >{{proteyValue.Name}}</el-checkbox>
  </el-form-item>
