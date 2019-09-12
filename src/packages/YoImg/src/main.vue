@@ -1,10 +1,15 @@
 <template>
-  <div>
+  <div class="preImg">
     <!-- <img v-for="file in fileList" :src="file.url" :key="file.id"  :title="file.name" @click="handlePreview(file.orgurl,file.name)"> -->
     <!-- 文件 -->
     <div v-if="fileList2.length > 0 ? true : false">
       <div v-for="file in fileList2" :key="file.id" @click="handleDownLoad(file.orgurl)" class="text item">
         <i class="el-icon-download marginright"></i>{{file.name}}
+      </div>
+    </div>
+    <div v-if="fileList2.length === 0 && fileList.length === 0">
+      <div class="text item nofile">
+        <i class="el-icon-warning marginright"></i>无法加载文件
       </div>
     </div>
     <!-- 图片 -->
@@ -16,7 +21,11 @@
     <div class="flexpic">
       <div v-for="file in fileList" :key="file.id" style="margin-right:3px;" >
         <!-- <img    alt="暂无图片"> -->
-        <el-image :src="file.url" width="200px" height="123px" style="margin-bottom:10px;border:1px solid #ccc;" :title="file.name" @click="handlePreview(file.orgurl,file.name)"></el-image>
+        <el-image :src="file.url" width="200px" height="123px" style="margin-bottom:10px;" :title="file.name" @click="handlePreview(file.orgurl,file.name)">
+          <div slot="error" class="image-slot">
+            <div class="errorInfo">无法加载图片</div>
+          </div>
+        </el-image>
       </div>
     </div>
     <el-dialog :visible.sync="dialogVisible" :title="dialogTitle" top="20px">
@@ -208,13 +217,24 @@ export default {
   }
 
   .item {
+    display: inline-block;
     margin-bottom: 5px;
-    padding: 12px 0px 12px 5px;
+    padding: 12px 10px;
+    background-color: #eee;
   }
   .item:hover {
     cursor: pointer;
     background-color: #365FA4;
     color: #fff;
+  }
+  .nofile {
+    background-color: #eee;
+    color: #FE615A;
+  }
+  .nofile:hover {
+    cursor:not-allowed;
+    background-color: #eee;
+    color: #FE615A;
   }
 
   .clearfix:before,
@@ -234,5 +254,27 @@ export default {
   }
   .flexpic {
     display: flex;
+  }
+  .preImg .flexpic .image-slot {
+    width: 220px;
+    height: 180px;
+    /* background-color: #EEEEEE; */
+    background: #EEEEEE url("./noImg.png") no-repeat 50% 40%;
+    padding-top: 100px;
+    box-sizing: border-box
+  }
+  .errorInfo {
+    text-align: center;
+    padding-top: 40px;
+    color: #AAAAAA;
+    font-size: 14px;
+  }
+  .el-image img {
+    width: 220px;
+    height: 180px;
+  }
+  /* 文件上传组件样式 */
+.preImg >>> .avatar-uploader .el-upload {
+    border: none !important;
   }
 </style>

@@ -57,7 +57,7 @@ export default {
   left: 250px;
   right: 0px;
   z-index: 997;
-  /* box-shadow: 2px 2px 6px #f5f5f5; */
+  box-shadow: 1px 1px 3px #dedede;
 }
 </style>
 

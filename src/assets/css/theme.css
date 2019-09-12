@@ -166,7 +166,7 @@ color: var(--active);
 
 /* 文件上传组件样式 */
 .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
+    /* border: 1px dashed #d9d9d9; */
     border-radius: 6px;
     cursor: pointer;
     position: relative;
@@ -238,4 +238,8 @@ color: var(--active);
 }
 .el-textarea__inner:focus {
     border-color: var(--active);
+}
+/* 解决字体加粗 */
+.el-checkbox, .el-checkbox-button__inner, .el-radio {
+    font-weight: 400;
 }
