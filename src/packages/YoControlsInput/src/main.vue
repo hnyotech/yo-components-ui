@@ -7,7 +7,7 @@
        ,{validator:validateRegex2,trigger:'blur'}]"
        >
  
-  <el-input class="user-input" :type="proteyValue.AttributeType==1?'textarea':'text'" 
+  <el-input class="user-input" :type="proteyValue.AttributeType===1?'textarea':(proteyValue.AttributeType===0?'text':'number')" 
   :placeholder="'请输入' + proteyValue.Name" :rows="proteyValue.InputRowCount"  v-model="proteyValue.AttributeValue" ></el-input>
  </el-form-item>
 </el-col>
