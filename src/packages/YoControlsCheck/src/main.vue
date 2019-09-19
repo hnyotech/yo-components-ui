@@ -5,7 +5,7 @@
       :label="proteyValue.Name"
       :prop="itemsname + '.' + datakey + '.property.AttributeValue'"
     >
-      <el-radio-group v-model="proteyValue.AttributeValue" v-if="proteyValue.AttributeType===5">
+      <el-radio-group v-model="proteyValue.AttributeValue" v-if="proteyValue.AttributeType===6">
         <el-radio
           v-for="item in lstoptions"
           :key="item.value"
@@ -61,6 +61,13 @@ export default {
       dk: this.datakey,
       newproteyValue: this.proteyValue
     };
+  },
+  created() {
+    if(this.proteyValue.AttributeType===6 && this.proteyValue.AttributeValue === null){
+      this.proteyValue.AttributeValue = ''
+    } else {
+      this.proteyValue.AttributeValue = []
+    }
   },
   computed: {
     isedit() {

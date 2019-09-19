@@ -175,7 +175,7 @@ export default {
       this.search()
       this.$emit('search')
     },
-    reset () {
+    reset (param, val) {
       for (var key in this.realData.params) {
         if (key === 'PageIndex') {
           this.realData.params[key] = 1
@@ -185,7 +185,11 @@ export default {
           this.realData.params[key] = ''
         };
       };
+      if(param){
+        this.realData.params[param] = val
+      }
       this.search()
+      this.$emit('reset')
     },
     clearData (data) {
       realData.params.data = null
@@ -238,15 +242,15 @@ export default {
       // })
     },
     handleCollapse () {
-      for (var key in this.realData.params) {
-        if (key === 'PageIndex') {
-          this.realData.params[key] = 1
-        } else if (key === 'PageSize') {
-          this.realData.params[key] = 10
-        } else {
-          this.realData.params[key] = ''
-        };
-      };
+      // for (var key in this.realData.params) {
+      //   if (key === 'PageIndex') {
+      //     this.realData.params[key] = 1
+      //   } else if (key === 'PageSize') {
+      //     this.realData.params[key] = 10
+      //   } else {
+      //     this.realData.params[key] = ''
+      //   };
+      // };
       this.defaultShowHidden = !this.defaultShowHidden
       this.realData.params.YoGridCollapse = this.defaultShowHidden
     },
@@ -260,6 +264,17 @@ export default {
     // },
 
     handleQuickSearch () {
+      let val = realData.params[quickSearch]
+      for (var key in this.realData.params) {
+        if (key === 'PageIndex') {
+          this.realData.params[key] = 1
+        } else if (key === 'PageSize') {
+          this.realData.params[key] = 10
+        } else {
+          this.realData.params[key] = ''
+        };
+      };
+      this.realData.params[quickSearch] = val
       this.search()
     },
 
