@@ -63,11 +63,14 @@ export default {
     };
   },
   created() {
-    if(this.proteyValue.AttributeType===6 && this.proteyValue.AttributeValue === null){
-      this.proteyValue.AttributeValue = ''
-    } else {
-      this.proteyValue.AttributeValue = []
+    if(this.isNullOrEmpty(this.proteyValue.AttributeValue)){
+      if(this.proteyValue.AttributeType===6  ){
+        this.proteyValue.AttributeValue = ''
+      } else {
+        this.proteyValue.AttributeValue = []
+      }
     }
+   
   },
   computed: {
     isedit() {
@@ -93,6 +96,11 @@ export default {
   },
 
   methods: {
+    isNullOrEmpty(o){
+      if( o === undefined || o === null) return true
+      if(typeof(o) == 'string' && o.trim() === "") return true
+      return false
+    },
     closez() {
       this.$emit("RemoveItem", this.datakey);
     }
