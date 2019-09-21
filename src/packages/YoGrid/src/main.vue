@@ -151,6 +151,17 @@ export default {
       type: String,
       default: '',
       required: false
+    },
+    isReserveParam: {
+      type: Object,
+      default: function () {
+        return {
+          is: false,
+          Name: '',
+          Value: ''
+        }
+      },
+      required: false
     }
   },
   computed: {
@@ -175,7 +186,7 @@ export default {
       this.search()
       this.$emit('search')
     },
-    reset (param, val) {
+    reset () {
       for (var key in this.realData.params) {
         if (key === 'PageIndex') {
           this.realData.params[key] = 1
@@ -185,11 +196,10 @@ export default {
           this.realData.params[key] = ''
         };
       };
-      if(param){
-        this.realData.params[param] = val
+      if(this.isReserveParam.is){
+        this.realData.params[this.isReserveParam.Name] = this.isReserveParam.Value
       }
       this.search()
-      this.$emit('reset')
     },
     clearData (data) {
       realData.params.data = null
@@ -264,7 +274,7 @@ export default {
     // },
 
     handleQuickSearch () {
-      let val = realData.params[quickSearch]
+      let val = this.realData.params[this.quickSearch]
       for (var key in this.realData.params) {
         if (key === 'PageIndex') {
           this.realData.params[key] = 1
@@ -274,7 +284,10 @@ export default {
           this.realData.params[key] = ''
         };
       };
-      this.realData.params[quickSearch] = val
+      this.realData.params[this.quickSearch] = val
+      if(this.isReserveParam.is){ // 解决公告审核重置和快速搜索给公告状态赋值的问题。
+        this.realData.params[this.isReserveParam.Name] = this.isReserveParam.Value
+      }
       this.search()
     },
 
