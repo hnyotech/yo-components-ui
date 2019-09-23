@@ -116,11 +116,12 @@ export default {
       type: Boolean,
       required: false,
       default: false
-    },
-    apiUrl: {
-      type: String,
-      required: true
     }
+    // ,
+    // apiUrl: {
+    //   type: String,
+    //   required: true
+    // }
   },
   data: function () {
     return {
@@ -135,8 +136,17 @@ export default {
       dialogTitle: '', // 预览标题
       showFileList: [], // 需要提交的文件列表
       delInd: '', // 待删除的文件索引
-      singleFile: '' // 单个文件
+      singleFile: '', // 单个文件
+      apiUrl: process.env.AttachAPI
     }
+  },
+  beforeCreate() {
+    if(process.env.AttachAPI){
+      this.apiUrl = process.env.AttachAPI
+    }else {
+      this.apiUrl = process.env.API
+    }
+    this.action = this.apiUrl + '/api/Attach/SaveAttach'
   },
   created: function () {
     // console.log("created:" + this.ids);
