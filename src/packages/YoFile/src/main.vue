@@ -85,7 +85,7 @@ export default {
     fileSize: {
       type: Number,
       required: false,
-      default: 4194304
+      default: 104857600
     },
     // 文件后缀
     fileExtension: {
@@ -306,7 +306,7 @@ export default {
 
       var param = {}
       param['ids'] = newIds
-      that.$http.post('api/Attach/GetAttachs', param).then(resp => {
+      that.$http.post(that.apiUrl + '/api/Attach/GetAttachs', param).then(resp => {
         resp.forEach(function (file) {
           var item = {}
           item.id = file.id
@@ -396,7 +396,7 @@ export default {
       // 从服务器端删除
       that.$http
         .post(
-        //  process.env.API +
+         that.apiUrl +
           '/api/Attach/Delete?id=' +
             delFile.id +
             '&sign=' +
