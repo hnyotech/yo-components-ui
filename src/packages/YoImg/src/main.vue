@@ -107,7 +107,7 @@ export default {
       var param = {}
       param['ids'] = newIds
       that.$http
-        .post('/api/Attach/GetAttachs', param)
+        .post(that.apiUrl + '/api/Attach/GetAttachs', param)
         .then(resp => {
           resp.forEach(function (file) {
             var item = {}

@@ -6,7 +6,7 @@
       :prop="itemsname + '.' + datakey + '.property.AttributeValue'"
       :rules="[{ required: proteyValue.Required, message: '请选择' + proteyValue.Name ,trigger: 'submit'}]"
     >
-      <el-date-picker
+      <el-date-picker :format="newproteyValue.AttributeType === 3 ? 'yyyy-MM-dd HH:mm:ss':'yyyy-MM-dd'" :value-format="newproteyValue.AttributeType === 3 ? 'yyyy-MM-dd HH:mm:ss':'yyyy-MM-dd'"
         v-model="proteyValue.AttributeValue"
         align="left"
         style="width:100%;"

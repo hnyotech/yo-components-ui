@@ -519,7 +519,7 @@ export default {
         // 显示
         if (that.uploadType === 1) {
           that.singleFile = item
-          that.imageUrl = item.orgurl
+          that.imageUrl = item.url
           that.dialogTitle = item.name
         }
       }).catch(() => {
