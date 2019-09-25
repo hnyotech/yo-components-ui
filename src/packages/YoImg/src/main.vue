@@ -9,7 +9,7 @@
     </div>
     <div v-if="fileList2.length === 0 && fileList.length === 0">
       <div class="text item nofile">
-        <i class="el-icon-warning marginright"></i>无法加载文件
+        <i class="el-icon-warning marginright"></i>暂无文件
       </div>
     </div>
     <!-- 图片 -->
