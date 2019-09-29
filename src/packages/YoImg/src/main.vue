@@ -50,6 +50,11 @@ export default {
     apiUrl: {
       type: String,
       required: true
+    },
+    isPreviw: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   data: function () {
@@ -168,7 +173,8 @@ export default {
         'image/gif',
         'image/tiff',
         'image/x-icon',
-        'application/x-bmp'
+        'application/x-bmp',
+        'image/webp'
       ]
       if (ctypeArr.indexOf(filetype) >= 0) {
         return true
@@ -178,6 +184,9 @@ export default {
     },
 
     handlePreview: function (url, name) {
+      if(!this.isPreviw){
+        return
+      }
       console.log('handlePreview:' + url)
       this.dialogImageUrl = url
       this.dialogVisible = true
@@ -202,6 +211,9 @@ export default {
     },
     // 下载
     handleDownLoad: function (url) {
+      if(!this.isPreviw){
+        return
+      }
       if (url.length > 0) {
         url = url.toLowerCase().replace('showimage', 'download')
         this.$refs.download_a.href = url
