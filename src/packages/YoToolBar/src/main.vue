@@ -20,13 +20,27 @@ export default {
       type: Boolean,
       default: false,
       required: false
+    },
+    specifiedUrl: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    params: {
+      type: Object,
+      required: false
     }
   },
   methods: {
     handleBackClick() {
         console.log("返回");
       if (this.showAutoback) {
+        if(this.specifiedUrl === ''){
+
         this.$router.back();
+        }else {
+          this.$router.push({name:this.specifiedUrl,query:params})
+        }
       } else {
         this.$emit("goback");
       }
