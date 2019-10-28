@@ -39,7 +39,7 @@ export default {
 
         this.$router.back();
         }else {
-          this.$router.push({name:this.specifiedUrl,query:params})
+          this.$router.push({name:this.specifiedUrl,query:this.params})
         }
       } else {
         this.$emit("goback");

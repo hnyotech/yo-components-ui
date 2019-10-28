@@ -1,5 +1,5 @@
 <template>
-  <el-button :type="type" :icon="icon" :size="size" :disabled="disabledComputed" @click="clickHandler">
+  <el-button :type="type" :icon="icon" :size="size" :disabled="disabledComputed" :loading="loading" @click="clickHandler">
        <slot></slot>
   </el-button>
 </template>
@@ -18,6 +18,10 @@ export default {
       type: String,
     },
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    loading: {
       type: Boolean,
       default: false
     },
