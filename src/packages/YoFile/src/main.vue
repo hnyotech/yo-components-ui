@@ -408,7 +408,13 @@ export default {
         .then(resp => {
           console.log('remove file ' + delFile.id)
           // 移除列表
+          if(that.uploadType === 1){
+              that.imageUrl = ''
+              that.singleFile = {}
+          }else {
+
           that.showFileList = that.showFileList.filter(t => t.id !== delFile.id)
+          }
           that.handleId()
         })
         .catch(err => {
@@ -532,13 +538,12 @@ export default {
     handleRemove: function (file) {
       console.log(file)
       var that = this
-      astec
-        .showConfirmDialog('警告', '确认要删除文件吗?', '', '')
-        .then(function () {
-          //  console.log("handleRemove");
           that.onRemove(file, null)
-          that.imageUrl = ''
-        })
+      // astec
+      //   .showConfirmDialog('警告', '确认要删除文件吗?', '', '')
+      //   .then(function () {
+      //     //  console.log("handleRemove");
+      //   })
     },
     handlePreview: function (url, name) {
       console.log('handlePreview:' + url)
