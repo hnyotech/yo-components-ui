@@ -378,7 +378,6 @@ export default {
     onPreview: function (file) {
       // 点击文件列表中已上传的文件时的钩子
       console.log('onPreview.')
-      console.log(file)
       if (this.isImgType(file.type)) {
         this.handlePreview(file.url, file.name)
       } else {
@@ -436,12 +435,12 @@ export default {
         for (let i = 0; fileList.length; i++) {
           if (file.name === fileList[i].name) {
             this.delInd = i
-            return
+            break
           };
         };
       }
 
-      return astec.showConfirmDialog('警告', '确认要删除文件吗?', '', '')
+      // return astec.showConfirmDialog('警告', '确认要删除文件吗?', '', '')
     },
     onExceed: function (files, fileList) {
       // 文件超出个数限制时的钩子
@@ -517,18 +516,20 @@ export default {
               response.timestamp
           item.url = item.orgurl
         }
-        that.showFileList.push(item)
-        that.handleId()
+
+        if (that.uploadType === 1) {
+        // 显示
+            that.singleFile = item
+            that.imageUrl = item.url
+          that.dialogTitle = item.name
+          } else {
+            that.showFileList.push(item)
+          }
+          that.handleId()
         that.$emit('callback', that.AllfileList) // 触发回调
         // 上传成功 调用onSuccess方法，否则没有完成图标
         // 处理自己的逻辑
         param.onSuccess()
-        // 显示
-        if (that.uploadType === 1) {
-          that.singleFile = item
-          that.imageUrl = item.url
-          that.dialogTitle = item.name
-        }
       }).catch(() => {
         // 上传失败 调用onError方法
         // 处理自己的逻辑
@@ -536,13 +537,12 @@ export default {
       })
     },
     handleRemove: function (file) {
-      console.log(file)
       var that = this
           that.onRemove(file, null)
       // astec
       //   .showConfirmDialog('警告', '确认要删除文件吗?', '', '')
       //   .then(function () {
-      //     //  console.log("handleRemove");
+      //     that.onRemove(file, null)
       //   })
     },
     handlePreview: function (url, name) {
