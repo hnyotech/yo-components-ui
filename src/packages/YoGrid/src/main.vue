@@ -4,7 +4,7 @@
             <YoToolBar v-if="$slots.toolbar">
                 <slot name="toolbar"></slot>
             </YoToolBar>
-            <YoButton type="primary" size="medium" @click="handleCollapse"
+            <YoButton type="primary" size="medium" @click="handleCollapse" v-if="gridData.formLabel.length > 1"
               style="float: right;margin-left: 20px;margin-top: 6px;">
               <i class="el-icon-arrow-down" style="font-size:10px;"></i>
               高级搜索
@@ -130,10 +130,17 @@ export default {
       default: false,
       required: false
     }, // 是否显示tabs
+    IsNotNeedSaveParams: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
     gridData: {
       type: Object,
       default: function () {
-        return {}
+        return {
+          formLabel: []
+        }
       },
       required: false
     },
@@ -244,7 +251,9 @@ export default {
           that.TotalCount = res.TotalCount
           that.requireData = res
           // sessionStorage.setItem('paramsList',JSON.stringify(paramsList))
-          that.$store.commit('UPDATE_PARAMSlIST', paramsList)
+          if(!that.IsNotNeedSaveParams){
+            that.$store.commit('UPDATE_PARAMSlIST', paramsList)
+          }
           // resolve(res);
           that.$emit('update:requireData', res)
           this.loading = false
