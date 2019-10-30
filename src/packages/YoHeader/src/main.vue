@@ -53,7 +53,7 @@ export default {
 <style scope>
 .my-header-float {
   position: fixed;
-  top: 60px;
+  top: 70px;
   left: 250px;
   right: 0px;
   z-index: 997;

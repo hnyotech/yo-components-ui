@@ -346,6 +346,7 @@ export default {
           }
           if (that.uploadType === 1) {
             that.singleFile = item
+            that.imageUrl = item.url
           } else {
             that.fileList.push(item)
             that.showFileList.push(item)

@@ -157,8 +157,7 @@ export default {
       default: function () {
         return {
           is: false,
-          Name: '',
-          Value: ''
+          Params: []
         }
       },
       required: false
@@ -197,7 +196,9 @@ export default {
         };
       };
       if(this.isReserveParam.is){
-        this.realData.params[this.isReserveParam.Name] = this.isReserveParam.Value
+        this.isReserveParam.Params.forEach(element => {
+          this.realData.params[element.Name] = element.Value
+        })
       }
       this.search()
     },
@@ -286,7 +287,9 @@ export default {
       };
       this.realData.params[this.quickSearch] = val
       if(this.isReserveParam.is){ // 解决公告审核重置和快速搜索给公告状态赋值的问题。
-        this.realData.params[this.isReserveParam.Name] = this.isReserveParam.Value
+        this.isReserveParam.Params.forEach(element => {
+          this.realData.params[element.Name] = element.Value
+        })
       }
       this.search()
     },
