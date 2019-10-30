@@ -554,13 +554,17 @@ export default {
       var that = this
       // 回调IDs用
       var newIds = ''
-      that.AllfileList.forEach(function (file) {
+      if(that.uploadType === 1){
+        newIds = that.singleFile.id
+      }else {
+        that.AllfileList.forEach(function (file) {
         if (file.id) {
           newIds += file.id + ','
         }
       })
       if (newIds.length > 0) {
         newIds = newIds.substring(0, newIds.length - 1)
+      }
       }
       that.$emit('update:ids', newIds) // 双向绑定ids
       that.$emit('update:id', newIds)
