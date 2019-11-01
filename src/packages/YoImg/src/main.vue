@@ -28,7 +28,7 @@
         </el-image>
       </div>
     </div>
-    <el-dialog :visible.sync="dialogVisible" :title="dialogTitle" top="20px">
+    <el-dialog :visible.sync="dialogVisible" :title="dialogTitle" top="20px" append-to-body>
       <!-- 预览弹出 -->
       <img width="100%" :src="dialogImageUrl" alt>
       <span slot="footer" class="dialog-footer">

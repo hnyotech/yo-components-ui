@@ -228,7 +228,8 @@ export default {
           url: that.realData.api,
           data: that.realData.params
         }).then(res => {
-          var key = that.$route.name
+          if(!that.IsNotNeedSaveParams){
+            var key = that.$route.name
           // console.log(key)
           var obj = {}
           obj[key] = that.realData.params
@@ -246,6 +247,7 @@ export default {
               paramsList.push(obj)
             }
           };
+          }
           that.PageIndex = that.realData.params.PageIndex
           that.PageSize = that.realData.params.PageSize
           that.TotalCount = res.TotalCount
