@@ -19,7 +19,7 @@
                :action="action"
                :multiple="false"
                :limit="FileLimit"
-               :FileAccept="FileAccept"
+               :accept="FileAccept"
                :auto-upload="autoupload"
                :show-file-list="true"
                :list-type="ListType"
@@ -426,6 +426,9 @@ export default {
     beforeUpload: function (file) {
       // 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
       console.log('beforeUpload..')
+      if(this.fileExtension.length > 0){
+        return file.type === 'application/vnd.ms-excel'
+      }
     },
     beforeRemove: function (file, fileList) {
       // 删除文件之前的钩子，参数为上传的文件和文件列表，若返回 false 或者返回 Promise 且被 reject，则停止上传。
