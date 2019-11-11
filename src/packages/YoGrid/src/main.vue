@@ -293,15 +293,24 @@ export default {
         } else if (key === 'PageSize') {
           this.realData.params[key] = 10
         } else {
-          this.realData.params[key] = ''
+          if(this.isReserveParam.is){ // 解决公告审核重置和快速搜索给公告状态赋值的问题。
+            let keyName = this.isReserveParam.Params.find(item => item.Name === key)
+            if(keyName){
+              keyName = null
+            } else {
+              this.realData.params[key] = ''
+            }
+          }else{
+            this.realData.params[key] = ''
+          }
         };
       };
       this.realData.params[this.quickSearch] = val
-      if(this.isReserveParam.is){ // 解决公告审核重置和快速搜索给公告状态赋值的问题。
-        this.isReserveParam.Params.forEach(element => {
-          this.realData.params[element.Name] = element.Value
-        })
-      }
+      // if(this.isReserveParam.is){ // 解决公告审核重置和快速搜索给公告状态赋值的问题。
+      //   this.isReserveParam.Params.forEach(element => {
+      //     this.realData.params[element.Name] = element.Value
+      //   })
+      // }
       this.search()
     },
 
