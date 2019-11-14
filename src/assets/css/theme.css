@@ -7,17 +7,17 @@
 #yoMenu .el-menu{
     background-color: var(--main-bg-color);
 }
-.el-submenu__title,.el-menu-item {
+#yoMenu .el-submenu__title,.el-menu-item {
     color: #ffffff;
 }
-.el-submenu .el-menu-item{
+#yoMenu .el-submenu .el-menu-item{
     background-color: #253044;
 }
-.el-submenu__title:hover,.el-menu-item:hover {
+#yoMenu .el-submenu__title:hover,.el-menu-item:hover {
     background-color: var(--hover);
     color: #ffffff;
 }
-.el-menu-item.is-active{
+#yoMenu .el-menu-item.is-active{
     background-color: var(--active);
     color: #ffffff;
 }
