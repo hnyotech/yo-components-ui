@@ -28,7 +28,7 @@
         </el-image>
       </div>
     </div>
-    <el-dialog :visible.sync="dialogVisible" :title="dialogTitle" top="20px" append-to-body>
+    <el-dialog :visible.sync="dialogVisible" :title="isNeedialogTitle ? isNeedialogTitle : dialogTitle" top="20px" append-to-body>
       <!-- 预览弹出 -->
       <img width="100%" :src="dialogImageUrl" alt>
       <span slot="footer" class="dialog-footer">
@@ -42,6 +42,11 @@
 export default {
   name: 'YoImg',
   props: {
+    isNeedialogTitle: {
+      type: String,
+      required: false,
+      default: null
+    },
     ids: {
       type: String,
       required: false,

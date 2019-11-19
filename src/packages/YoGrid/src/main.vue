@@ -31,8 +31,8 @@
                 </el-row>
             </el-form>
             <div style="padding:0 20px;text-align:right;">
-              <YoButton icon="el-icon-setting" size="medium" class="my-query__reset" @click="reset()">重置</YoButton>
-              <YoButton type="primary" size="medium" icon="el-icon-search" @click="searchTableData()">搜索</YoButton>
+              <YoButton icon="el-icon-setting" size="medium" class="my-query__reset" :loading="reLoading" @click="reset()">重置</YoButton>
+              <YoButton type="primary" size="medium" icon="el-icon-search" :loading="searchLoading" @click="searchTableData()">搜索</YoButton>
             </div>
         </div>
         <div class="my-grid__body">
@@ -64,6 +64,8 @@ export default {
   },
   data () {
     return {
+      reLoading:false,
+      searchLoading:false,
       quickSearch: this.quickSearchVal,
 
       // showHidden: false,
@@ -189,10 +191,12 @@ export default {
   methods: {
     searchTableData () {
       // console.log(this.realData);
+      this.searchLoading = true
       this.search()
       this.$emit('search')
     },
     reset () {
+      this.reLoading = true
       for (var key in this.realData.params) {
         if (key === 'PageIndex') {
           this.realData.params[key] = 1
@@ -228,6 +232,8 @@ export default {
           url: that.realData.api,
           data: that.realData.params
         }).then(res => {
+          this.searchLoading = false
+          this.reLoading = false
           if(!that.IsNotNeedSaveParams){
             var key = that.$route.name
           // console.log(key)
@@ -259,6 +265,9 @@ export default {
           // resolve(res);
           that.$emit('update:requireData', res)
           this.loading = false
+        }).catch(() => {
+          this.searchLoading = false
+          this.reLoading = false
         })
       }
       // })
