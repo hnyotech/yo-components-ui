@@ -1,6 +1,6 @@
 <template>
 <el-form-item :label="label" :prop="prop">
-    <el-select v-model="selectedValue" v-if="isDrop" clearable :disabled="disabled" :placeholder="'请选择' + label" @change="handleChange" @visible-change="visibleChange" style="width:100%">
+    <el-select v-model="selectedValue" v-if="isDrop" :clearable="isClear" :disabled="disabled" :placeholder="'请选择' + label" @change="handleChange" @visible-change="visibleChange" style="width:100%">
         <el-option v-for="item in options" :key="item.Value" :label="item.Description" :value="item.Value">
         </el-option>
     </el-select>
@@ -14,6 +14,11 @@
 export default {
   name: 'YoEnum',
   props: {
+    isClear: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
     selValue: {
       type: [String, Number],
       required: false,
