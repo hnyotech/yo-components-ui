@@ -427,7 +427,7 @@ export default {
       // 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
       console.log('beforeUpload..')
       if(this.fileSize>0&&file.size>this.fileSize){
-         this.$message.error('上传附件大小不能超过'+ Math.round(this.fileSize / 1024 / 1024, 2) + 'MB!');
+         astec.showErrorToast('上传附件大小不能超过'+ Math.round(this.fileSize / 1024 / 1024, 2) + 'MB!')
         return false;
       }      
       if(this.fileExtension.length > 0){
