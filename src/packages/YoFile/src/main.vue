@@ -81,11 +81,11 @@ export default {
       required: false,
       default: 0
     },
-    // 文件大小B, 0不限
+    // 文件大小B, 0不限 默认10M(n/1024/1024)
     fileSize: {
       type: Number,
       required: false,
-      default: 104857600
+      default: 10485760
     },
     // 文件后缀
     fileExtension: {
@@ -125,7 +125,7 @@ export default {
   data: function () {
     return {
       // action:process.env.API + "/api/Attach/SaveAttach", //上传附件接口地址
-      action: this.apiUrl + '/api/Attach/SaveAttach', // 上传附件接口地址
+      action:this.apiUrl + '/api/Attach/SaveAttach', // 上传附件接口地址
       autoupload: true, // 自动上传
       imageUrl: '', // uploadType=1时候 显示图片  //"http://wx3.sinaimg.cn/large/006nLajtly1fpi9ikmj1kj30dw0dwwfq.jpg"
       fileList: [], // 附件列表(本次上传的)
@@ -426,6 +426,10 @@ export default {
     beforeUpload: function (file) {
       // 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
       console.log('beforeUpload..')
+      if(this.fileSize>0&&file.size>this.fileSize){
+         this.$message.error('上传附件大小不能超过'+ Math.round(this.fileSize / 1024 / 1024, 2) + 'MB!');
+        return false;
+      }      
       if(this.fileExtension.length > 0){
         return file.type === 'application/vnd.ms-excel'
       }

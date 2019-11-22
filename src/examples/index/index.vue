@@ -10,7 +10,8 @@
         
         <yo-menu :width="250"></yo-menu>
         <yo-detail-col :rowData="rowData" :label_width='100'></yo-detail-col>
-        <yo-file :uploadType="1"></yo-file>
+        <yo-file :uploadType="1" apiUrl="/"></yo-file>
+        <yo-file :uploadType="3" apiUrl="/"></yo-file>
         <yo-img></yo-img>
         <yo-input></yo-input>
         
