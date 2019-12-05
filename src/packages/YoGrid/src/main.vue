@@ -218,7 +218,7 @@ export default {
     selectSalerMember (data) {
       if (data) {
         // Formindex
-        this.realData.params[this.realData.formLabel[Formindex].value] = data.Name
+        this.realData.params[this.realData.formLabel[this.Formindex].value] = data.Name
       } else {
         console.error('selectSalerMember is null')
       }
