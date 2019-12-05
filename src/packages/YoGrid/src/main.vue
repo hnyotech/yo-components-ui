@@ -18,13 +18,22 @@
         <div v-show="!defaultShowHidden" class="my-grid__moresearch">
             <el-form :model="realData.params" class="detail-form" ref="form" label-width="100px" size="medium" label-position="left">
                 <el-row :gutter="40">
-                    <el-col  v-for="item in realData.formLabel" :key="item.name" :span="item.span">
+                    <el-col  v-for="(item,index) in realData.formLabel" :key="item.name" :span="item.span">
                         <el-form-item :label="item.name + ':'" :prop="item.value">
-                            <el-input v-if="item.type == 'input'" class="user-input" type="text" :placeholder="'请输入' + item.name" v-model="realData.params[item.value]" clearable></el-input>
+                            <el-input v-if="item.type == 'input'" class="user-input" type="text" :placeholder="'请输入' + item.name" v-model.trim="realData.params[item.value]" clearable></el-input>
                             <el-date-picker v-if="item.type=='date'" :format="item.format" :value-format="item.format" type="date" placeholder="请选择时间" size="large" v-model="realData.params[item.value]" style="width:100%" clearable></el-date-picker>
                             <el-select v-if="item.type =='select'"  :placeholder="'请选择' + item.name" :disabled="item.disabled" v-model="realData.params[item.value]" clearable style="width:100%" @clear="clearData(item.value)">
                               <el-option v-for="li in item.options" :key="li.Value" :label="li.Description" :value="li.Value"></el-option>
                             </el-select>
+                            <el-input
+                            v-if="item.type =='inputselect'"
+                  type="text"
+                  clearable
+                  :placeholder="'请输入' + item.name"
+                  v-model.trim="realData.params[item.value]"
+                  maxlength="300"
+                  @focus="chooseSaler(index)"
+              ></el-input>
                         </el-form-item>
                     </el-col>
                     <slot name="inputSel"></slot>
@@ -52,18 +61,30 @@
             <el-pagination v-if="showPagination" @size-change="handleSizeChange" @current-change="handleIndexChange" :current-page="PageIndex" :page-size="PageSize" :page-sizes="pageSizes" :layout="layout" :total="TotalCount">
             </el-pagination>
         </div>
+    <select-saler
+        :visible.sync="selectSalerDialog"
+        ref="participantdialog"
+        :IsSaler="true"
+        title="选择转让方"
+        :MultipleSelection="false"
+        @OutterSelected="selectSalerMember"
+    ></select-saler>
     </div>
 </template>
 
 <script>
 import YoButton from '../../YoButton/src/main.vue'
+import SelectSaler from './SelSaler.vue'
 export default {
   name: 'YoGrid',
   components: {
-    YoButton
+    YoButton,
+    SelectSaler
   },
   data () {
     return {
+      Formindex: null,
+      selectSalerDialog: false, // 选择转让方
       reLoading:false,
       searchLoading:false,
       quickSearch: this.quickSearchVal,
@@ -189,6 +210,19 @@ export default {
   },
 
   methods: {
+    chooseSaler (index) {
+      this.selectSalerDialog = true
+      this.Formindex = index
+    },
+    // 显示选择的转让方
+    selectSalerMember (data) {
+      if (data) {
+        // Formindex
+        this.realData.params[this.realData.formLabel[Formindex].value] = data.Name
+      } else {
+        console.error('selectSalerMember is null')
+      }
+    },
     searchTableData () {
       // console.log(this.realData);
       this.searchLoading = true
