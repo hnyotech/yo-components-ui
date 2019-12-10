@@ -532,6 +532,7 @@ export default {
           that.imageUrl = item.url
           that.dialogTitle = item.name
         } else {
+          that.fileList.push(item)
           that.showFileList.push(item)
         }
         that.handleId()

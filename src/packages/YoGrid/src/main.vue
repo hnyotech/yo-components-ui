@@ -21,19 +21,20 @@
                     <el-col  v-for="(item,index) in realData.formLabel" :key="item.name" :span="item.span">
                         <el-form-item :label="item.name + ':'" :prop="item.value">
                             <el-input v-if="item.type == 'input'" class="user-input" type="text" :placeholder="'请输入' + item.name" v-model.trim="realData.params[item.value]" clearable></el-input>
-                            <el-date-picker v-if="item.type=='date'" :format="item.format" :value-format="item.format" type="date" placeholder="请选择时间" size="large" v-model="realData.params[item.value]" style="width:100%" clearable></el-date-picker>
+                            <el-date-picker v-if="item.type=='date'" :format="item.format" :value-format="item.format" type="date" placeholder="请选择日期" v-model="realData.params[item.value]" style="width:100%" clearable></el-date-picker>
+                            <el-date-picker v-if="item.type=='datetime'" :format="item.format" :value-format="item.format" type="datetime" placeholder="请选择时间" v-model="realData.params[item.value]" style="width:100%" clearable></el-date-picker>
                             <el-select v-if="item.type =='select'"  :placeholder="'请选择' + item.name" :disabled="item.disabled" v-model="realData.params[item.value]" clearable style="width:100%" @clear="clearData(item.value)">
                               <el-option v-for="li in item.options" :key="li.Value" :label="li.Description" :value="li.Value"></el-option>
                             </el-select>
                             <el-input
-                            v-if="item.type =='inputselect'"
-                  type="text"
-                  clearable
-                  :placeholder="'请输入' + item.name"
-                  v-model.trim="realData.params[item.value]"
-                  maxlength="300"
-                  @focus="chooseSaler(index)"
-              ></el-input>
+                                v-if="item.type =='inputselect'"
+                                type="text"
+                                clearable
+                                :placeholder="'请输入' + item.name"
+                                v-model.trim="realData.params[item.value]"
+                                maxlength="300"
+                                @focus="chooseSaler(index)"
+                            ></el-input>
                         </el-form-item>
                     </el-col>
                     <slot name="inputSel"></slot>
