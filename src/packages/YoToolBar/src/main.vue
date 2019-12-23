@@ -33,7 +33,6 @@ export default {
   },
   methods: {
     handleBackClick() {
-        console.log("返回");
       if (this.showAutoback) {
         if(this.specifiedUrl === ''){
 

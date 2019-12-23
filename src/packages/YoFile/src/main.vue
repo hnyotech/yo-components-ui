@@ -85,7 +85,7 @@ export default {
     fileSize: {
       type: Number,
       required: false,
-      default: 10485760
+      default: 104857600
     },
     // 文件后缀
     fileExtension: {
@@ -432,8 +432,8 @@ export default {
         this.$message.error('上传附件大小不能超过' + Math.round(this.fileSize / 1024 / 1024, 2) + 'MB!')
         return false
       }
-      if (this.fileExtension.length > 0) {
-        return file.type === 'application/vnd.ms-excel'
+      if (this.fileExtension === '.xls,.xlsx,.xlsm,.xltx,.xltm,.xlsb,.xlam') {
+        return file.type === 'application/vnd.ms-excel' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.type === 'application/vnd.ms-excel.sheet.macroEnabled.12' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' || file.type === 'application/vnd.ms-excel.sheet.binary.macroEnabled.12' || file.type === 'application/vnd.ms-excel.addin.macroEnabled.12' || file.type === 'application/vnd.ms-excel.template.macroEnabled.12'
       }
     },
     beforeRemove: function (file, fileList) {

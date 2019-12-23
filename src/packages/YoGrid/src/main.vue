@@ -37,48 +37,51 @@
         :model="realData.params"
         class="detail-form"
         ref="form"
-        label-width="100px"
+        :label-width="labelWidth"
         size="medium"
         label-position="left"
       >
         <el-row :gutter="40">
           <el-col v-if="realData.IsNeedBusiness" :span="8">
-            <el-select
-              placeholder="请选择业务类型"
-              v-model="realData.params.BusinessTypeParentId"
-              clearable
-              style="width:100%"
-              @clear="clearData('BusinessTypeParentId')"
-              @change="selparentBusi"
-            >
-              <el-option
-                v-for="item in item.BusinessTypeParentIds"
-                :key="item.BusinessTypeId"
-                :label="item.BusinessTypeName"
-                :value="item.BusinessTypeId"
-              ></el-option>
-            </el-select>
+            <el-form-item label="业务类型：" prop="BusinessTypeParentId">
+              <el-select
+                placeholder="请选择业务类型"
+                v-model="realData.params.BusinessTypeParentId"
+                clearable
+                style="width:100%"
+                @clear="clearData('BusinessTypeParentId')"
+                @change="selparentBusi"
+              >
+                <el-option
+                  v-for="item in BusinessTypeParentIds"
+                  :key="item.BusinessTypeId"
+                  :label="item.BusinessTypeName"
+                  :value="item.BusinessTypeId"
+                ></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
           <el-col v-if="realData.IsNeedBusiness" :span="8">
-            <el-select
-              placeholder="请选择标的类型"
-              v-model="realData.params.BusinessTypeId"
-              clearable
-              style="width:100%"
-              @clear="clearData('BusinessTypeId')"
-              @change="selparentBusi"
-            >
-              <el-option
-                v-for="item in item.BusinessTypeIds"
-                :key="item.BusinessTypeId"
-                :label="item.BusinessTypeName"
-                :value="item.BusinessTypeId"
-              ></el-option>
-            </el-select>
+            <el-form-item label="标的类型：" prop="BusinessTypeId">
+              <el-select
+                placeholder="请选择标的类型"
+                v-model="realData.params.BusinessTypeId"
+                clearable
+                style="width:100%"
+                @clear="clearData('BusinessTypeId')"
+              >
+                <el-option
+                  v-for="item in BusinessTypeIds"
+                  :key="item.BusinessTypeId"
+                  :label="item.BusinessTypeName"
+                  :value="item.BusinessTypeId"
+                ></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
 
           <el-col v-for="(item,index) in realData.formLabel" :key="item.name" :span="item.span">
-            <el-form-item :label="item.name + ':'" :prop="item.value">
+            <el-form-item :label="item.name + '：'" :prop="item.value">
               <el-input
                 v-if="item.type == 'input'"
                 class="user-input"
@@ -277,6 +280,10 @@ export default {
       default: false,
       required: false
     },
+    labelWidth: {
+      type: String,
+      default: '100px'
+    },
     gridData: {
       type: Object,
       default: function() {
@@ -329,9 +336,16 @@ export default {
 
   methods: {
     selparentBusi(val) {
-      this.BusinessTypeIds = val.Children;
+      this.clearData('BusinessTypeId')
+      let obj = this.BusinessTypeParentIds.find(item => item.BusinessTypeId === val)
+      if(obj){
+      this.BusinessTypeIds = obj.Children;
+      }else {
+      this.BusinessTypeIds = [];
+      }
     },
     getBusinessPT() {
+      let that = this
       let tradingOrgId = that.$store.getters.user.TradingOrgId;
       that.$http
         .post(
@@ -339,12 +353,12 @@ export default {
         )
         .then(res => {
           that.BusinessTypeParentIds = res;
-          let obj = this.BusinessTypeParentIds.find(
+          let obj = that.BusinessTypeParentIds.find(
             item =>
               item.BusinessTypeId === that.realData.params.BusinessTypeParentId
           );
           if (obj) {
-            this.BusinessTypeIds = obj.Children;
+            that.BusinessTypeIds = obj.Children;
           }
         });
     },
@@ -387,7 +401,7 @@ export default {
       this.search();
     },
     clearData(data) {
-      realData.params.data = null;
+      this.realData.params.data = null;
     },
     // table数据搜索函数
     search(data) {

@@ -1,6 +1,6 @@
 <template>
   <div class="my-city">
-    <el-form-item :label="label" prop="CityCode">
+    <el-form-item :label="label" :prop="prop">
       <el-select v-model="mycityForm.provinceCode" @change="onProvinceChange" placeholder="请选择省" @visible-change="visibleChange">
         <el-option v-for="(item,index) in provinces" :key="item.Level + index" :label="item.Name" :value="item.Code"></el-option>
       </el-select>
@@ -36,6 +36,10 @@ export default {
     }
   },
   props: {
+    prop: {
+      type: String,
+      default: 'CityCode'
+    },
     CityCode: {
       type: String,
       default: ''
