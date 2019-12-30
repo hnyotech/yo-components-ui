@@ -433,7 +433,11 @@ export default {
         return false
       }
       if (this.fileExtension === '.xls,.xlsx,.xlsm,.xltx,.xltm,.xlsb,.xlam') {
-        return file.type === 'application/vnd.ms-excel' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.type === 'application/vnd.ms-excel.sheet.macroEnabled.12' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' || file.type === 'application/vnd.ms-excel.sheet.binary.macroEnabled.12' || file.type === 'application/vnd.ms-excel.addin.macroEnabled.12' || file.type === 'application/vnd.ms-excel.template.macroEnabled.12'
+        let isLeagalFile = file.type === 'application/vnd.ms-excel' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.type === 'application/vnd.ms-excel.sheet.macroEnabled.12' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' || file.type === 'application/vnd.ms-excel.sheet.binary.macroEnabled.12' || file.type === 'application/vnd.ms-excel.addin.macroEnabled.12' || file.type === 'application/vnd.ms-excel.template.macroEnabled.12'
+        if(isLeagalFile === false){
+          this.$message.error('您选择的文件格式不正确，请上传Excel格式文件！')
+        }
+        return isLeagalFile
       }
     },
     beforeRemove: function (file, fileList) {
