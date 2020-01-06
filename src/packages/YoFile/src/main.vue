@@ -85,7 +85,7 @@ export default {
     fileSize: {
       type: Number,
       required: false,
-      default: 10485760
+      default: 104857600
     },
     // 文件后缀
     fileExtension: {
@@ -125,7 +125,7 @@ export default {
   data: function () {
     return {
       // action:process.env.API + "/api/Attach/SaveAttach", //上传附件接口地址
-      action:this.apiUrl + '/api/Attach/SaveAttach', // 上传附件接口地址
+      action: this.apiUrl + '/api/Attach/SaveAttach', // 上传附件接口地址
       autoupload: true, // 自动上传
       imageUrl: '', // uploadType=1时候 显示图片  //"http://wx3.sinaimg.cn/large/006nLajtly1fpi9ikmj1kj30dw0dwwfq.jpg"
       fileList: [], // 附件列表(本次上传的)
@@ -135,7 +135,7 @@ export default {
       dialogTitle: '', // 预览标题
       showFileList: [], // 需要提交的文件列表
       delInd: '', // 待删除的文件索引
-      singleFile: '', // 单个文件
+      singleFile: '' // 单个文件
     }
   },
   created: function () {
@@ -288,7 +288,7 @@ export default {
         that.singleFile = {}
         return false
       }
-      //   debugger;
+      debugger
       var idArr = ids.split(',')
       var loadId = []
       // 先判断id 是否加载过了
@@ -386,39 +386,40 @@ export default {
       }
     },
     onRemove: function (file, fileList) {
-      // 文件列表移除文件时的钩子
-      var that = this
-      var delFile = this.delInd !== '' ? that.showFileList[this.delInd] : file
-      if (this.delInd === 0) {
-        delFile = that.showFileList[0]
-      };
-      //   debugger;
-      // 从服务器端删除
-      that.$http
-        .post(
-         that.apiUrl +
+      if (file && file.status === 'success') {
+        // 文件列表移除文件时的钩子
+        var that = this
+        var delFile = this.delInd !== '' ? that.showFileList[this.delInd] : file
+        if (this.delInd === 0) {
+          delFile = that.showFileList[0]
+        };
+        //   debugger;
+        // 从服务器端删除
+        that.$http
+          .post(
+            that.apiUrl +
           '/api/Attach/Delete?id=' +
             delFile.id +
             '&sign=' +
             delFile.sign +
             '&timestamp=' +
             delFile.timestamp
-        )
-        .then(resp => {
-          console.log('remove file ' + delFile.id)
-          // 移除列表
-          if(that.uploadType === 1){
+          )
+          .then(resp => {
+            console.log('remove file ' + delFile.id)
+            // 移除列表
+            if (that.uploadType === 1) {
               that.imageUrl = ''
               that.singleFile = {}
-          }else {
-
-          that.showFileList = that.showFileList.filter(t => t.id !== delFile.id)
-          }
-          that.handleId()
-        })
-        .catch(err => {
-          astec.showErrorToast(err.Message)
-        })
+            } else {
+              that.showFileList = that.showFileList.filter(t => t.id !== delFile.id)
+            }
+            that.handleId()
+          })
+          .catch(err => {
+            astec.showErrorToast(err.Message)
+          })
+      }
     },
     onChange: function (file, fileList) {
       // 文件状态改变时的钩子，添加文件、上传成功和上传失败时都会被调用
@@ -426,12 +427,17 @@ export default {
     beforeUpload: function (file) {
       // 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
       console.log('beforeUpload..')
-      if(this.fileSize>0&&file.size>this.fileSize){
-         astec.showErrorToast('上传附件大小不能超过'+ Math.round(this.fileSize / 1024 / 1024, 2) + 'MB!')
-        return false;
-      }      
-      if(this.fileExtension.length > 0){
-        return file.type === 'application/vnd.ms-excel'
+      // debugger
+      if (this.fileSize > 0 && file.size > this.fileSize) {
+        this.$message.error('上传附件大小不能超过' + Math.round(this.fileSize / 1024 / 1024, 2) + 'MB!')
+        return false
+      }
+      if (this.fileExtension === '.xls,.xlsx,.xlsm,.xltx,.xltm,.xlsb,.xlam') {
+        let isLeagalFile = file.type === 'application/vnd.ms-excel' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.type === 'application/vnd.ms-excel.sheet.macroEnabled.12' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' || file.type === 'application/vnd.ms-excel.sheet.binary.macroEnabled.12' || file.type === 'application/vnd.ms-excel.addin.macroEnabled.12' || file.type === 'application/vnd.ms-excel.template.macroEnabled.12'
+        if(isLeagalFile === false){
+          this.$message.error('您选择的文件格式不正确，请上传Excel格式文件！')
+        }
+        return isLeagalFile
       }
     },
     beforeRemove: function (file, fileList) {
@@ -526,13 +532,14 @@ export default {
 
         if (that.uploadType === 1) {
         // 显示
-            that.singleFile = item
-            that.imageUrl = item.url
+          that.singleFile = item
+          that.imageUrl = item.url
           that.dialogTitle = item.name
-          } else {
-            that.showFileList.push(item)
-          }
-          that.handleId()
+        } else {
+          that.fileList.push(item)
+          that.showFileList.push(item)
+        }
+        that.handleId()
         that.$emit('callback', that.AllfileList) // 触发回调
         // 上传成功 调用onSuccess方法，否则没有完成图标
         // 处理自己的逻辑
@@ -545,7 +552,7 @@ export default {
     },
     handleRemove: function (file) {
       var that = this
-          that.onRemove(file, null)
+      that.onRemove(file, null)
       // astec
       //   .showConfirmDialog('警告', '确认要删除文件吗?', '', '')
       //   .then(function () {
@@ -566,17 +573,17 @@ export default {
       var that = this
       // 回调IDs用
       var newIds = ''
-      if(that.uploadType === 1){
+      if (that.uploadType === 1) {
         newIds = that.singleFile.id
-      }else {
+      } else {
         that.AllfileList.forEach(function (file) {
-        if (file.id) {
-          newIds += file.id + ','
+          if (file.id) {
+            newIds += file.id + ','
+          }
+        })
+        if (newIds.length > 0) {
+          newIds = newIds.substring(0, newIds.length - 1)
         }
-      })
-      if (newIds.length > 0) {
-        newIds = newIds.substring(0, newIds.length - 1)
-      }
       }
       that.$emit('update:ids', newIds) // 双向绑定ids
       that.$emit('update:id', newIds)
