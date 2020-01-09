@@ -93,6 +93,16 @@ export default {
       required: false,
       default: ''
     },
+    Extension: {
+      type: Object,
+      required: false,
+      default: () => {
+        return {
+          isCheckExtension: false,
+          formation: '符合'
+        }
+      }
+    },
     // 支持多选文件
     isMultiple: {
       type: Boolean,
@@ -214,7 +224,7 @@ export default {
         // 未单独指定的 根据uploadType自定义
         if (this.uploadType === 1 || this.uploadType === 2) {
           // 图片的
-          acceptstr = '.jpg,.jpeg,.png,.ico'
+          acceptstr = '.jpg,.jpeg,.png,.ico,.gif,.svg,.pdf'
         }
       }
       return acceptstr
@@ -432,10 +442,13 @@ export default {
         this.$message.error('上传附件大小不能超过' + Math.round(this.fileSize / 1024 / 1024, 2) + 'MB!')
         return false
       }
-      if (this.fileExtension === '.xls,.xlsx,.xlsm,.xltx,.xltm,.xlsb,.xlam') {
-        let isLeagalFile = file.type === 'application/vnd.ms-excel' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.type === 'application/vnd.ms-excel.sheet.macroEnabled.12' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' || file.type === 'application/vnd.ms-excel.sheet.binary.macroEnabled.12' || file.type === 'application/vnd.ms-excel.addin.macroEnabled.12' || file.type === 'application/vnd.ms-excel.template.macroEnabled.12'
+      if (this.Extension.isCheckExtension === true) {
+        let index = file.name.lastIndexOf('.')
+        let suffix = file.name
+        let str = suffix.substring(index,suffix.length )
+        let isLeagalFile = (this.fileExtension.indexOf(str) === -1)
         if(isLeagalFile === false){
-          this.$message.error('您选择的文件格式不正确，请上传Excel格式文件！')
+          this.$message.error(`您选择的文件格式不正确，请上传${this.Extension.formation}格式文件！`)
         }
         return isLeagalFile
       }
