@@ -73,6 +73,7 @@ export default {
         })
     },
     handleChange (val) {
+      this.$emit('update:selValue', val)
       this.$emit('selectChange', val)
     }
   },

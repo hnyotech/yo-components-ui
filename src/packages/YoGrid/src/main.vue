@@ -81,6 +81,7 @@
           </el-col>
 
           <el-col v-for="(item,index) in realData.formLabel" :key="item.name" :span="item.span">
+            <yo-enum v-if="item.type==='enum'" :EnumName="item.enumName" :selValue.sync="realData.params[item.value]" :label="item.name" prop="none"></yo-enum>
             <el-form-item :label="item.name + '：'" :prop="item.value">
               <el-input
                 v-if="item.type == 'input'"
@@ -194,6 +195,7 @@
 </template>
 
 <script>
+import YoEnum from '../../YoEnum/src/main';
 import YoButton from "../../YoButton/src/main.vue";
 import SelectSaler from "./SelSaler.vue";
 export default {
