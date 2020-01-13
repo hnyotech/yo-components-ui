@@ -447,7 +447,7 @@ export default {
         let suffix = file.name
         let str = suffix.substring(index,suffix.length )
         let isLeagalFile = (this.fileExtension.indexOf(str) === -1)
-        if(isLeagalFile === false){
+        if(isLeagalFile === true){
           this.$message.error(`您选择的文件格式不正确，请上传${this.Extension.formation}格式文件！`)
         }
         return isLeagalFile
