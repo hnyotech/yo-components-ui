@@ -386,6 +386,7 @@ export default {
     },
     reset() {
       this.reLoading = true;
+      this.BusinessTypeIds = []
       for (var key in this.realData.params) {
         if (key === "PageIndex") {
           this.realData.params[key] = 1;

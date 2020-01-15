@@ -450,7 +450,7 @@ export default {
         if(isLeagalFile === true){
           this.$message.error(`您选择的文件格式不正确，请上传${this.Extension.formation}格式文件！`)
         }
-        return isLeagalFile
+        return !isLeagalFile
       }
     },
     beforeRemove: function (file, fileList) {
@@ -566,6 +566,7 @@ export default {
     handleRemove: function (file) {
       var that = this
       that.onRemove(file, null)
+      that.imageUrl = ''
       // astec
       //   .showConfirmDialog('警告', '确认要删除文件吗?', '', '')
       //   .then(function () {
