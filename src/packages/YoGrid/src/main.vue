@@ -424,6 +424,10 @@ export default {
             data: that.realData.params
           })
           .then(res => {
+            if (res.TotalCount > 0 && that.realData.params.PageIndex >= 1 && res.Items.length === 0) {
+              this.search('isPage')
+              return
+            }
             this.searchLoading = false;
             this.reLoading = false;
             if (!that.IsNotNeedSaveParams) {

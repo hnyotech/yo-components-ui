@@ -17,7 +17,7 @@
                class="avatar-uploader"
                :with-credentials="true"
                :action="action"
-               :multiple="false"
+               :multiple="IsMultiple"
                :limit="FileLimit"
                :accept="FileAccept"
                :auto-upload="autoupload"
