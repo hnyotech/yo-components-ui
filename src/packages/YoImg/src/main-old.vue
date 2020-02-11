@@ -21,32 +21,24 @@
     <div class="flexpic">
       <div v-for="file in fileList" :key="file.id" style="margin-right:3px;" >
         <!-- <img    alt="暂无图片"> -->
-        <el-image :src="file.url" width="200px" height="123px" style="margin-bottom:10px;border:1px solid #DDDDDD;" :title="file.name" @click="handlePreview(file)">
+        <el-image :src="file.url" width="200px" height="123px" style="margin-bottom:10px;border:1px solid #DDDDDD;" :title="file.name" @click="handlePreview(file.orgurl,file.name)">
           <div slot="error" class="image-slot">
             <div class="errorInfo">无法加载图片</div>
           </div>
         </el-image>
       </div>
     </div>
-    <yo-img-viewer
-      v-if="dialogVisible"
-      :on-close="closeViewer"
-      :url-list="GetSrcListByCache()"
-      :initialIndex="PriviewStartIndex"
-      :titles="dialogTitle"
-    ></yo-img-viewer>
-    <!-- <el-dialog :visible.sync="dialogVisible" :title="isNeedialogTitle ? isNeedialogTitle : dialogTitle" top="20px" append-to-body>
+    <el-dialog :visible.sync="dialogVisible" :title="isNeedialogTitle ? isNeedialogTitle : dialogTitle" top="20px" append-to-body>
+      <!-- 预览弹出 -->
       <img width="100%" :src="dialogImageUrl" alt>
       <span slot="footer" class="dialog-footer">
         <a href ref="download_a" target="_blank" v-show="false"></a>
         <el-button type="text" @click="handleDownLoad(dialogImageUrl)">下载原图</el-button>
       </span>
-    </el-dialog> -->
+    </el-dialog>
   </div>
 </template>
 <script type="text/javascript">
-import { Base64 } from "js-base64";
-import YoImgViewer from './YoImageViewer'
 export default {
   name: 'YoImg',
   props: {
@@ -62,35 +54,21 @@ export default {
     },
     apiUrl: {
       type: String,
-      required: false,
-      default: process.env.API
+      required: true
     },
     isPreviw: {
       type: Boolean,
       required: false,
       default: true
-    },
-    fit: {
-      validator: function(value) {
-        // 这个值必须匹配下列字符串中的一个
-        return (
-          ["fill", "contain", "cover", "none", "scale-down"].indexOf(value) !==
-          -1
-        );
-      },
-      default: "scale-down"
     }
   },
-  components: {YoImgViewer},
   data: function () {
     return {
       dialogImageUrl: '', // 预览图片地址
       dialogVisible: false, // 显示预览
       dialogTitle: '', // 预览标题
       fileList: [], // 附件列表(本次上传的)
-      fileList2: [],
-      PriviewStartIndex: 0, //預覽index
-      StorageKey: "_ImgViewSrcCache"
+      fileList2: []
     }
   },
   created: function () {
@@ -106,10 +84,6 @@ export default {
   },
 
   methods: {
-    // 关闭查看器
-    closeViewer() {
-      this.dialogVisible = false;
-    },
     fileListContainId: function (id) {
       // 判断指定ID是否在fileList里面
       var that = this
@@ -173,7 +147,6 @@ export default {
                 '&timestamp=' +
                 file.timestamp
               that.fileList.push(item)
-              that.AddSrcCache(item); //添加到預覽緩存
             } else {
               // 非图片
               item.orgurl =
@@ -197,71 +170,6 @@ export default {
           astec.showErrorToast(err.Message)
         })
     },
-    
-    //添加到預覽緩存組中
-    AddSrcCache: function(item) {
-      // debugger;
-      var id = item.id;
-      var src = item.orgurl;
-      let that = this;
-      let cacheData = JSON.parse(sessionStorage.getItem(that.StorageKey));
-      if (!cacheData) {
-        cacheData = new Object();
-        cacheData[that.group] = {};
-      }
-      //保存
-      var obj = cacheData[that.group];
-      if (!obj) {
-        obj = new Object();
-      }
-      //判斷存在不
-      obj[id] = { src: src, title: item.name };
-      cacheData[that.group] = obj;
-      sessionStorage.setItem(that.StorageKey, JSON.stringify(cacheData));
-    },
-    
-    //獲取地址所在index
-    GetIndexByCache: function(id) {
-      let that = this;
-      let cacheData = JSON.parse(sessionStorage.getItem(that.StorageKey));
-      if (cacheData) {
-        let obj = cacheData[that.group];
-        if (obj) {
-          let i = 0;
-          for (var key in obj) {
-            if (key == id) {
-              return i;
-            }
-            i++;
-          }
-          // for (let i = 0; i < obj.length; i++) {
-          //   if (obj.id == id) {
-          //     return i;
-          //   }
-          // }
-        }
-      }
-      return -1;
-    },
-     //獲取當前分組的緩存列表
-    GetSrcListByCache: function() {
-      // debugger;
-      let that = this;
-      let list = [];
-      let titleArr = [];
-      let cacheData = JSON.parse(sessionStorage.getItem(that.StorageKey));
-      if (cacheData) {
-        let obj = cacheData[that.group];
-        if (obj) {
-          for (var a in obj) {
-            list.push(obj[a].src);
-            titleArr.push(obj[a].title);
-          }
-        }
-      }
-      this.dialogTitle = titleArr;
-      return list;
-    },
     // 判断是否图片
     isImgType: function (filetype) {
       var ctypeArr = [
@@ -280,21 +188,18 @@ export default {
       }
     },
 
-    handlePreview: function (file) {
+    handlePreview: function (url, name) {
       if(!this.isPreviw){
         return
       }
-      // console.log('handlePreview:' + url)
-      // this.dialogImageUrl = url
-      // this.dialogVisible = true
-      // if (name) {
-      //   this.dialogTitle = name
-      // } else {
-      //   this.dialogTitle = ''
-      // }
-
-       this.dialogVisible = true;
-      this.PriviewStartIndex = this.GetIndexByCache(file.id);
+      console.log('handlePreview:' + url)
+      this.dialogImageUrl = url
+      this.dialogVisible = true
+      if (name) {
+        this.dialogTitle = name
+      } else {
+        this.dialogTitle = ''
+      }
     },
     handleId: function () {
       var that = this
@@ -381,7 +286,7 @@ export default {
     color: #AAAAAA;
     font-size: 14px;
   }
-  .el-image img {
+  .preImg .el-image img {
     width: 220px;
     height: 180px;
   }
