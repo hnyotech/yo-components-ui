@@ -459,6 +459,8 @@ export default {
               that.$store.commit("UPDATE_PARAMSlIST", paramsList);
             }
             // resolve(res);
+            res.PageIndex = that.realData.params.PageIndex;
+            res.PageSize = that.realData.params.PageSize;
             that.$emit("update:requireData", res);
             this.loading = false;
           })
