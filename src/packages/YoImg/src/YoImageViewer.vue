@@ -34,6 +34,7 @@
         <div class="el-image-viewer__actions__inner">
           <i class="el-icon-zoom-out" @click="handleActions('zoomOut')"></i>
           <i class="el-icon-zoom-in" @click="handleActions('zoomIn')"></i>
+          <i class="el-icon-download" @click="handleDownLoad(downUrl)"></i>
           <i class="el-image-viewer__actions__divider"></i>
           <i :class="mode.icon" @click="toggleMode"></i>
           <i class="el-image-viewer__actions__divider"></i>
@@ -56,6 +57,7 @@
           @mousedown="handleMouseDown"
         />
       </div>
+      <a href ref="download_a" target="_blank" v-show="false"></a>
     </div>
   </transition>
 </template>
@@ -152,6 +154,12 @@ export default {
       }
       return "";
     },
+    downUrl: function () {
+      if (this.urlList && this.urlList.length > 0) {
+        return this.urlList[this.index];
+      }
+      return "";
+    },
     isSingle() {
       return this.urlList.length <= 1;
     },
@@ -195,6 +203,13 @@ export default {
     }
   },
   methods: {
+    handleDownLoad: function (url) {
+      if (url.length > 0) {
+        url = url.toLowerCase().replace('showimage', 'download')
+        this.$refs.download_a.href = url
+        this.$refs.download_a.click()
+      }
+    },
     hide() {
       this.deviceSupportUninstall();
       this.onClose();

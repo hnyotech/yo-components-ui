@@ -38,10 +38,11 @@
     <!-- <el-dialog :visible.sync="dialogVisible" :title="isNeedialogTitle ? isNeedialogTitle : dialogTitle" top="20px" append-to-body>
       <img width="100%" :src="dialogImageUrl" alt>
       <span slot="footer" class="dialog-footer">
-        <a href ref="download_a" target="_blank" v-show="false"></a>
+        
         <el-button type="text" @click="handleDownLoad(dialogImageUrl)">下载原图</el-button>
       </span>
     </el-dialog> -->
+    <a href ref="download_a" target="_blank" v-show="false"></a>
   </div>
 </template>
 <script type="text/javascript">

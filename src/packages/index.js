@@ -30,6 +30,8 @@ import YoLt from '../packages/YoControlsLt/src/main';
 import YoDate from '../packages/YoControlsDate/src/main';
 import YoTime from '../packages/YoControlsTime/src/main';
 import YoTable from '../packages/YoTable/src/main';
+import YoRow from '../packages/YoRow/src/main';
+import YoCol from '../packages/YoCol/src/main';
 const components = [
   YoButton,
   YoHeader,
@@ -60,7 +62,9 @@ const components = [
   YoLt,
   YoDate,
   YoTime, // 添加标的动态控件 5
-  YoTable
+  YoTable,
+  YoRow,
+  YoCol
 ];
 const install = function(Vue, opts = {}) {
   components.forEach(component => {
@@ -102,6 +106,8 @@ const yoComponents ={
   YoLt,
   YoDate,
   YoTime, // 添加标的动态控件 5
-  YoTable
+  YoTable,
+  YoRow,
+  YoCol
 }
 export default yoComponents;
