@@ -1,11 +1,11 @@
 <template>
-  <el-row :span="span" :offset="offset" :push="push" :pull="pull" :xs="xs" :xs="xs" :sm="sm" :md="md" :lg="lg" :xl="xl" :tag="tag">
+  <el-col :span="span" :offset="offset" :push="push" :pull="pull" :xs="xs" :sm="sm" :md="md" :lg="lg" :xl="xl" :tag="tag">
        <slot></slot>
-  </el-row>
+  </el-col>
 </template>
 <script type="text/javascript">
 export default {
-  name: "YoButton",
+  name: "YoCol",
   props: {
     span: {
       type: Number,
@@ -24,24 +24,19 @@ export default {
       default: 0
     },
     xs: {
-      type: [String, Object],
-      default: ''
+      type: [Number, Object]
     },
     sm: {
-      type: [String, Object],
-      default: ''
+      type: [Number, Object]
     },
     md: {
-      type: [String, Object],
-      default: ''
+      type: [Number, Object]
     },
     lg: {
-      type: [String, Object],
-      default: ''
+      type: [Number, Object]
     },
     xl: {
-      type: [String, Object],
-      default: ''
+      type: [Number, Object]
     },
     tag: {
       type: String,

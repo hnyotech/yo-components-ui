@@ -5,7 +5,7 @@
 </template>
 <script type="text/javascript">
 export default {
-  name: "YoButton",
+  name: "YoRow",
   props: {
     gutter: {
       type: Number,

@@ -14,8 +14,8 @@ module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
     app: process.env.NODE_ENV === 'production'
-    ? './src/packages/index.js' // 生产模式下导入文件
-    : './src/main.js' // 开发模式下导入文件
+    ? ['babel-polyfill', './src/packages/index.js'] // 生产模式下导入文件
+    : ['babel-polyfill', './src/main.js'] // 开发模式下导入文件
   },
   output: {
     path: config.build.assetsRoot,
@@ -41,7 +41,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client'), resolve('node_modules/element-ui/src/utils')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
