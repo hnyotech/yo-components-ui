@@ -321,6 +321,9 @@ export default {
         this.$refs.download_a.click()
       }
     }
+  },
+  beforeDestroy() {
+    sessionStorage.removeItem(this.StorageKey)
   }
 }
 </script>

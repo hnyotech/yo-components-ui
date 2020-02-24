@@ -14,8 +14,8 @@ module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
     app: process.env.NODE_ENV === 'production'
-    ? ['babel-polyfill', './src/packages/index.js'] // 生产模式下导入文件
-    : ['babel-polyfill', './src/main.js'] // 开发模式下导入文件
+    ? './src/packages/index.js' // 生产模式下导入文件
+    : './src/main.js' // 开发模式下导入文件
   },
   output: {
     path: config.build.assetsRoot,

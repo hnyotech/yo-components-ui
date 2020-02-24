@@ -3,7 +3,7 @@
         <el-row :gutter="40" v-for="(item,index) in rowData" :key="index">
             <el-col v-for="(li,ind) in item" :span="li.span === undefined ? 8 : li.span" :key="ind">
                 <div class="col_content_box" v-if="li.isVisiable === undefined || li.isVisiable === true">
-                    <label class="detail_label" :style="{width: li.labelW ? li.labelW : l_w}">{{li.title === '' ? '' : li.title + '：'}}</label>
+                    <label class="detail_label" :style="{width: li.labelW ? li.labelW : l_w, lineHeight: li.lineHeight ? li.lineHeight : '40px'}">{{li.title === '' ? '' : li.title + '：'}}</label>
                     <div class="value_w" :style="{'width': 'calc(100% - ' + (li.labelW ? li.labelW : l_w) + ' )'}">&nbsp;{{li.value}}</div>
                 </div>
             </el-col>
