@@ -7,7 +7,7 @@
         <span class="el-upload-act-preview">
           <i class="el-icon-zoom-in" @click.stop="handlePreview(imageUrl,dialogTitle)"></i>
         </span>
-        <span class="el-upload-act-delete">
+        <span class="el-upload-act-delete" v-show="!readOnly">
           <i class="el-icon-delete" @click.stop="handleRemove(singleFile)"></i>
         </span>
       </span>
@@ -31,7 +31,8 @@
                :on-change="onChange"
                :on-remove="onRemove"
                :on-preview="onPreview"
-               :http-request="httpRequest">
+               :http-request="httpRequest"
+               :disabled="readOnly">
       <!--<template v-if="uploadType==1">
         <i class="el-icon-plus avatar-uploader-icon"></i>
       </template>-->
@@ -41,7 +42,7 @@
         <el-progress type="circle" :percentage="25"></el-progress>
       </template>
       <template v-else>
-        <el-button size="small" type="primary">选择</el-button>
+        <el-button size="small" type="primary" v-show="!readOnly">选择</el-button>
       </template>
       <div v-if="IsShowTip" slot="tip" class="el-upload__tip">{{Tip}}</div>
     </el-upload>
@@ -130,6 +131,11 @@ export default {
     apiUrl: {
       type: String,
       required: true
+    },
+    readOnly: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   data: function () {
@@ -399,6 +405,9 @@ export default {
       if (file && file.status === 'success') {
         // 文件列表移除文件时的钩子
         var that = this
+        if(that.readOnly) {
+          return;
+        }
         var delFile = this.delInd !== '' ? that.showFileList[this.delInd] : file
         if (this.delInd === 0) {
           delFile = that.showFileList[0]
@@ -455,6 +464,9 @@ export default {
     },
     beforeRemove: function (file, fileList) {
       // 删除文件之前的钩子，参数为上传的文件和文件列表，若返回 false 或者返回 Promise 且被 reject，则停止上传。
+      if(this.readOnly) {
+        return false
+      }
       if (file.id) {
         this.delInd = ''
       } else {
