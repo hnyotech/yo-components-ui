@@ -3,12 +3,12 @@
     <!-- <img v-for="file in fileList" :src="file.url" :key="file.id"  :title="file.name" @click="handlePreview(file.orgurl,file.name)"> -->
     <!-- 文件 -->
     <div v-if="fileList2.length > 0 ? true : false">
-      <div v-for="file in fileList2" :key="file.id" @click="handleDownLoad(file.orgurl)" class="text item">
+      <div v-for="file in fileList2" :key="file.id" @click="handleDownLoad(file.orgurl)" class="text file-item-img">
         <i class="el-icon-download marginright"></i>{{file.name}}
       </div>
     </div>
     <div v-if="fileList2.length === 0 && fileList.length === 0">
-      <div class="text item nofile">
+      <div class="text file-item-img nofile">
         <i class="el-icon-warning marginright"></i>暂无文件
       </div>
     </div>
@@ -35,13 +35,6 @@
       :initialIndex="PriviewStartIndex"
       :titles="dialogTitle"
     ></yo-img-viewer>
-    <!-- <el-dialog :visible.sync="dialogVisible" :title="isNeedialogTitle ? isNeedialogTitle : dialogTitle" top="20px" append-to-body>
-      <img width="100%" :src="dialogImageUrl" alt>
-      <span slot="footer" class="dialog-footer">
-        
-        <el-button type="text" @click="handleDownLoad(dialogImageUrl)">下载原图</el-button>
-      </span>
-    </el-dialog> -->
     <a href ref="download_a" target="_blank" v-show="false"></a>
   </div>
 </template>
@@ -85,7 +78,6 @@ export default {
   components: {YoImgViewer},
   data: function () {
     return {
-      dialogImageUrl: '', // 预览图片地址
       dialogVisible: false, // 显示预览
       dialogTitle: '', // 预览标题
       fileList: [], // 附件列表(本次上传的)
@@ -285,15 +277,6 @@ export default {
       if(!this.isPreviw){
         return
       }
-      // console.log('handlePreview:' + url)
-      // this.dialogImageUrl = url
-      // this.dialogVisible = true
-      // if (name) {
-      //   this.dialogTitle = name
-      // } else {
-      //   this.dialogTitle = ''
-      // }
-
        this.dialogVisible = true;
       this.PriviewStartIndex = this.GetIndexByCache(file.id);
     },
@@ -332,13 +315,14 @@ export default {
     font-size: 14px;
   }
 
-  .item {
+  .file-item-img {
     display: inline-block;
     margin-bottom: 5px;
+    margin-right: 10px;
     padding: 12px 10px;
     background-color: #eee;
   }
-  .item:hover {
+  .file-item-img:hover {
     cursor: pointer;
     background-color: #365FA4;
     color: #fff;

@@ -3,12 +3,12 @@
     <!-- <img v-for="file in fileList" :src="file.url" :key="file.id"  :title="file.name" @click="handlePreview(file.orgurl,file.name)"> -->
     <!-- 文件 -->
     <div v-if="fileList2.length > 0 ? true : false">
-      <div v-for="file in fileList2" :key="file.id" @click="handleDownLoad(file.orgurl)" class="text item">
+      <div v-for="file in fileList2" :key="file.id" @click="handleDownLoad(file.orgurl)" class="text file-item-img">
         <i class="el-icon-download marginright"></i>{{file.name}}
       </div>
     </div>
     <div v-if="fileList2.length === 0 && fileList.length === 0">
-      <div class="text item nofile">
+      <div class="text file-item-img nofile">
         <i class="el-icon-warning marginright"></i>暂无文件
       </div>
     </div>
@@ -233,13 +233,13 @@ export default {
     font-size: 14px;
   }
 
-  .item {
+  .file-item-img {
     display: inline-block;
     margin-bottom: 5px;
     padding: 12px 10px;
     background-color: #eee;
   }
-  .item:hover {
+  .file-item-img:hover {
     cursor: pointer;
     background-color: #365FA4;
     color: #fff;

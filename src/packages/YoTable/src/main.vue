@@ -1,5 +1,5 @@
 <template>
-  <el-table ref="multipleTable" :data="tableData" class="yo-table" style="width: 100%;">
+  <el-table ref="multipleTable" :data="tableData" :show-summary="showSummary" :summary-method="summaryMethod" class="yo-table" style="width: 100%;">
     <el-table-column
       type="index"
       width="50"
@@ -68,6 +68,18 @@ export default {
           index: 1,
           size: 10
         }
+      }
+    },
+    showSummary: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    summaryMethod: {
+      type: Function,
+      required: false,
+      default: () => {
+        return []
       }
     }
   },

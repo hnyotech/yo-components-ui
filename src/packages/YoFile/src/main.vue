@@ -5,7 +5,7 @@
       <img :src="imageUrl" class="avatar">
       <span class="el-upload-act">
         <span class="el-upload-act-preview">
-          <i class="el-icon-zoom-in" @click.stop="handlePreview(imageUrl,dialogTitle)"></i>
+          <i class="el-icon-zoom-in" @click.stop="handlePreview(singleFile)"></i>
         </span>
         <span class="el-upload-act-delete" v-show="!readOnly">
           <i class="el-icon-delete" @click.stop="handleRemove(singleFile)"></i>
@@ -46,17 +46,19 @@
       </template>
       <div v-if="IsShowTip" slot="tip" class="el-upload__tip">{{Tip}}</div>
     </el-upload>
-    <el-dialog :visible.sync="dialogVisible" :title="dialogTitle" top="20px">
-      <!-- 预览弹出 -->
-      <img width="100%" :src="dialogImageUrl" alt>
-      <span slot="footer" class="dialog-footer">
-        <a href ref="download_a" target="_blank" v-show="false"></a>
-        <el-button type="text" @click="handleDownLoad(dialogImageUrl)">下载原图</el-button>
-      </span>
-    </el-dialog>
+
+    <yo-img-viewer
+      v-if="dialogVisible"
+      :on-close="closeViewer"
+      :url-list="GetSrcListByCache()"
+      :initialIndex="PriviewStartIndex"
+      :titles="dialogTitle"
+    ></yo-img-viewer>
   </div>
 </template>
 <script type="text/javascript">
+import { Base64 } from "js-base64";
+import YoImgViewer from '../YoImg/YoImageViewer'
 export default {
   name: 'YoFile',
   props: {
@@ -138,6 +140,7 @@ export default {
       default: false
     }
   },
+  components: {YoImgViewer},
   data: function () {
     return {
       // action:process.env.API + "/api/Attach/SaveAttach", //上传附件接口地址
@@ -146,12 +149,14 @@ export default {
       imageUrl: '', // uploadType=1时候 显示图片  //"http://wx3.sinaimg.cn/large/006nLajtly1fpi9ikmj1kj30dw0dwwfq.jpg"
       fileList: [], // 附件列表(本次上传的)
       fileListOrg: [], // 原始附件列表-默认带着的
-      dialogImageUrl: '', // 预览图片地址
       dialogVisible: false, // 显示预览
       dialogTitle: '', // 预览标题
       showFileList: [], // 需要提交的文件列表
       delInd: '', // 待删除的文件索引
-      singleFile: '' // 单个文件
+      singleFile: '', // 单个文件
+      
+      PriviewStartIndex: 0, //預覽index
+      StorageKey: "_ImgViewSrcCache"
     }
   },
   created: function () {
@@ -284,6 +289,10 @@ export default {
     }
   },
   methods: {
+    // 关闭查看器
+    closeViewer() {
+      this.dialogVisible = false;
+    },
     fileListContainId: function (id) {
       // 判断指定ID是否在fileList里面
       var that = this
@@ -348,6 +357,8 @@ export default {
                 file.sign +
                 '&timestamp=' +
                 file.timestamp
+                
+              that.AddSrcCache(item); //添加到預覽緩存
           } else {
             // 非图片
             item.orgurl =
@@ -375,6 +386,70 @@ export default {
           astec.showErrorToast(err.Message)
         })
     },
+    //添加到預覽緩存組中
+    AddSrcCache: function(item) {
+      // debugger;
+      var id = item.id;
+      var src = item.orgurl;
+      let that = this;
+      let cacheData = JSON.parse(sessionStorage.getItem(that.StorageKey));
+      if (!cacheData) {
+        cacheData = new Object();
+        cacheData[that.group] = {};
+      }
+      //保存
+      var obj = cacheData[that.group];
+      if (!obj) {
+        obj = new Object();
+      }
+      //判斷存在不
+      obj[id] = { src: src, title: item.name };
+      cacheData[that.group] = obj;
+      sessionStorage.setItem(that.StorageKey, JSON.stringify(cacheData));
+    },
+    
+    //獲取地址所在index
+    GetIndexByCache: function(id) {
+      let that = this;
+      let cacheData = JSON.parse(sessionStorage.getItem(that.StorageKey));
+      if (cacheData) {
+        let obj = cacheData[that.group];
+        if (obj) {
+          let i = 0;
+          for (var key in obj) {
+            if (key == id) {
+              return i;
+            }
+            i++;
+          }
+          // for (let i = 0; i < obj.length; i++) {
+          //   if (obj.id == id) {
+          //     return i;
+          //   }
+          // }
+        }
+      }
+      return -1;
+    },
+     //獲取當前分組的緩存列表
+    GetSrcListByCache: function() {
+      // debugger;
+      let that = this;
+      let list = [];
+      let titleArr = [];
+      let cacheData = JSON.parse(sessionStorage.getItem(that.StorageKey));
+      if (cacheData) {
+        let obj = cacheData[that.group];
+        if (obj) {
+          for (var a in obj) {
+            list.push(obj[a].src);
+            titleArr.push(obj[a].title);
+          }
+        }
+      }
+      this.dialogTitle = titleArr;
+      return list;
+    },
     // 判断是否图片
     isImgType: function (filetype) {
       var ctypeArr = [
@@ -395,7 +470,7 @@ export default {
       // 点击文件列表中已上传的文件时的钩子
       console.log('onPreview.')
       if (this.isImgType(file.type)) {
-        this.handlePreview(file.url, file.name)
+        this.handlePreview(file)
       } else {
         // 直接触发下载
         this.handleDownLoad(file.url)
@@ -585,15 +660,9 @@ export default {
       //     that.onRemove(file, null)
       //   })
     },
-    handlePreview: function (url, name) {
-      console.log('handlePreview:' + url)
-      this.dialogImageUrl = url
-      this.dialogVisible = true
-      if (name) {
-        this.dialogTitle = name
-      } else {
-        this.dialogTitle = ''
-      }
+    handlePreview: function (file) {
+      this.dialogVisible = true;
+      this.PriviewStartIndex = this.GetIndexByCache(file.id);
     },
     handleId: function () {
       var that = this
@@ -622,6 +691,9 @@ export default {
         this.$refs.download_a.click()
       }
     }
+  },
+  beforeDestroy() {
+    sessionStorage.removeItem(this.StorageKey)
   }
 }
 </script>
