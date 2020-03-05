@@ -58,7 +58,7 @@
 </template>
 <script type="text/javascript">
 import { Base64 } from "js-base64";
-import YoImgViewer from '../YoImg/YoImageViewer'
+import YoImgViewer from '@/packages/YoImg/src/YoImageViewer'
 export default {
   name: 'YoFile',
   props: {
