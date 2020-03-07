@@ -1,8 +1,10 @@
 <template>
   <div>
-    <div v-show="imageUrl.length>0&&uploadType==1"
-         style="position: relative;margin-top: 5px;margin-bottom: 5px;">
-      <img :src="imageUrl" class="avatar">
+    <div
+      v-show="imageUrl.length>0&&uploadType==1"
+      style="position: relative;margin-top: 5px;margin-bottom: 5px;"
+    >
+      <img :src="imageUrl" class="avatar" />
       <span class="el-upload-act">
         <span class="el-upload-act-preview">
           <i class="el-icon-zoom-in" @click.stop="handlePreview(singleFile)"></i>
@@ -12,27 +14,29 @@
         </span>
       </span>
     </div>
-    <el-upload ref="upload"
-               v-show="IsShow"
-               class="avatar-uploader"
-               :with-credentials="true"
-               :action="action"
-               :multiple="IsMultiple"
-               :limit="FileLimit"
-               :accept="FileAccept"
-               :auto-upload="autoupload"
-               :show-file-list="true"
-               :list-type="ListType"
-               :data="ExData"
-               :file-list="fileList"
-               :on-exceed="onExceed"
-               :before-remove="beforeRemove"
-               :before-upload="beforeUpload"
-               :on-change="onChange"
-               :on-remove="onRemove"
-               :on-preview="onPreview"
-               :http-request="httpRequest"
-               :disabled="readOnly">
+    <el-upload
+      ref="upload"
+      v-show="IsShow"
+      class="avatar-uploader"
+      :with-credentials="true"
+      :action="action"
+      :multiple="IsMultiple"
+      :limit="FileLimit"
+      :accept="FileAccept"
+      :auto-upload="autoupload"
+      :show-file-list="true"
+      :list-type="ListType"
+      :data="ExData"
+      :file-list="fileList"
+      :on-exceed="onExceed"
+      :before-remove="beforeRemove"
+      :before-upload="beforeUpload"
+      :on-change="onChange"
+      :on-remove="onRemove"
+      :on-preview="onPreview"
+      :http-request="httpRequest"
+      :disabled="readOnly"
+    >
       <!--<template v-if="uploadType==1">
         <i class="el-icon-plus avatar-uploader-icon"></i>
       </template>-->
@@ -54,13 +58,16 @@
       :initialIndex="PriviewStartIndex"
       :titles="dialogTitle"
     ></yo-img-viewer>
+    <yo-pdf-viewer v-if="pdfdialogVisible" :on-close="closePdfViewer" :src="pdfVuewerSrc"></yo-pdf-viewer>
+    <a href ref="download_a" target="_blank" v-show="false"></a>
   </div>
 </template>
 <script type="text/javascript">
 import { Base64 } from "js-base64";
-import YoImgViewer from '@/packages/YoImg/src/YoImageViewer'
+import YoImgViewer from "@/packages/YoImg/src/YoImageViewer";
+import YoPdfViewer from "@/packages/YoFile/src/YoPdfViewer";
 export default {
-  name: 'YoFile',
+  name: "YoFile",
   props: {
     ids: {
       type: String,
@@ -94,7 +101,7 @@ export default {
     fileExtension: {
       type: String,
       required: false,
-      default: ''
+      default: ""
     },
     Extension: {
       type: Object,
@@ -102,8 +109,8 @@ export default {
       default: () => {
         return {
           isCheckExtension: false,
-          formation: '符合'
-        }
+          formation: "符合"
+        };
       }
     },
     // 支持多选文件
@@ -140,255 +147,270 @@ export default {
       default: false
     }
   },
-  components: {YoImgViewer},
-  data: function () {
+  components: { YoImgViewer, YoPdfViewer },
+  data: function() {
     return {
       // action:process.env.API + "/api/Attach/SaveAttach", //上传附件接口地址
-      action: this.apiUrl + '/api/Attach/SaveAttach', // 上传附件接口地址
+      action: this.apiUrl + "/api/Attach/SaveAttach", // 上传附件接口地址
       autoupload: true, // 自动上传
-      imageUrl: '', // uploadType=1时候 显示图片  //"http://wx3.sinaimg.cn/large/006nLajtly1fpi9ikmj1kj30dw0dwwfq.jpg"
+      imageUrl: "", // uploadType=1时候 显示图片  //"http://wx3.sinaimg.cn/large/006nLajtly1fpi9ikmj1kj30dw0dwwfq.jpg"
       fileList: [], // 附件列表(本次上传的)
       fileListOrg: [], // 原始附件列表-默认带着的
       dialogVisible: false, // 显示预览
-      dialogTitle: '', // 预览标题
+      pdfdialogVisible: false,
+      pdfVuewerSrc: "",
+      dialogTitle: "", // 预览标题
       showFileList: [], // 需要提交的文件列表
-      delInd: '', // 待删除的文件索引
-      singleFile: '', // 单个文件
-      
+      delInd: "", // 待删除的文件索引
+      singleFile: "", // 单个文件
+
       PriviewStartIndex: 0, //預覽index
       StorageKey: "_ImgViewSrcCache"
-    }
+    };
   },
-  created: function () {
+  created: function() {
     // console.log("created:" + this.ids);
-    this.loadData(this.ids)
+    this.loadData(this.ids);
   },
-  mounted: function () {
-
-  },
+  mounted: function() {},
   watch: {
-    ids: function (val) {
-      console.log('watch ids:' + val)
+    ids: function(val) {
+      console.log("watch ids:" + val);
       // 变化后 持续加载附件
-      this.loadData(this.ids)
+      this.loadData(this.ids);
     },
-    showFileList: function (newVal, fromVal) {
+    showFileList: function(newVal, fromVal) {
       // console.log(newVal)
       // TODO:
     }
   },
   // 计算属性
   computed: {
-    AllfileList: function () {
+    AllfileList: function() {
       // 所有附件
-      //    debugger;
-      var allList = []
+      var allList = [];
       if (this.fileListOrg != null && this.fileListOrg.length > 0) {
-        allList = allList.concat(this.fileListOrg)
+        allList = allList.concat(this.fileListOrg);
       }
       if (this.showFileList != null && this.showFileList.length > 0) {
-        allList = allList.concat(this.showFileList)
+        allList = allList.concat(this.showFileList);
       }
 
-      return allList
+      return allList;
     },
-    IsShow: function () {
+    IsShow: function() {
       if (this.uploadType === 1 && this.imageUrl.length > 0) {
-        return false
+        return false;
       } else {
-        return true
+        return true;
       }
     },
-    ExData: function () {
+    ExData: function() {
       // 附加信息
-      var param = {}
-      param.test = 'admin'
+      var param = {};
+      param.test = "admin";
       if (this.exData != null) {
-        Object.assign(param, this.exData)
+        Object.assign(param, this.exData);
       }
-      return param
+      return param;
     },
     // 文件列表的显示类型
-    ListType: function () {
+    ListType: function() {
       if (this.uploadType === 1) {
-        return 'picture-card'
+        return "picture-card";
       } else if (this.uploadType === 2) {
-        return 'picture-card'
+        return "picture-card";
       } else {
-        return 'text'
+        return "text";
       }
     },
     // 显示文件列表:单图片时候不显示
-    IsShowFileList: function () {
+    IsShowFileList: function() {
       if (this.uploadType === 1) {
-        return false
+        return false;
       } else {
-        return true
+        return true;
       }
     },
     // 允许的文件类型
-    FileAccept: function () {
-      var acceptstr = ''
+    FileAccept: function() {
+      var acceptstr = "";
       if (this.fileExtension.length > 0) {
-        acceptstr = this.fileExtension
+        acceptstr = this.fileExtension;
       } else {
         // 未单独指定的 根据uploadType自定义
         if (this.uploadType === 1 || this.uploadType === 2) {
           // 图片的
-          acceptstr = '.jpg,.jpeg,.png,.ico,.gif,.svg,.pdf'
+          acceptstr = ".jpg,.jpeg,.png,.ico,.gif,.svg,.pdf";
         }
       }
-      return acceptstr
+      return acceptstr;
     },
     // 显示的 提示语
-    Tip: function () {
-      var tipStr = ''
+    Tip: function() {
+      var tipStr = "";
       if (this.FileAccept.length > 0) {
-        tipStr += '只能上传 ' + this.FileAccept + ' 类型的文件,'
+        tipStr += "只能上传 " + this.FileAccept + " 类型的文件,";
       }
       if (this.FileLimit > 0) {
-        tipStr += '允许上传最多' + this.FileLimit + '个文件,'
+        tipStr += "允许上传最多" + this.FileLimit + "个文件,";
       }
       if (this.fileSize > 0) {
-        //   debugger;
-        var sizeStr = this.fileSize + 'B,'
+        var sizeStr = this.fileSize + "B,";
         if (this.fileSize < 1024) {
         } else if (this.fileSize < 1024 * 1024) {
-          sizeStr = Math.round(this.fileSize / 1024, 2) + 'KB,'
+          sizeStr = Math.round(this.fileSize / 1024, 2) + "KB,";
         } else {
           // M
-          sizeStr = Math.round(this.fileSize / 1024 / 1024, 2) + 'MB,'
+          sizeStr = Math.round(this.fileSize / 1024 / 1024, 2) + "MB,";
         }
-        tipStr += '单个文件不能超过' + sizeStr
+        tipStr += "单个文件不能超过" + sizeStr;
       }
       if (tipStr.length > 0) {
-        tipStr = tipStr.substring(0, tipStr.length - 1)
+        tipStr = tipStr.substring(0, tipStr.length - 1);
       }
-      return tipStr
+      return tipStr;
     },
     // 是否显示提示
-    IsShowTip: function () {
-      // debugger;
-      return this.isShowTip && this.Tip.length > 0
+    IsShowTip: function() {
+      return this.isShowTip && this.Tip.length > 0;
     },
     // 是否允许多选
-    IsMultiple: function () {
+    IsMultiple: function() {
       if (this.uploadType === 1) {
-        return false
+        return false;
       } else {
-        return this.isMultiple
+        return this.isMultiple;
       }
     },
     // 文件上传数量
-    FileLimit: function () {
+    FileLimit: function() {
       if (this.uploadType === 1) {
-        return 1
+        return 1;
       } else {
-        return this.fileLimit
+        return this.fileLimit;
       }
     }
   },
   methods: {
-    // 关闭查看器
-    closeViewer() {
-      this.dialogVisible = false;
-    },
-    fileListContainId: function (id) {
+    fileListContainId: function(id) {
       // 判断指定ID是否在fileList里面
-      var that = this
+      var that = this;
       for (var i = 0; i < that.showFileList.length; i++) {
         if (that.showFileList[i].id === id) {
-          return true
+          return true;
         }
       }
-      return false
+      return false;
     },
-    loadData: function (ids) {
-      var that = this
+    loadData: function(ids) {
+      var that = this;
       if (ids == null || ids === undefined || ids.length === 0) {
-        that.showFileList = []
-        that.fileList = []
-        that.fileListOrg = []
-        that.imageUrl = ''
-        that.singleFile = {}
-        return false
+        that.showFileList = [];
+        that.fileList = [];
+        that.fileListOrg = [];
+        that.imageUrl = "";
+        that.singleFile = {};
+        return false;
       }
-      debugger
-      var idArr = ids.split(',')
-      var loadId = []
+      var idArr = ids.split(",");
+      var loadId = [];
       // 先判断id 是否加载过了
-      idArr.forEach(function (id) {
+      idArr.forEach(function(id) {
         if (!that.fileListContainId(id)) {
-          loadId.push(id)
+          loadId.push(id);
         }
-      })
+      });
       if (loadId.length === 0) {
-        return false
-      };
-      var newIds = loadId.join(',')
+        return false;
+      }
+      var newIds = loadId.join(",");
       // console.log(process.env.API);
       // console.log(this.apiUrl)
 
-      var param = {}
-      param['ids'] = newIds
-      that.$http.post(that.apiUrl + '/api/Attach/GetAttachs', param).then(resp => {
-        resp.forEach(function (file) {
-          var item = {}
-          item.id = file.id
-          item.sign = file.sign
-          item.timestamp = file.timestamp
-          item.name = file.name
-          item.size = file.size
-          item.type = file.type
-          if (that.isImgType(item.type)) {
-            item.orgurl =
-              //  process.env.API +
-                that.apiUrl + '/api/Attach/ShowImage?id=' +
+      var param = {};
+      param["ids"] = newIds;
+      that.$http
+        .post(that.apiUrl + "/api/Attach/GetAttachs", param)
+        .then(resp => {
+          resp.forEach(function(file) {
+            var item = {};
+            item.id = file.id;
+            item.sign = file.sign;
+            item.timestamp = file.timestamp;
+            item.name = file.name;
+            item.size = file.size;
+            item.type = file.type;
+            if (that.isImgType(item.type)) {
+              item.orgurl =
+                //  process.env.API +
+                that.apiUrl +
+                "/api/Attach/ShowImage?id=" +
                 file.id +
-                '&sign=' +
+                "&sign=" +
                 file.sign +
-                '&timestamp=' +
-                file.timestamp
-            item.url =
-              //  process.env.API +
-                that.apiUrl + '/api/Attach/ShowThumbImage?id=' +
+                "&timestamp=" +
+                file.timestamp;
+              item.url =
+                //  process.env.API +
+                that.apiUrl +
+                "/api/Attach/ShowThumbImage?id=" +
                 file.id +
-                '&sign=' +
+                "&sign=" +
                 file.sign +
-                '&timestamp=' +
-                file.timestamp
-                
+                "&timestamp=" +
+                file.timestamp;
+
               that.AddSrcCache(item); //添加到預覽緩存
-          } else {
-            // 非图片
+            } 
+            else if (that.isCanPreviewPDFType(item.type)) {
             item.orgurl =
-              //  process.env.API +
-                that.apiUrl + '/api/Attach/Download?id=' +
+              that.apiUrl +
+              "/api/Attach/Download?id=" +
+              file.id +
+              "&sign=" +
+              file.sign +
+              "&timestamp=" +
+              file.timestamp;
+               item.url =
+              that.apiUrl +
+              "/api/Attach/ShowPDF?id=" +
+              file.id +
+              "&sign=" +
+              file.sign +
+              "&timestamp=" +
+              file.timestamp;
+          } 
+            else {
+              // 非图片
+              item.orgurl =
+                //  process.env.API +
+                that.apiUrl +
+                "/api/Attach/Download?id=" +
                 file.id +
-                '&sign=' +
+                "&sign=" +
                 file.sign +
-                '&timestamp=' +
-                file.timestamp
-            item.url = item.orgurl
-          }
-          if (that.uploadType === 1) {
-            that.singleFile = item
-            that.imageUrl = item.url
-          } else {
-            that.fileList.push(item)
-            that.showFileList.push(item)
-          }
-          that.handleId()
+                "&timestamp=" +
+                file.timestamp;
+              item.url = item.orgurl;
+            }
+            if (that.uploadType === 1) {
+              that.singleFile = item;
+              that.imageUrl = item.url;
+            } else {
+              that.fileList.push(item);
+              that.showFileList.push(item);
+            }
+            that.handleId();
+          });
         })
-      })
         .catch(err => {
-          console.error(err)
-          astec.showErrorToast(err.Message)
-        })
+          console.error(err);
+          astec.showErrorToast(err.Message);
+        });
     },
     //添加到預覽緩存組中
     AddSrcCache: function(item) {
-      // debugger;
       var id = item.id;
       var src = item.orgurl;
       let that = this;
@@ -407,7 +429,7 @@ export default {
       cacheData[that.group] = obj;
       sessionStorage.setItem(that.StorageKey, JSON.stringify(cacheData));
     },
-    
+
     //獲取地址所在index
     GetIndexByCache: function(id) {
       let that = this;
@@ -431,9 +453,8 @@ export default {
       }
       return -1;
     },
-     //獲取當前分組的緩存列表
+    //獲取當前分組的緩存列表
     GetSrcListByCache: function() {
-      // debugger;
       let that = this;
       let list = [];
       let titleArr = [];
@@ -451,313 +472,388 @@ export default {
       return list;
     },
     // 判断是否图片
-    isImgType: function (filetype) {
+    isImgType: function(filetype) {
       var ctypeArr = [
-        'image/png',
-        'image/jpeg',
-        'image/gif',
-        'image/tiff',
-        'image/x-icon',
-        'application/x-bmp'
-      ]
+        "image/png",
+        "image/jpeg",
+        "image/gif",
+        "image/tiff",
+        "image/x-icon",
+        "application/x-bmp"
+      ];
       if (ctypeArr.indexOf(filetype) >= 0) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
     },
-    onPreview: function (file) {
+    // 判断是可做PDF预览的 .doc/.docx之类
+    isCanPreviewPDFType: function(filetype) {
+      var ctypeArr = [
+        "application/pdf", //.pdf
+        "application/msword", //.doc|.docx
+        "application/vnd.ms-excel" //.xls|.xlsx
+        // "text/plain" //.txt
+      ];
+      if (ctypeArr.indexOf(filetype) >= 0) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    onPreview: function(file) {
       // 点击文件列表中已上传的文件时的钩子
-      console.log('onPreview.')
+      console.log("onPreview.");
       if (this.isImgType(file.type)) {
-        this.handlePreview(file)
+        this.handlePreview(file);
+      } else if (this.isCanPreviewPDFType(file.type)) {
+        this.handlePreviewPdf(file);
       } else {
         // 直接触发下载
-        this.handleDownLoad(file.url)
+        this.handleDownLoad(file.url);
       }
     },
-    onRemove: function (file, fileList) {
-      if (file && file.status === 'success') {
+    onRemove: function(file, fileList) {
+      if (file && file.status === "success") {
         // 文件列表移除文件时的钩子
-        var that = this
-        if(that.readOnly) {
+        var that = this;
+        if (that.readOnly) {
           return;
         }
-        var delFile = this.delInd !== '' ? that.showFileList[this.delInd] : file
+        var delFile =
+          this.delInd !== "" ? that.showFileList[this.delInd] : file;
         if (this.delInd === 0) {
-          delFile = that.showFileList[0]
-        };
-        //   debugger;
+          delFile = that.showFileList[0];
+        }
         // 从服务器端删除
         that.$http
           .post(
             that.apiUrl +
-          '/api/Attach/Delete?id=' +
-            delFile.id +
-            '&sign=' +
-            delFile.sign +
-            '&timestamp=' +
-            delFile.timestamp
+              "/api/Attach/Delete?id=" +
+              delFile.id +
+              "&sign=" +
+              delFile.sign +
+              "&timestamp=" +
+              delFile.timestamp
           )
           .then(resp => {
-            console.log('remove file ' + delFile.id)
+            console.log("remove file " + delFile.id);
             // 移除列表
             if (that.uploadType === 1) {
-              that.imageUrl = ''
-              that.singleFile = {}
+              that.imageUrl = "";
+              that.singleFile = {};
             } else {
-              that.showFileList = that.showFileList.filter(t => t.id !== delFile.id)
+              that.showFileList = that.showFileList.filter(
+                t => t.id !== delFile.id
+              );
             }
-            that.handleId()
+            that.handleId();
           })
           .catch(err => {
-            astec.showErrorToast(err.Message)
-          })
+            astec.showErrorToast(err.Message);
+          });
       }
     },
-    onChange: function (file, fileList) {
+    onChange: function(file, fileList) {
       // 文件状态改变时的钩子，添加文件、上传成功和上传失败时都会被调用
     },
-    beforeUpload: function (file) {
+    beforeUpload: function(file) {
       // 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
-      console.log('beforeUpload..')
-      // debugger
+      console.log("beforeUpload..");
       if (this.fileSize > 0 && file.size > this.fileSize) {
-        this.$message.error('上传附件大小不能超过' + Math.round(this.fileSize / 1024 / 1024, 2) + 'MB!')
-        return false
+        this.$message.error(
+          "上传附件大小不能超过" +
+            Math.round(this.fileSize / 1024 / 1024, 2) +
+            "MB!"
+        );
+        return false;
       }
       if (this.Extension.isCheckExtension === true) {
-        let index = file.name.lastIndexOf('.')
-        let suffix = file.name
-        let str = suffix.substring(index,suffix.length )
-        let isLeagalFile = (this.fileExtension.indexOf(str) === -1)
-        if(isLeagalFile === true){
-          this.$message.error(`您选择的文件格式不正确，请上传${this.Extension.formation}格式文件！`)
+        let index = file.name.lastIndexOf(".");
+        let suffix = file.name;
+        let str = suffix.substring(index, suffix.length);
+        let isLeagalFile = this.fileExtension.indexOf(str) === -1;
+        if (isLeagalFile === true) {
+          this.$message.error(
+            `您选择的文件格式不正确，请上传${this.Extension.formation}格式文件！`
+          );
         }
-        return !isLeagalFile
+        return !isLeagalFile;
       }
     },
-    beforeRemove: function (file, fileList) {
+    beforeRemove: function(file, fileList) {
       // 删除文件之前的钩子，参数为上传的文件和文件列表，若返回 false 或者返回 Promise 且被 reject，则停止上传。
-      if(this.readOnly) {
-        return false
+      if (this.readOnly) {
+        return false;
       }
       if (file.id) {
-        this.delInd = ''
+        this.delInd = "";
       } else {
         for (let i = 0; fileList.length; i++) {
           if (file.name === fileList[i].name) {
-            this.delInd = i
-            break
-          };
-        };
+            this.delInd = i;
+            break;
+          }
+        }
       }
 
       // return astec.showConfirmDialog('警告', '确认要删除文件吗?', '', '')
     },
-    onExceed: function (files, fileList) {
+    onExceed: function(files, fileList) {
       // 文件超出个数限制时的钩子
-      console.log('onExceed..')
+      console.log("onExceed..");
       if (this.uploadType === 1) {
-        return true
+        return true;
       } else {
-        astec.showErrorToast('文件超出个数限制!')
-        return false
+        astec.showErrorToast("文件超出个数限制!");
+        return false;
       }
     },
-    httpRequest: function (param) {
-      var that = this
+    httpRequest: function(param) {
+      var that = this;
       // 自定义上传 ,否则无法获取当前用户--暂时先不用,因为无法获取正确的状态
-      //  debugger;
       //  return;
-      var form = new FormData()
-      form.append('file', param.file)
-      form.append('exData', param.file.uid)
+      var form = new FormData();
+      form.append("file", param.file);
+      form.append("exData", param.file.uid);
       if (that.allowAnonymous) {
         // 匿名附件
-        form.append('allowanonymous', true)
+        form.append("allowanonymous", true);
       }
       if (param.data) {
         // TODO:附加信息
       }
       //   that.$refs.upload.clearFiles();//
-      that.$http.post(param.action, form, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        onUploadProgress: progressEvent => {
-          let percent = (progressEvent.loaded / progressEvent.total * 100) | 0
-          // 调用onProgress方法来显示进度条，需要传递个对象 percent为进度值
-          param.onProgress({percent: percent})
-        }
-      }).then((response) => {
-        //  debugger;
-        console.log('upload success:' + response.id)
-        var item = {}
-        item.id = response.id
-        item.sign = response.sign
-        item.timestamp = response.timestamp
-        item.name = response.name
-        item.size = response.size
-        item.type = response.type
-        if (that.isImgType(item.type)) {
-          item.orgurl =
-            //  process.env.API
-              this.apiUrl + '/api/Attach/ShowImage?id=' +
+      that.$http
+        .post(param.action, form, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          },
+          onUploadProgress: progressEvent => {
+            let percent =
+              ((progressEvent.loaded / progressEvent.total) * 100) | 0;
+            // 调用onProgress方法来显示进度条，需要传递个对象 percent为进度值
+            param.onProgress({ percent: percent });
+          }
+        })
+        .then(response => {
+          console.log("upload success:" + response.id);
+          var item = {};
+          item.id = response.id;
+          item.sign = response.sign;
+          item.timestamp = response.timestamp;
+          item.name = response.name;
+          item.size = response.size;
+          item.type = response.type;
+          if (that.isImgType(item.type)) {
+            item.orgurl =
+              //  process.env.API
+              that.apiUrl +
+              "/api/Attach/ShowImage?id=" +
               response.id +
-              '&sign=' +
+              "&sign=" +
               response.sign +
-              '&timestamp=' +
-              response.timestamp
-          item.url =
-            //  process.env.API
-              this.apiUrl + '/api/Attach/ShowThumbImage?id=' +
+              "&timestamp=" +
+              response.timestamp;
+            item.url =
+              //  process.env.API
+              that.apiUrl +
+              "/api/Attach/ShowThumbImage?id=" +
               response.id +
-              '&sign=' +
+              "&sign=" +
               response.sign +
-              '&timestamp=' +
-              response.timestamp
-        } else {
-          // 非图片
-          item.orgurl =
-            //  process.env.API
-              this.apiUrl + '/api/Attach/Download?id=' +
+              "&timestamp=" +
+              response.timestamp;
+          } else if (that.isCanPreviewPDFType(item.type)) {
+            item.orgurl =
+              that.apiUrl +
+              "/api/Attach/Download?id=" +
               response.id +
-              '&sign=' +
+              "&sign=" +
               response.sign +
-              '&timestamp=' +
-              response.timestamp
-          item.url = item.orgurl
-        }
+              "&timestamp=" +
+              response.timestamp;
+               item.url =
+              that.apiUrl +
+              "/api/Attach/ShowPDF?id=" +
+              response.id +
+              "&sign=" +
+              response.sign +
+              "&timestamp=" +
+              response.timestamp;
+          } else {
+            // 非图片
+            item.orgurl =
+              //  process.env.API
+              that.apiUrl +
+              "/api/Attach/Download?id=" +
+              response.id +
+              "&sign=" +
+              response.sign +
+              "&timestamp=" +
+              response.timestamp;
+            item.url = item.orgurl;
+          }
 
-        if (that.uploadType === 1) {
-        // 显示
-          that.singleFile = item
-          that.imageUrl = item.url
-          that.dialogTitle = item.name
-        } else {
-          that.fileList.push(item)
-          that.showFileList.push(item)
-        }
-        that.handleId()
-        that.$emit('callback', that.AllfileList) // 触发回调
-        // 上传成功 调用onSuccess方法，否则没有完成图标
-        // 处理自己的逻辑
-        param.onSuccess()
-      }).catch(() => {
-        // 上传失败 调用onError方法
-        // 处理自己的逻辑
-        param.onError()
-      })
+          if (that.uploadType === 1) {
+            // 显示
+            that.singleFile = item;
+            that.imageUrl = item.url;
+            that.dialogTitle = item.name;
+          } else {
+            that.fileList.push(item);
+            that.showFileList.push(item);
+          }
+          that.handleId();
+          that.$emit("callback", that.AllfileList); // 触发回调
+          // 上传成功 调用onSuccess方法，否则没有完成图标
+          // 处理自己的逻辑
+          param.onSuccess();
+        })
+        .catch(() => {
+          // 上传失败 调用onError方法
+          // 处理自己的逻辑
+          param.onError();
+        });
     },
-    handleRemove: function (file) {
-      var that = this
-      that.onRemove(file, null)
-      that.imageUrl = ''
+    handleRemove: function(file) {
+      var that = this;
+      that.onRemove(file, null);
+      that.imageUrl = "";
       // astec
       //   .showConfirmDialog('警告', '确认要删除文件吗?', '', '')
       //   .then(function () {
       //     that.onRemove(file, null)
       //   })
     },
-    handlePreview: function (file) {
+
+    //用于预览新上传的照片
+    handlePreviewNew: function(file) {
+      let that = this;
+      if (that.AllfileList && that.AllfileList.length > 0 && file.name) {
+        that.AllfileList.forEach(function(item) {
+          if (item.name == file.name) {
+            // console.log("找到了");
+            that.handlePreview(item.orgurl, item, name);
+          }
+        });
+      }
+    },
+    //预览照片
+    handlePreview: function(file) {
       this.dialogVisible = true;
       this.PriviewStartIndex = this.GetIndexByCache(file.id);
     },
-    handleId: function () {
-      var that = this
+    //预览PDF
+    handlePreviewPdf: function(file) {
+      // console.log("预览PDF");
+      // console.log(file);
+      this.pdfdialogVisible = true;
+      this.pdfVuewerSrc =file.url;
+    },
+    // 关闭图片预览
+    closeViewer() {
+      this.dialogVisible = false;
+    },
+    //关闭PDF预览
+    closePdfViewer() {
+      this.pdfdialogVisible = false;
+      this.pdfVuewerSrc = "";
+    },
+    handleId: function() {
+      var that = this;
       // 回调IDs用
-      var newIds = ''
+      var newIds = "";
       if (that.uploadType === 1) {
-        newIds = that.singleFile.id
+        newIds = that.singleFile.id;
       } else {
-        that.AllfileList.forEach(function (file) {
+        that.AllfileList.forEach(function(file) {
           if (file.id) {
-            newIds += file.id + ','
+            newIds += file.id + ",";
           }
-        })
+        });
         if (newIds.length > 0) {
-          newIds = newIds.substring(0, newIds.length - 1)
+          newIds = newIds.substring(0, newIds.length - 1);
         }
       }
-      that.$emit('update:ids', newIds) // 双向绑定ids
-      that.$emit('update:id', newIds)
+      that.$emit("update:ids", newIds); // 双向绑定ids
+      that.$emit("update:id", newIds);
     },
     // 下载
-    handleDownLoad: function (url) {
+    handleDownLoad: function(url) {
       if (url.length > 0) {
-        url = url.toLowerCase().replace('showimage', 'download')
-        this.$refs.download_a.href = url
-        this.$refs.download_a.click()
+        url = url.toLowerCase().replace("showimage", "download");
+        this.$refs.download_a.href = url;
+        this.$refs.download_a.click();
       }
     }
   },
   beforeDestroy() {
-    sessionStorage.removeItem(this.StorageKey)
+    sessionStorage.removeItem(this.StorageKey);
   }
-}
+};
 </script>
 <style>
-    .avatar-uploader .el-upload {
-      border-radius: 6px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
+.avatar-uploader .el-upload {
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
 
-      .avatar-uploader .el-upload:hover {
-        border-color: #3B70C2;
-      }
+.avatar-uploader .el-upload:hover {
+  border-color: #3b70c2;
+}
 
-    .avatar-uploader-icon {
-      font-size: 28px;
-      color: #8c939d;
-      width: 148px;
-      height: 148px;
-      line-height: 148px !important;
-      text-align: center;
-    }
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 148px;
+  height: 148px;
+  line-height: 148px !important;
+  text-align: center;
+}
 
-    .avatar {
-      width: 148px;
-      height: 148px;
-      /* display: block; */
-    }
+.avatar {
+  width: 148px;
+  height: 148px;
+  /* display: block; */
+}
 
-    .el-icon-document {
-      height: auto !important;
-    }
+.el-icon-document {
+  height: auto !important;
+}
 
-    .el-upload-act:hover {
-      opacity: 0.7;
-      -webkit-transition: opacity 0.3s;
-      transition: opacity 0.3s;
-    }
+.el-upload-act:hover {
+  opacity: 0.7;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
 
-    .el-upload-act {
-      position: absolute;
-      width: 148px;
-      height: 148px;
-      line-height: 148px;
-      left: 0;
-      top: 0;
-      cursor: default;
-      text-align: center;
-      color: #fff;
-      opacity: 0;
-      font-size: 20px;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
+.el-upload-act {
+  position: absolute;
+  width: 148px;
+  height: 148px;
+  line-height: 148px;
+  left: 0;
+  top: 0;
+  cursor: default;
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  font-size: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
-    .el-upload-act-preview {
-      margin-right: 10px;
-      cursor: pointer;
-    }
+.el-upload-act-preview {
+  margin-right: 10px;
+  cursor: pointer;
+}
 
-    .el-upload-act-delete {
-      cursor: pointer;
-    }
-    /*.el-progress{
+.el-upload-act-delete {
+  cursor: pointer;
+}
+/*.el-progress{
     top: -136px;
   }*/
 </style>
