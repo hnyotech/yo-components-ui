@@ -21,7 +21,7 @@
     <div class="flexpic">
       <div v-for="file in fileList" :key="file.id" style="margin-right:3px;" >
         <!-- <img    alt="暂无图片"> -->
-        <el-image :src="file.url" width="200px" height="123px" style="margin-bottom:10px;border:1px solid #DDDDDD;" :title="file.name" @click="handlePreview(file)">
+        <el-image :src="file.url" width="200px" height="123px" style="margin-bottom:10px;border:1px solid #DDDDDD;" :title="file.name" @click="handlePreview(file)" lazy>
           <div slot="error" class="image-slot">
             <div class="errorInfo">无法加载图片</div>
           </div>

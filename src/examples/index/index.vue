@@ -97,7 +97,7 @@ export default {
     data () {
         return {
              apiUrl: process.env.AttachAPI,
-             Files:'k2037d15529e01f4d1ef87l',
+             Files:'k2037d15529e01f4d1ef87l,k2037g5548pg0020123bc7v',
             type1: 'primary',
             type2: 'default',
             type3: 'info',
