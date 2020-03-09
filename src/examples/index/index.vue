@@ -13,16 +13,16 @@
         <yo-file :uploadType="1"  :ids.sync="Files" :apiUrl="apiUrl"></yo-file>
         <yo-file :uploadType="3" :ids.sync="Files"  :apiUrl="apiUrl"></yo-file>
         <yo-img></yo-img>
-        <!-- <yo-input></yo-input> -->
+        <yo-input></yo-input>
         
-        <!-- <el-form>
+        <el-form>
             
         <yo-enum EnumName="sssss" label="123" prop="234"></yo-enum>
         <yo-city :api="''" :labelWidth="'120'" :label="'地址：'" @selectchange="selectchange()"></yo-city>
-        </el-form> -->
+        </el-form>
         
         
-      <!-- <yo-content>
+      <yo-content>
           <yo-grid ref="YoGrid"
             :quicksearchPlaceholder="'快速搜索公告编号'"
             :requireData.sync="requireData"
@@ -62,7 +62,7 @@
                 </el-table-column>
             </el-table>
         </yo-grid>
-      </yo-content> -->
+      </yo-content>
     </div>
 </template>
 <script>
@@ -97,7 +97,7 @@ export default {
     data () {
         return {
              apiUrl: process.env.AttachAPI,
-             Files:'k2037d15529e01f4d1ef87l,k2037g5548pg0020123bc7v',
+             Files:'k2037d15529e01f4d1ef87l,k2037g5548pg0020123bc7v,k2039e1524pb0010d31dc05',
             type1: 'primary',
             type2: 'default',
             type3: 'info',

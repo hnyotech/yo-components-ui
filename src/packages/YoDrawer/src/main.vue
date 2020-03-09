@@ -51,49 +51,7 @@ export default {
     };
   },
   computed: {
-    //pdf实际地址带显示控制，详见https://www.adobe.com/content/dam/acom/en/devnet/acrobat/pdfs/pdf_open_parameters.pdf
-    pdfSrc: function() {
-      let that = this;
-      let _src = that.src;
-      if (that.mimeType === "application/pdf") {
-        //pdf模式增加控制参数
-        if (!_src.endsWith("#")) {
-          _src += "#";
-        }
-        if (that.page > 0) {
-          _src += "page=" + that.page + "&";
-        }
-        if (that.view) {
-          _src += "view=" + that.view + "&";
-        }
-        // console.log("PDF Src:" + _src);
-      }
-
-      return _src;
-    },
-    pdftyle() {
-      const {
-        scale,
-        deg,
-        offsetX,
-        offsetY,
-        enableTransition,
-        width,
-        height
-      } = this.transform;
-      const style = {
-        transform: `scale(${scale}) rotate(${deg}deg)`,
-        transition: enableTransition ? "transform .3s" : "",
-        "margin-left": `${offsetX}px`,
-        "margin-top": `${offsetY}px`,
-        width: `${width}`,
-        height: `${height}`
-      };
-      // if (this.mode === Mode.CONTAIN) {
-      //   style.maxWidth = style.maxHeight = "100%";
-      // }
-      return style;
-    }
+    
   },
   methods: {
     //显示错误提示

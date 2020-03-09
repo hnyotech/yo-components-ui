@@ -362,26 +362,24 @@ export default {
                 file.timestamp;
 
               that.AddSrcCache(item); //添加到預覽緩存
-            } 
-            else if (that.isCanPreviewPDFType(item.type)) {
-            item.orgurl =
-              that.apiUrl +
-              "/api/Attach/Download?id=" +
-              file.id +
-              "&sign=" +
-              file.sign +
-              "&timestamp=" +
-              file.timestamp;
-               item.url =
-              that.apiUrl +
-              "/api/Attach/ShowPDF?id=" +
-              file.id +
-              "&sign=" +
-              file.sign +
-              "&timestamp=" +
-              file.timestamp;
-          } 
-            else {
+            } else if (that.isCanPreviewPDFType(item.type)) {
+              item.orgurl =
+                that.apiUrl +
+                "/api/Attach/Download?id=" +
+                file.id +
+                "&sign=" +
+                file.sign +
+                "&timestamp=" +
+                file.timestamp;
+              item.url =
+                that.apiUrl +
+                "/api/Attach/ShowPDF?id=" +
+                file.id +
+                "&sign=" +
+                file.sign +
+                "&timestamp=" +
+                file.timestamp;
+            } else {
               // 非图片
               item.orgurl =
                 //  process.env.API +
@@ -673,7 +671,7 @@ export default {
               response.sign +
               "&timestamp=" +
               response.timestamp;
-               item.url =
+            item.url =
               that.apiUrl +
               "/api/Attach/ShowPDF?id=" +
               response.id +
@@ -746,10 +744,22 @@ export default {
     },
     //预览PDF
     handlePreviewPdf: function(file) {
-      // console.log("预览PDF");
+      // console.log("预览PDF:"+file.url);
       // console.log(file);
-      this.pdfdialogVisible = true;
-      this.pdfVuewerSrc =file.url;
+      let that = this;
+      if (that.pdfdialogVisible) {
+        // console.log("已经打开了 先关闭 0.2后打开");
+        that.pdfdialogVisible = false;
+        that.pdfVuewerSrc = "";
+        setTimeout(() => {
+          //不这么搞是不能重复打开的.by Z.C
+          that.pdfdialogVisible = true;
+          that.pdfVuewerSrc = file.url;
+        }, 200);
+      } else {
+        that.pdfdialogVisible = true;
+        that.pdfVuewerSrc = file.url;
+      }
     },
     // 关闭图片预览
     closeViewer() {
