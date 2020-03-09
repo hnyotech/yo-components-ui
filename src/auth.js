@@ -90,7 +90,7 @@ export default {
       }
       return response
     }, function (error) {
-      debugger
+      // debugger
       if (error && error.response) {
         if (that._isRefreshTokenReq(error.config)) {
           console.debug('请求token的时候异常了 直接退出登录吧')
