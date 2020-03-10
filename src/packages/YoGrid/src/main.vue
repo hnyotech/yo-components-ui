@@ -43,25 +43,6 @@
       >
         <el-row :gutter="40">
           <el-col v-if="realData.IsNeedBusiness" :span="8">
-            <el-form-item label="业务类型：" prop="BusinessTypeParentId">
-              <el-select
-                placeholder="请选择业务类型"
-                v-model="realData.params.BusinessTypeParentId"
-                clearable
-                style="width:100%"
-                @clear="clearData('BusinessTypeParentId')"
-                @change="selparentBusi"
-              >
-                <el-option
-                  v-for="item in BusinessTypeParentIds"
-                  :key="item.BusinessTypeId"
-                  :label="item.BusinessTypeName"
-                  :value="item.BusinessTypeId"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col v-if="realData.IsNeedBusiness" :span="8">
             <el-form-item label="标的类型：" prop="BusinessTypeId">
               <el-select
                 placeholder="请选择标的类型"
@@ -222,8 +203,7 @@ export default {
       realData: this.gridData,
       TotalCount: 0,
       loading: false,
-      BusinessTypeParentIds: [], // 业务类型集合
-      BusinessTypeIds: [] // 标的l类型
+      BusinessTypeIds: [] // 标的类型
     };
   },
   beforeCreate() {},
@@ -337,15 +317,6 @@ export default {
   },
 
   methods: {
-    selparentBusi(val) {
-      this.clearData('BusinessTypeId')
-      let obj = this.BusinessTypeParentIds.find(item => item.BusinessTypeId === val)
-      if(obj){
-      this.BusinessTypeIds = obj.Children;
-      }else {
-      this.BusinessTypeIds = [];
-      }
-    },
     getBusinessPT() {
       let that = this
       let tradingOrgId = that.$store.getters.user.TradingOrgId;
@@ -354,14 +325,7 @@ export default {
           "/api/TradingOrg/QueryBusinessTypeList?tradingOrgId=" + tradingOrgId
         )
         .then(res => {
-          that.BusinessTypeParentIds = res;
-          let obj = that.BusinessTypeParentIds.find(
-            item =>
-              item.BusinessTypeId === that.realData.params.BusinessTypeParentId
-          );
-          if (obj) {
-            that.BusinessTypeIds = obj.Children;
-          }
+          that.BusinessTypeIds = res;
         });
     },
     chooseSaler(index) {
