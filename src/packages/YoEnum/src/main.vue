@@ -4,7 +4,7 @@
           <el-option v-for="item in options" :key="item.Value" :label="item.Description" :value="item.Value">
           </el-option>
       </el-select>
-      <el-radio-group v-else v-model="selectedValue" @change="handleChange">
+      <el-radio-group v-else v-model="selectedValue">
         <el-radio v-for="item in options" :key="item.Value" :label="item.Value">{{item.Description}}</el-radio>
       </el-radio-group>
   </el-form-item>
@@ -70,8 +70,8 @@ export default {
     this.selectedValue = this.selValue
   },
   watch: {
-    selValue: function (val) {
-      this.selectedValue = val
+    selectedValue: function (val) {
+      this.$emit('update:selValue', val)
     },
     EnumName: function (val) {
       this.bindEnumlist()
@@ -84,10 +84,6 @@ export default {
         .then(function (res) {
           self.options = res
         })
-    },
-    handleChange (val) {
-      this.$emit('update:selValue', val)
-      this.$emit('selectChange', val)
     }
   },
   mounted: function () {
