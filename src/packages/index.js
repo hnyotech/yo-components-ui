@@ -32,6 +32,7 @@ import YoTime from '../packages/YoControlsTime/src/main';
 import YoTable from '../packages/YoTable/src/main';
 import YoRow from '../packages/YoRow/src/main';
 import YoCol from '../packages/YoCol/src/main';
+import YoDialogViewer from "../packages/YoDialogViewer/src/main.vue";
 const components = [
   YoButton,
   YoHeader,
@@ -64,7 +65,8 @@ const components = [
   YoTime, // 添加标的动态控件 5
   YoTable,
   YoRow,
-  YoCol
+  YoCol,
+  YoDialogViewer,
 ];
 const install = function(Vue, opts = {}) {
   components.forEach(component => {
@@ -108,6 +110,7 @@ const yoComponents ={
   YoTime, // 添加标的动态控件 5
   YoTable,
   YoRow,
-  YoCol
+  YoCol,
+  YoDialogViewer,
 }
 export default yoComponents;

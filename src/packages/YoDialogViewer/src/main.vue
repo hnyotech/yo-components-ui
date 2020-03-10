@@ -16,7 +16,7 @@
           <i class="el-icon-close" @click="hide" title="关闭"></i>
         </div>
       </div>
-      <div class="yo-pdf-viewer-mask"  :class="CustosmMaskClassObject"></div>
+      <div class="yo-pdf-viewer-mask" :class="CustosmMaskClassObject"></div>
       <span class="el-image-viewer__btn el-image-viewer__close" @click="hide" v-if="isFullScreen">
         <i class="el-icon-circle-close" v-if="fullScreenClose"></i>
         <i class="el-icon-c-scale-to-original" v-if="!fullScreenClose"></i>
@@ -78,10 +78,8 @@ export default {
       type: Function,
       default: () => {}
     },
-    CustosmCanvasClass:{
-    },
-        CustosmMaskClass:{
-    }
+    CustosmCanvasClass: {},
+    CustosmMaskClass: {}
   },
   components: {},
 
@@ -120,18 +118,16 @@ export default {
         return Mode.Dialog;
       }
     },
-    CustosmMaskClassObject(){
-      if(this.CustosmMaskClass){
+    CustosmMaskClassObject() {
+      if (this.CustosmMaskClass) {
         return this.CustosmMaskClass;
-      }
-      else{
+      } else {
         // :class="isFullScreen?'fullscreen':'dialog'"
-      return {
-      fullscreen: this.isFullScreen,
-      dialog: !this.isFullScreen
-    }
+        return {
+          fullscreen: this.isFullScreen,
+          dialog: !this.isFullScreen
+        };
       }
-
     },
     viewerDivStyle() {
       const style = {
@@ -209,9 +205,10 @@ export default {
     handleMouseDown(e) {
       let that = this;
       // if (that.loading || e.button !== 0) return;
-      // console.log("鼠标按下");
+      console.log("鼠标按下");
       // console.log(e);
-
+      //首先移除一下之前的吧 免得有没移除掉的
+      off(document, "mousemove", that._dragHandler);
       if (that.realmode === Mode.Dialog) {
         //窗口模式
         const { top, left, width, height } = that.DialogStyle;
@@ -243,10 +240,10 @@ export default {
 
             that.DialogStyle.width = newWidth;
             that.DialogStyle.height = newHeight;
-            this.$emit("onYoZooming",ev);
+            this.$emit("onYoZooming", ev);
           } else {
             that.ismoving = true;
-            // console.log("moving...");
+            console.log("moving...");
             let newTop = top + ev.pageY - startY;
             let newLeft = left + ev.pageX - startX;
             // console.log(" newTop:"+ newTop+", newLeft:"+newLeft)
@@ -255,16 +252,16 @@ export default {
             }
             that.DialogStyle.top = newTop;
             that.DialogStyle.left = newLeft;
-            this.$emit("onYoMoveing",ev); //触发一下事件
+            this.$emit("onYoMoveing", ev); //触发一下事件
           }
         });
         on(document, "mousemove", that._dragHandler);
         on(document, "mouseup", ev => {
           if (that.ismoving) {
-            this.$emit("onYoMoveEnd",ev);
+            this.$emit("onYoMoveEnd", ev);
           }
           if (that.iszooming) {
-            this.$emit("onYoZoomEnd",ev);
+            this.$emit("onYoZoomEnd", ev);
           }
           that.ismoving = false;
           that.iszooming = false;
