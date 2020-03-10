@@ -1,42 +1,34 @@
 <template>
-  <transition name="viewer-fade">
-    <div
-      tabindex="-1"
-      ref="el-image-viewer__wrapper"
-      class="el-image-viewer__wrapper"
-      :style="{ 'z-index': zIndex }"
-      v-loading="loading"
-    element-loading-background="rgba(0, 0, 0, 0.2)"
-    >
-      <div class="el-image-viewer__mask"></div>
-      <span class="el-image-viewer__btn el-image-viewer__close" @click="hide">
-        <i class="el-icon-circle-close"></i>
-      </span>
-      <div class="el-image-viewer__canvas">
-        <embed
-          v-show="true"
-          :src="realpdfSrc"
-          :type="mimeType"
-          class="el-image-viewer__img"
-          :style="pdftyle"
-          @load="handlePdfLoad"
-        />
-      </div>
-    </div>
-  </transition>
+  <yo-dialog-viewer
+    :on-close="hide"
+    :z-index="zIndex"
+    @onYoZooming="handleYoZooming"
+    @onYoMoveing="handleYoMoveing"
+    @onYoZoomEnd="handleYoZoomEnd"
+    @onYoMoveEnd="handleYoMoveEnd"
+     :custosm-canvas-class="{'yo-pad-viewer-custom-canvas': true}"
+     :custosm-mask-class="{'yo-pad-viewer-custom-mask': true}"
+  >
+    <embed
+      v-show="true"
+      :src="realpdfSrc"
+      :type="mimeType"
+      class="el-image-viewer__img"
+      :style="pdftyle"
+      @load="handlePdfLoad"
+    />
+  </yo-dialog-viewer>
 </template>
 <script type="text/javascript">
-import { on, off } from "element-ui/src/utils/dom";
-import { rafThrottle, isFirefox } from "element-ui/src/utils/util";
+import YoDialogViewer from "@/packages/YoDialogViewer/src/main.vue";
 const Mode = {
   FullScreen: {
-    name: "FullScreen",
+    name: "FullScreen"
   },
   Dialog: {
-    name: "Dialog",    
+    name: "Dialog"
   }
 };
-const mousewheelEventName = isFirefox() ? "DOMMouseScroll" : "mousewheel";
 export default {
   name: "YoPdfViewer",
   props: {
@@ -66,17 +58,19 @@ export default {
     },
     //显示模式，不建议改，现在默认是适用屏幕，全屏可以改成"FitH,top",或者空
     view: {
-      type: String,
-      default: "Fit"
+      type: String
+      // default: "Fit"
     }
   },
-  components: {},
+  components: { YoDialogViewer },
   data: function() {
     return {
-      isShow: false,//没什么作用 不显示也不糊加载
+      isShow: false, //没什么作用 不显示也不糊加载
       realpdfSrc: "", //实际显示的PDF地址
       loading: true,
-      mode: Mode.FullScreen,
+      mode: Mode.Dialog,
+      ismoving: false,
+      iszooming: false,
       transform: {
         width: "100%",
         height: "100%",
@@ -85,9 +79,20 @@ export default {
         offsetX: 0,
         offsetY: 0,
         enableTransition: false
+      },
+      DialogStyle: {
+        width: 800,
+        height: 600,
+        top: 0,
+        left: 0
       }
     };
   },
+  // watch:{
+  //   src:function (val) {
+  //     console.log("src="+val)
+  //   }
+  // },
   computed: {
     //pdf实际地址带显示控制，详见https://www.adobe.com/content/dam/acom/en/devnet/acrobat/pdfs/pdf_open_parameters.pdf
     pdfSrc: function() {
@@ -103,8 +108,15 @@ export default {
         }
         if (that.view) {
           _src += "view=" + that.view + "&";
+        } else {
+          // _src += "view=Fit&";
+          if (this.mode === Mode.FullScreen) {
+            _src += "view=Fit&";
+          } else {
+            _src += "view=FitH,top&";
+          }
         }
-        // console.log("PDF Src:" + _src);
+        console.log("PDF Src:" + _src);
       }
 
       return _src;
@@ -120,42 +132,39 @@ export default {
         height
       } = this.transform;
       const style = {
-        transform: `scale(${scale}) rotate(${deg}deg)`,
+        transform: (this.ismoving||this.iszooming )? "" : `scale(${scale}) rotate(${deg}deg)`,
         transition: enableTransition ? "transform .3s" : "",
         "margin-left": `${offsetX}px`,
         "margin-top": `${offsetY}px`,
         width: `${width}`,
         height: `${height}`
       };
-      // if (this.mode === Mode.CONTAIN) {
-      //   style.maxWidth = style.maxHeight = "100%";
-      // }
       return style;
     }
   },
+
   methods: {
     //显示错误提示
-    showerr(msg){
-        var that = this;
-          that.loading=false;
-       that.$alert(msg,
-       {
-         showClose:false,
-         callback:function(action, instance){
-           that.hide();
-       }
-       });
+    showerr(msg) {
+      var that = this;
+      that.loading = false;
+      that.$alert(msg, {
+        showClose: false,
+        callback: function(action, instance) {
+          that.hide();
+        }
+      });
     },
     initSrc() {
       //測試地址 沒問題才顯示
       var that = this;
-      that.loading=true;
+      that.loading = true;
       var instance = that.$http.create();
-      instance.options(that.src).then(resp => 
-      {
+      instance
+        .options(that.src)
+        .then(resp => {
           if (resp.status == 200) {
             that.realpdfSrc = that.pdfSrc;
-             this.deviceSupportInstall();//载入按键事件
           } else if (resp.status == 204) {
             //接口主動返回的204 表示內容還沒有 友好提示
             that.showerr("文件正在转码，请稍后再试...");
@@ -166,52 +175,68 @@ export default {
         .catch(err => {
           console.log(err);
           if (err && err.response && err.response.status == 404) {
-             that.showerr("不支持预览!");
+            that.showerr("不支持预览!");
           } else {
-             that.showerr("加载失败!");
+            that.showerr("加载失败!");
           }
         });
     },
     hide() {
-      this.deviceSupportUninstall();
       this.onClose();
     },
-    //注册键盘事件 esc退出
-    deviceSupportInstall() {
-      this._keyDownHandler = rafThrottle(e => {
-        const keyCode = e.keyCode;
-        switch (keyCode) {
-          // ESC
-          case 27:
-            this.hide();
-            break;
-        }
-      });
-      on(document, "keydown", this._keyDownHandler);
+    fullscreen() {
+      //全屏
+      this.mode = Mode.FullScreen;
     },
-    //卸载键盘事件
-    deviceSupportUninstall() {
-      off(document, "keydown", this._keyDownHandler);
-      this._keyDownHandler = null;
-    },
-    handlePdfLoad(e, x) {
+
+    handlePdfLoad(e) {
       this.loading = false;
-      console.log("load");
+      // console.log("load");
       this.isShow = true; //加载完成显示
+    },
+    handleYoZooming(e) {
+      this.iszooming = true;
+    },
+    handleYoMoveing(e) {
+      this.ismoving = true;
+    },
+    handleYoZoomEnd(e) {
+      this.iszooming = false;
+    },
+    handleYoMoveEnd(e) {   
+      this.ismoving = false;
     }
   },
   created: function() {},
   mounted() {
     this.initSrc();
-   
-    this.$refs["el-image-viewer__wrapper"].focus();
-    
+    // this.$refs["el-image-viewer__wrapper"].focus();
   }
 };
 </script>
-<style scoped>
-.el-image-viewer__close {
-  top: 50px;
-  color: #fff;
+<style>
+.yo-pad-viewer-custom-canvas{
+position: initial !important;
 }
+.yo-pad-viewer-custom-mask{
+background: #000 !important;
+opacity: 0.5 !important;
+}
+/* 滚动条的不显示和美化，不好实现，别折腾了--来自前辈的关爱 */
+/* .el-image-viewer__img::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+.el-image-viewer__img::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+.el-image-viewer__img::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #555;
+}
+.el-image-viewer__img::-webkit-scrollbar {display:none} */
+
 </style>
