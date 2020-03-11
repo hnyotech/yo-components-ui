@@ -1,6 +1,6 @@
 <template>
   <el-form-item :label="label" :prop="prop" v-if="isNeedForm">
-      <el-select v-model="selectedValue" v-if="isDrop" :clearable="isClear" :disabled="disabled" :placeholder="'请选择' + label" @change="handleChange" @visible-change="visibleChange" style="width:100%">
+      <el-select v-model="selectedValue" v-if="isDrop" :clearable="isClear" :disabled="disabled" :placeholder="'请选择' + label" @visible-change="visibleChange" style="width:100%">
           <el-option v-for="item in options" :key="item.Value" :label="item.Description" :value="item.Value">
           </el-option>
       </el-select>
@@ -8,7 +8,7 @@
         <el-radio v-for="item in options" :key="item.Value" :label="item.Value">{{item.Description}}</el-radio>
       </el-radio-group>
   </el-form-item>
-  <el-select v-else v-model="selectedValue" :size="size" :clearable="isClear" :disabled="disabled" :placeholder="'请选择' + label" @change="handleChange" @visible-change="visibleChange" style="width:100%">
+  <el-select v-else v-model="selectedValue" :size="size" :clearable="isClear" :disabled="disabled" :placeholder="'请选择' + label" @visible-change="visibleChange" style="width:100%">
       <el-option v-for="item in options" :key="item.Value" :label="item.Description" :value="item.Value">
       </el-option>
   </el-select>
@@ -72,6 +72,7 @@ export default {
   watch: {
     selectedValue: function (val) {
       this.$emit('update:selValue', val)
+      this.$emit('selectChange', val)
     },
     EnumName: function (val) {
       this.bindEnumlist()
