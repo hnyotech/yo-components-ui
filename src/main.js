@@ -8,6 +8,8 @@ import router from './router'
 import ElementUI from 'element-ui'
 import Auth from '@/auth'
 import axios from 'axios'
+// 导入字体图标
+import '@/assets/font_system/iconfont.css'
 // 引用element-ui
 import 'element-ui/lib/theme-chalk/index.css'
 // 导入阻止elementUIselect重复点击崩溃的js
