@@ -32,6 +32,7 @@ import YoTime from '../packages/YoControlsTime/src/main';
 import YoTable from '../packages/YoTable/src/main';
 import YoRow from '../packages/YoRow/src/main';
 import YoCol from '../packages/YoCol/src/main';
+import YoDateWithBtn from '../packages/YoDateWithBtn/src/main';
 import YoDialogViewer from "../packages/YoDialogViewer/src/main.vue";
 const components = [
   YoButton,
@@ -66,6 +67,7 @@ const components = [
   YoTable,
   YoRow,
   YoCol,
+  YoDateWithBtn,
   YoDialogViewer,
 ];
 const install = function(Vue, opts = {}) {
@@ -111,6 +113,7 @@ const yoComponents ={
   YoTable,
   YoRow,
   YoCol,
+  YoDateWithBtn,
   YoDialogViewer,
 }
 export default yoComponents;
