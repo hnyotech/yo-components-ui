@@ -58,7 +58,13 @@
       :initialIndex="PriviewStartIndex"
       :titles="dialogTitle"
     ></yo-img-viewer>
-    <yo-pdf-viewer v-if="pdfdialogVisible" :on-close="closePdfViewer" :src="pdfVuewerSrc"></yo-pdf-viewer>
+    <yo-pdf-viewer
+      v-if="pdfdialogVisible"
+      :title="pdfViewerTitle"
+      :on-close="closePdfViewer"
+      :src="pdfViewerSrc"
+      :mime-type="mimeType"
+    ></yo-pdf-viewer>
     <a href ref="download_a" target="_blank" v-show="false"></a>
   </div>
 </template>
@@ -145,6 +151,23 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    //圖片預覽組件
+    imgViewer: {
+      type: String,
+      default: "YoImgViewer",
+      validator: function(value) {
+        if (value) {
+          var has = ["YoImgViewer", "YoPdfViewer"].indexOf(value) !== -1;
+          if(!has){
+            console.error("props参数必须匹配下面的值之一:['YoImgViewer','YoPdfViewer']")
+          }
+          return has;
+        } else {
+          //空的 表示默認
+          return true;
+        }
+      }
     }
   },
   components: { YoImgViewer, YoPdfViewer },
@@ -158,7 +181,9 @@ export default {
       fileListOrg: [], // 原始附件列表-默认带着的
       dialogVisible: false, // 显示预览
       pdfdialogVisible: false,
-      pdfVuewerSrc: "",
+      pdfViewerSrc: "",
+      pdfViewerTitle: "",
+      mimeType: "",
       dialogTitle: "", // 预览标题
       showFileList: [], // 需要提交的文件列表
       delInd: "", // 待删除的文件索引
@@ -490,7 +515,8 @@ export default {
       var ctypeArr = [
         "application/pdf", //.pdf
         "application/msword", //.doc|.docx
-        "application/vnd.ms-excel" //.xls|.xlsx
+        "application/vnd.ms-excel", //.xls|.xlsx
+        "application/vnd.ms-powerpoint" //ppt
         // "text/plain" //.txt
       ];
       if (ctypeArr.indexOf(filetype) >= 0) {
@@ -502,10 +528,8 @@ export default {
     onPreview: function(file) {
       // 点击文件列表中已上传的文件时的钩子
       console.log("onPreview.");
-      if (this.isImgType(file.type)) {
+      if (this.isImgType(file.type) || this.isCanPreviewPDFType(file.type)) {
         this.handlePreview(file);
-      } else if (this.isCanPreviewPDFType(file.type)) {
-        this.handlePreviewPdf(file);
       } else {
         // 直接触发下载
         this.handleDownLoad(file.url);
@@ -739,26 +763,39 @@ export default {
     },
     //预览照片
     handlePreview: function(file) {
-      this.dialogVisible = true;
-      this.PriviewStartIndex = this.GetIndexByCache(file.id);
+      console.log(file);
+      if (this.isImgType(file.type)) {
+        if (this.imgViewer == "YoPdfViewer") {
+          this.handlePreviewPdf(file.orgurl, file.type, file.name);
+        } else {
+          this.dialogVisible = true;
+          this.PriviewStartIndex = this.GetIndexByCache(file.id);
+        }
+      } else if (this.isCanPreviewPDFType(file.type)) {
+        this.handlePreviewPdf(file.url, "application/pdf", file.name);
+      }
     },
     //预览PDF
-    handlePreviewPdf: function(file) {
+    handlePreviewPdf: function(url, mimeType = "application/pdf", title = "") {
       // console.log("预览PDF:"+file.url);
       // console.log(file);
       let that = this;
       if (that.pdfdialogVisible) {
         // console.log("已经打开了 先关闭 0.2后打开");
         that.pdfdialogVisible = false;
-        that.pdfVuewerSrc = "";
+        that.pdfViewerSrc = "";
         setTimeout(() => {
           //不这么搞是不能重复打开的.by Z.C
           that.pdfdialogVisible = true;
-          that.pdfVuewerSrc = file.url;
+          that.pdfViewerSrc = url;
+          that.mimeType = mimeType;
+          that.pdfViewerTitle = title;
         }, 200);
       } else {
         that.pdfdialogVisible = true;
-        that.pdfVuewerSrc = file.url;
+        that.pdfViewerSrc = url;
+        that.mimeType = mimeType;
+        that.pdfViewerTitle = title;
       }
     },
     // 关闭图片预览
@@ -768,7 +805,7 @@ export default {
     //关闭PDF预览
     closePdfViewer() {
       this.pdfdialogVisible = false;
-      this.pdfVuewerSrc = "";
+      this.pdfViewerSrc = "";
     },
     handleId: function() {
       var that = this;
