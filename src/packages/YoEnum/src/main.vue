@@ -70,6 +70,9 @@ export default {
     this.selectedValue = this.selValue
   },
   watch: {
+    selValue: function (val) {
+      this.selectedValue = val
+    },
     selectedValue: function (val) {
       this.$emit('update:selValue', val)
       this.$emit('selectChange', val)
