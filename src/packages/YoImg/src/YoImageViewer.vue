@@ -57,7 +57,7 @@
           @mousedown="handleMouseDown"
         />
       </div>
-      <!-- <a href ref="download_a" target="_blank" v-show="false"></a> -->
+      <a href ref="download_a" target="_blank" v-show="false"></a>
     </div>
   </transition>
 </template>

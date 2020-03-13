@@ -11,7 +11,7 @@
     <yo-menu :width="250"></yo-menu>
     <yo-detail-col :rowData="rowData" :label_width="100"></yo-detail-col>
     <yo-file :uploadType="1" :ids.sync="Files" :apiUrl="apiUrl"></yo-file>
-    <yo-file :uploadType="3" :ids.sync="Files" :apiUrl="apiUrl"></yo-file>
+    <yo-file :uploadType="3" :ids.sync="Files" :apiUrl="apiUrl" img-viewer="YoPdfViewer"></yo-file>
     <yo-img></yo-img>
     <!-- <yo-input></yo-input>
         

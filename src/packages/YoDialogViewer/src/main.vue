@@ -13,13 +13,13 @@
         <span style="padding-left: 5px;text-align: left;">{{title}}</span>
         <div style="padding-right: 5px;text-align: right;float: right;">
           <i class="el-icon-full-screen" title="全屏" @click="fullscreen"></i>
-          <i class="el-icon-close" @click="hide" title="关闭"></i>
+          <i class="el-icon-close" @click="hide" title="按Esc关闭"></i>
         </div>
       </div>
       <div class="yo-pdf-viewer-mask" :class="CustosmMaskClassObject"></div>
       <span class="el-image-viewer__btn el-image-viewer__close" @click="hide" v-if="isFullScreen">
-        <i class="el-icon-circle-close" v-if="fullScreenClose"></i>
-        <i class="el-icon-c-scale-to-original" v-if="!fullScreenClose"></i>
+        <i class="el-icon-close" v-if="fullScreenClose" title="按Esc关闭"></i>
+        <i class="el-icon-c-scale-to-original" v-if="!fullScreenClose" title="按Esc恢复窗口"></i>
       </span>
       <div class="yo-pdf-viewer-canvas" :class="CustosmCanvasClass">
         <slot></slot>
@@ -205,7 +205,7 @@ export default {
     handleMouseDown(e) {
       let that = this;
       // if (that.loading || e.button !== 0) return;
-      console.log("鼠标按下");
+      // console.log("鼠标按下");
       // console.log(e);
       //首先移除一下之前的吧 免得有没移除掉的
       off(document, "mousemove", that._dragHandler);
@@ -243,7 +243,7 @@ export default {
             this.$emit("onYoZooming", ev);
           } else {
             that.ismoving = true;
-            console.log("moving...");
+            // console.log("moving...");
             let newTop = top + ev.pageY - startY;
             let newLeft = left + ev.pageX - startX;
             // console.log(" newTop:"+ newTop+", newLeft:"+newLeft)
@@ -275,11 +275,12 @@ export default {
         return;
       }
 
-      e.preventDefault();
+      // e.preventDefault();
     },
     hide() {
       if (this.isFullScreen && !this.fullScreenClose) {
         this.mode = Mode.Dialog;
+        this.$emit("onYoModelChange", this.mode); //把模式變化事件甩出去
       } else {
         this.deviceSupportUninstall();
         this.onClose();
@@ -288,6 +289,7 @@ export default {
     fullscreen() {
       //全屏
       this.mode = Mode.FullScreen;
+      this.$emit("onYoModelChange", this.mode); //把模式變化事件甩出去
     },
     //注册键盘事件 esc退出
     deviceSupportInstall() {
@@ -365,6 +367,11 @@ export default {
 .el-image-viewer__close {
   top: 60px;
   color: #000;
+  font-size: 23px;
+  background-color: #fff;
+  width: 36px;
+  height: 36px;
+  opacity: 0.9;
 }
 .yo-pdf-viewer-mask {
   position: absolute;
