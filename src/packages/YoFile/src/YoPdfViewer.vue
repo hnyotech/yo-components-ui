@@ -18,14 +18,14 @@
     <!-- <template v-if="!isSingle">
       <span
         class="el-image-viewer__btn el-image-viewer__prev"
-        :class="{ 'is-disabled': isFirst }"
+        :class="{ 'pdf-is-disabled': isFirst }"
         @click="prev"
       >
         <i class="el-icon-arrow-left" />
       </span>
       <span
         class="el-image-viewer__btn el-image-viewer__next"
-        :class="{ 'is-disabled': isLast }"
+        :class="{ 'pdf-is-disabled': isLast }"
         @click="next"
       >
         <i class="el-icon-arrow-right" />
@@ -462,7 +462,7 @@ export default {
   background: #000 !important;
   opacity: 0.5 !important;
 }
-.is-disabled {
+.pdf-is-disabled {
   color: #7e7e7e;
   background-color: #eaeaea;
   border: 1px solid #eaeaea;

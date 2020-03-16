@@ -13,9 +13,10 @@
       :align="item.align"
       :prop="item.key"
       :label="item.label"
-      :min-width="item.label.length*30"
+      :min-width="item.width"
       :show-overflow-tooltip="item.tooltip"
     >
+      <!-- :min-width="item.label.length*30" -->
       <template slot-scope="scope">
         <div v-if="item.type === 'multKey'" class="otw">
           <span v-for="(subitem,index) in item.keys" :key="index">
