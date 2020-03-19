@@ -17,7 +17,7 @@
     <el-upload
       ref="upload"
       v-show="IsShow"
-      class="avatar-uploader"
+      class="avatar-uploader yo-file-upload"
       :with-credentials="true"
       :action="action"
       :multiple="IsMultiple"
@@ -46,7 +46,7 @@
         <el-progress type="circle" :percentage="25"></el-progress>
       </template>
       <template v-else>
-        <el-button size="small" type="primary" v-show="!readOnly">选择</el-button>
+        <el-button size="small" type="primary" v-show="!readOnly" :disabled="fileList.length>=fileLimit">上传</el-button>
       </template>
       <div v-if="IsShowTip" slot="tip" class="el-upload__tip">{{Tip}}</div>
     </el-upload>
@@ -903,4 +903,17 @@ export default {
 /*.el-progress{
     top: -136px;
   }*/
+.yo-file-upload {
+  display: flex;
+}
+.yo-file-upload >>> .el-upload-list{
+  width: calc(100% - 55px);
+  display: flex;
+}
+.without-btn .yo-file-upload >>> .el-upload-list{
+  margin-left: 55px;
+}
+.yo-file-upload >>> .el-upload-list > .el-upload-list__item{
+  width: 50%
+}
 </style>
