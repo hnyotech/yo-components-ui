@@ -46,7 +46,7 @@
         <el-progress type="circle" :percentage="25"></el-progress>
       </template>
       <template v-else>
-        <el-button size="small" type="primary" v-show="!readOnly" :disabled="fileList.length>=fileLimit">上传</el-button>
+        <el-button size="small" type="primary" v-show="!readOnly" :disabled="showFileList.length>=fileLimit" @click.native="uploadBtn">上传</el-button>
       </template>
       <div v-if="IsShowTip" slot="tip" class="el-upload__tip">{{Tip}}</div>
     </el-upload>
@@ -160,7 +160,7 @@ export default {
         if (value) {
           var has = ["YoImgViewer", "YoPdfViewer"].indexOf(value) !== -1;
           if(!has){
-            console.error("props参数必须匹配下面的值之一:['YoImgViewer','YoPdfViewer']")
+            // console.error("props参数必须匹配下面的值之一:['YoImgViewer','YoPdfViewer']")
           }
           return has;
         } else {
@@ -200,7 +200,7 @@ export default {
   mounted: function() {},
   watch: {
     ids: function(val) {
-      console.log("watch ids:" + val);
+      // console.log("watch ids:" + val);
       // 变化后 持续加载附件
       this.loadData(this.ids);
     },
@@ -527,7 +527,7 @@ export default {
     },
     onPreview: function(file) {
       // 点击文件列表中已上传的文件时的钩子
-      console.log("onPreview.");
+      // console.log("onPreview.");
       if (this.isImgType(file.type) || this.isCanPreviewPDFType(file.type)) {
         this.handlePreview(file);
       } else {
@@ -559,7 +559,7 @@ export default {
               delFile.timestamp
           )
           .then(resp => {
-            console.log("remove file " + delFile.id);
+            // console.log("remove file " + delFile.id);
             // 移除列表
             if (that.uploadType === 1) {
               that.imageUrl = "";
@@ -581,7 +581,7 @@ export default {
     },
     beforeUpload: function(file) {
       // 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
-      console.log("beforeUpload..");
+      // console.log("beforeUpload..");
       if (this.fileSize > 0 && file.size > this.fileSize) {
         this.$message.error(
           "上传附件大小不能超过" +
@@ -623,7 +623,7 @@ export default {
     },
     onExceed: function(files, fileList) {
       // 文件超出个数限制时的钩子
-      console.log("onExceed..");
+      // console.log("onExceed..");
       if (this.uploadType === 1) {
         return true;
       } else {
@@ -659,7 +659,7 @@ export default {
           }
         })
         .then(response => {
-          console.log("upload success:" + response.id);
+          // console.log("upload success:" + response.id);
           var item = {};
           item.id = response.id;
           item.sign = response.sign;
@@ -748,6 +748,11 @@ export default {
       //     that.onRemove(file, null)
       //   })
     },
+    uploadBtn () {
+      if (this.fileList.length>=this.fileLimit) {
+        return false
+      }
+    },
 
     //用于预览新上传的照片
     handlePreviewNew: function(file) {
@@ -763,7 +768,7 @@ export default {
     },
     //预览照片
     handlePreview: function(file) {
-      console.log(file);
+      // console.log(file);
       if (this.isImgType(file.type)) {
         if (this.imgViewer == "YoPdfViewer") {
           this.handlePreviewPdf(file.orgurl, file.type, file.name);
@@ -906,14 +911,19 @@ export default {
 .yo-file-upload {
   display: flex;
 }
-.yo-file-upload >>> .el-upload-list{
+.yo-file-upload .el-upload-list{
   width: calc(100% - 55px);
   display: flex;
+  flex-wrap: wrap;
 }
-.without-btn .yo-file-upload >>> .el-upload-list{
+.without-btn .yo-file-upload .el-upload-list{
   margin-left: 55px;
 }
-.yo-file-upload >>> .el-upload-list > .el-upload-list__item{
+.yo-file-upload .el-upload-list > .el-upload-list__item{
   width: 50%
+}
+.yo-file-upload .el-button.is-disabled, .yo-file-upload .el-button.is-disabled:hover, .yo-file-upload .el-button.is-disabled:focus {
+  background-color: #ABABAB;
+  border-color: #ABABAB;
 }
 </style>

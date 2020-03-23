@@ -3,8 +3,14 @@
     <!-- <img v-for="file in fileList" :src="file.url" :key="file.id"  :title="file.name" @click="handlePreview(file.orgurl,file.name)"> -->
     <!-- 文件 -->
     <div v-if="fileList2.length > 0 ? true : false">
-      <div v-for="file in fileList2" :key="file.id" @click="handleDownLoad(file.orgurl)" class="text file-item-img">
-        <i class="el-icon-download marginright"></i>{{file.name}}
+      <div
+        v-for="file in fileList2"
+        :key="file.id"
+        @click="handleDownLoad(file.orgurl)"
+        class="text file-item-img"
+      >
+        <i class="el-icon-download marginright"></i>
+        {{file.name}}
       </div>
     </div>
     <div v-if="fileList2.length === 0 && fileList.length === 0">
@@ -17,13 +23,24 @@
       <el-col :span="4"  v-for="file in fileList" :key="file.id" >
           <img :src="file.url" width="200px" height="123px" style="margin-bottom:10px;" :title="file.name" @click="handlePreview(file.orgurl,file.name)" alt="暂无图片">
       </el-col>
-    </el-row> -->
+    </el-row>-->
     <div class="flexpic">
-      <div v-for="file in fileList" :key="file.id" style="margin-right:3px;" >
+      <div v-for="file in fileList" :key="file.id" style="margin-right:3px;">
         <!-- <img    alt="暂无图片"> -->
-        <el-image :src="file.url" width="200px" height="123px" style="margin-bottom:10px;border:1px solid #DDDDDD;" :title="file.name" @click="handlePreview(file)" lazy>
+        <el-image
+          :src.sync="file.url"
+          width="200px"
+          height="123px"
+          style="margin-bottom:10px;border:1px solid #DDDDDD;"
+          :title="file.name"
+          @click="handlePreview(file)"
+          lazy
+        >
           <div slot="error" class="image-slot">
             <div class="errorInfo">无法加载图片</div>
+          </div>
+          <div slot="placeholder" class="image-slot">
+            加载中<span class="dot">...</span>
           </div>
         </el-image>
       </div>
@@ -40,9 +57,9 @@
 </template>
 <script type="text/javascript">
 import { Base64 } from "js-base64";
-import YoImgViewer from './YoImageViewer'
+import YoImgViewer from "./YoImageViewer";
 export default {
-  name: 'YoImg',
+  name: "YoImg",
   props: {
     isNeedialogTitle: {
       type: String,
@@ -75,26 +92,26 @@ export default {
       default: "scale-down"
     }
   },
-  components: {YoImgViewer},
-  data: function () {
+  components: { YoImgViewer },
+  data: function() {
     return {
       dialogVisible: false, // 显示预览
-      dialogTitle: '', // 预览标题
+      dialogTitle: "", // 预览标题
       fileList: [], // 附件列表(本次上传的)
       fileList2: [],
       PriviewStartIndex: 0, //預覽index
       StorageKey: "_ImgViewSrcCache"
-    }
+    };
   },
-  created: function () {
-    this.loadData(this.ids)
+  created: function() {
+    this.loadData(this.ids);
   },
-  mounted: function () {},
+  mounted: function() {},
   watch: {
-    ids: function (val) {
-      console.log('watch ids:' + val)
+    ids: function(val) {
+      console.log("watch ids:" + val);
       // 变化后 持续加载附件
-      this.loadData(this.ids)
+      this.loadData(this.ids);
     }
   },
 
@@ -103,94 +120,94 @@ export default {
     closeViewer() {
       this.dialogVisible = false;
     },
-    fileListContainId: function (id) {
+    fileListContainId: function(id) {
       // 判断指定ID是否在fileList里面
-      var that = this
+      var that = this;
       for (var i = 0; i < that.fileList.length; i++) {
         if (that.fileList[i].id === id) {
-          return true
+          return true;
         }
       }
-      return false
+      return false;
     },
-    loadData: function (ids) {
-      var that = this
+    loadData: function(ids) {
+      var that = this;
       if (ids == null || ids === undefined || ids.length === 0) {
         // console.log(ids)
-        that.fileList = []
-        return false
+        that.fileList = [];
+        return false;
       }
-      var idArr = ids.split(',')
-      var loadId = []
+      var idArr = ids.split(",");
+      var loadId = [];
       // 先判断id 是否加载过了
-      idArr.forEach(function (id) {
+      idArr.forEach(function(id) {
         if (!that.fileListContainId(id)) {
-          loadId.push(id)
+          loadId.push(id);
         }
-      })
+      });
       if (loadId.length === 0) {
-        return false
+        return false;
       }
-      var newIds = loadId.join(',')
-      console.log('loadData:' + newIds)
-      var param = {}
-      param['ids'] = newIds
+      var newIds = loadId.join(",");
+      console.log("loadData:" + newIds);
+      var param = {};
+      param["ids"] = newIds;
       that.$http
-        .post(that.apiUrl + '/api/Attach/GetAttachs', param)
+        .post(that.apiUrl + "/api/Attach/GetAttachs", param)
         .then(resp => {
-          resp.forEach(function (file) {
-            var item = {}
-            item.id = file.id
-            item.sign = file.sign
-            item.timestamp = file.timestamp
-            item.name = file.name
-            item.size = file.size
-            item.type = file.type
+          resp.forEach(function(file) {
+            var item = {};
+            item.id = file.id;
+            item.sign = file.sign;
+            item.timestamp = file.timestamp;
+            item.name = file.name;
+            item.size = file.size;
+            item.type = file.type;
             if (that.isImgType(item.type)) {
               item.orgurl =
-              //  process.env.API +
-              that.apiUrl +
-                '/api/Attach/ShowImage?id=' +
+                //  process.env.API +
+                that.apiUrl +
+                "/api/Attach/ShowImage?id=" +
                 file.id +
-                '&sign=' +
+                "&sign=" +
                 file.sign +
-                '&timestamp=' +
-                file.timestamp
+                "&timestamp=" +
+                file.timestamp;
               item.url =
-              //  process.env.API +
-              that.apiUrl +
-                '/api/Attach/ShowThumbImage?id=' +
+                //  process.env.API +
+                that.apiUrl +
+                "/api/Attach/ShowThumbImage?id=" +
                 file.id +
-                '&sign=' +
+                "&sign=" +
                 file.sign +
-                '&timestamp=' +
-                file.timestamp
-              that.fileList.push(item)
+                "&timestamp=" +
+                file.timestamp;
+              that.fileList.push(item);
               that.AddSrcCache(item); //添加到預覽緩存
             } else {
               // 非图片
               item.orgurl =
-              //  process.env.API +
-              that.apiUrl +
-                '/api/Attach/Download?id=' +
+                //  process.env.API +
+                that.apiUrl +
+                "/api/Attach/Download?id=" +
                 file.id +
-                '&sign=' +
+                "&sign=" +
                 file.sign +
-                '&timestamp=' +
-                file.timestamp
-              item.url = item.orgurl
-              that.fileList2.push(item)
+                "&timestamp=" +
+                file.timestamp;
+              item.url = item.orgurl;
+              that.fileList2.push(item);
             }
 
             // that.fileList.push(item);
-          })
+          });
         })
         .catch(err => {
-          console.error(err)
-          astec.showErrorToast(err.Message)
-        })
+          console.error(err);
+          astec.showErrorToast(err.Message);
+        });
     },
-    
+
     //添加到預覽緩存組中
     AddSrcCache: function(item) {
       // debugger;
@@ -212,7 +229,7 @@ export default {
       cacheData[that.group] = obj;
       sessionStorage.setItem(that.StorageKey, JSON.stringify(cacheData));
     },
-    
+
     //獲取地址所在index
     GetIndexByCache: function(id) {
       let that = this;
@@ -236,7 +253,7 @@ export default {
       }
       return -1;
     },
-     //獲取當前分組的緩存列表
+    //獲取當前分組的緩存列表
     GetSrcListByCache: function() {
       // debugger;
       let that = this;
@@ -256,125 +273,120 @@ export default {
       return list;
     },
     // 判断是否图片
-    isImgType: function (filetype) {
+    isImgType: function(filetype) {
       var ctypeArr = [
-        'image/png',
-        'image/jpeg',
-        'image/gif',
-        'image/tiff',
-        'image/x-icon',
-        'application/x-bmp',
-        'application/octet-stream'
-      ]
+        "image/png",
+        "image/jpeg",
+        "image/gif",
+        "image/tiff",
+        "image/x-icon",
+        "application/x-bmp",
+        "application/octet-stream"
+      ];
       if (ctypeArr.indexOf(filetype) >= 0) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
     },
 
-    handlePreview: function (file) {
-      if(!this.isPreviw){
-        return
+    handlePreview: function(file) {
+      if (!this.isPreviw) {
+        return;
       }
-       this.dialogVisible = true;
+      this.dialogVisible = true;
       this.PriviewStartIndex = this.GetIndexByCache(file.id);
     },
-    handleId: function () {
-      var that = this
+    handleId: function() {
+      var that = this;
       // 回调IDs用
-      var newIds = ''
-      that.AllfileList.forEach(function (file) {
+      var newIds = "";
+      that.AllfileList.forEach(function(file) {
         if (file.id) {
-          newIds += file.id + ','
+          newIds += file.id + ",";
         }
-      })
+      });
       if (newIds.length > 0) {
-        newIds = newIds.substring(0, newIds.length - 1)
+        newIds = newIds.substring(0, newIds.length - 1);
       }
     },
     // 下载
-    handleDownLoad: function (url) {
-      if(!this.isPreviw){
-        return
+    handleDownLoad: function(url) {
+      if (!this.isPreviw) {
+        return;
       }
       if (url.length > 0) {
-        url = url.toLowerCase().replace('showimage', 'download')
-        this.$refs.download_a.href = url
-        this.$refs.download_a.click()
+        url = url.toLowerCase().replace("showimage", "download");
+        this.$refs.download_a.href = url;
+        this.$refs.download_a.click();
       }
     }
   },
   beforeDestroy() {
-    sessionStorage.removeItem(this.StorageKey)
+    sessionStorage.removeItem(this.StorageKey);
   }
-}
+};
 </script>
 <style scope>
 .text {
-    font-size: 14px;
-  }
+  font-size: 14px;
+}
 
-  .file-item-img {
-    display: inline-block;
-    margin-bottom: 5px;
-    margin-right: 10px;
-    padding: 12px 10px;
-    background-color: #eee;
-  }
-  .file-item-img:hover {
-    cursor: pointer;
-    background-color: #365FA4;
-    color: #fff;
-  }
-  .nofile {
-    background-color: #eee;
-    color: #999;
-  }
-  .nofile:hover {
-    cursor:not-allowed;
-    background-color: #eee;
-    color: #999;
-  }
+.file-item-img {
+  display: inline-block;
+  margin-bottom: 5px;
+  margin-right: 10px;
+  padding: 12px 10px;
+  background-color: #eee;
+}
+.file-item-img:hover {
+  cursor: pointer;
+  background-color: #365fa4;
+  color: #fff;
+}
+.nofile {
+  background-color: #eee;
+  color: #999;
+}
+.nofile:hover {
+  cursor: not-allowed;
+  background-color: #eee;
+  color: #999;
+}
 
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  .clearfix:after {
-    clear: both
-  }
-
-  .box-card {
-    /* width: 480px; */
-  }
-  .marginright {
-    margin-right: 5px;
-  }
-  .flexpic {
-    display: flex;
-  }
-  .preImg .flexpic .image-slot {
-    width: 220px;
-    height: 180px;
-    /* background-color: #EEEEEE; */
-    background: #EEEEEE url("./noImg.png") no-repeat 50% 40%;
-    padding-top: 100px;
-    box-sizing: border-box
-  }
-  .errorInfo {
-    text-align: center;
-    padding-top: 40px;
-    color: #AAAAAA;
-    font-size: 14px;
-  }
-  .el-image img {
-    width: 220px;
-    height: 180px;
-  }
-  /* 文件上传组件样式 */
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+.marginright {
+  margin-right: 5px;
+}
+.flexpic {
+  display: flex;
+}
+.preImg .flexpic .image-slot,.preImg .flexpic .el-image__placeholder{
+  width: 220px;
+  height: 180px;
+  background: #eeeeee url("./noImg.png") no-repeat 50% 40%;
+  padding-top: 100px;
+  box-sizing: border-box;
+}
+.errorInfo {
+  text-align: center;
+  padding-top: 40px;
+  color: #aaaaaa;
+  font-size: 14px;
+}
+.el-image img {
+  width: 220px;
+  height: 180px;
+}
+/* 文件上传组件样式 */
 .preImg >>> .avatar-uploader .el-upload {
-    border: none !important;
-  }
+  border: none !important;
+}
 </style>
