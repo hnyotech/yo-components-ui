@@ -912,7 +912,7 @@ export default {
   display: flex;
 }
 .yo-file-upload .el-upload-list{
-  width: calc(100% - 55px);
+  width: calc(100% - 56px);
   display: flex;
   flex-wrap: wrap;
 }

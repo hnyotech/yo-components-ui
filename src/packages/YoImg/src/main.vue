@@ -39,7 +39,7 @@
           <div slot="error" class="image-slot">
             <div class="errorInfo">无法加载图片</div>
           </div>
-          <div slot="placeholder" class="image-slot">
+          <div slot="placeholder" class="image-slot-placeholder">
             加载中<span class="dot">...</span>
           </div>
         </el-image>
@@ -374,6 +374,15 @@ export default {
   background: #eeeeee url("./noImg.png") no-repeat 50% 40%;
   padding-top: 100px;
   box-sizing: border-box;
+}
+.image-slot-placeholder {
+  font-size: 14px;
+  color: #999;
+  width: 220px;
+  height: 180px;
+  text-align: center;
+  line-height: 180px;
+  background-color: #eee;
 }
 .errorInfo {
   text-align: center;
