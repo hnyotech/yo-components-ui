@@ -1,14 +1,14 @@
 <template>
   <el-form-item :label="label" :prop="prop" v-if="isNeedForm">
-      <el-select v-model="selectedValue" v-if="isDrop" :clearable="isClear" :disabled="disabled" :placeholder="'请选择' + label" @visible-change="visibleChange" style="width:100%">
+      <el-select v-model="selectedValue" v-if="isDrop" :clearable="isClear" :disabled="isDisabled" :placeholder="'请选择' + label" @visible-change="visibleChange" style="width:100%">
           <el-option v-for="item in options" :key="item.Value" :label="item.Description" :value="item.Value">
           </el-option>
       </el-select>
-      <el-radio-group v-else v-model="selectedValue">
+      <el-radio-group v-else v-model="selectedValue" :disabled="isDisabled">
         <el-radio v-for="item in options" :key="item.Value" :label="item.Value">{{item.Description}}</el-radio>
       </el-radio-group>
   </el-form-item>
-  <el-select v-else v-model="selectedValue" :size="size" :clearable="isClear" :disabled="disabled" :placeholder="'请选择' + label" @visible-change="visibleChange" style="width:100%">
+  <el-select v-else v-model="selectedValue" :size="size" :clearable="isClear" :disabled="isDisabled" :placeholder="'请选择' + label" @visible-change="visibleChange" style="width:100%">
       <el-option v-for="item in options" :key="item.Value" :label="item.Description" :value="item.Value">
       </el-option>
   </el-select>
@@ -64,6 +64,11 @@ export default {
     return {
       selectedValue: '',
       options: []
+    }
+  },
+  computed: {
+    isDisabled() {
+      return this.disabled
     }
   },
   created () {
