@@ -912,15 +912,21 @@ export default {
   display: flex;
 }
 .yo-file-upload .el-upload-list{
-  width: calc(100% - 56px);
+  width: calc(100% - 66px);
+  margin-left: 10px;
   display: flex;
   flex-wrap: wrap;
 }
 .without-btn .yo-file-upload .el-upload-list{
-  margin-left: 55px;
+  margin-left: 65px;
 }
 .yo-file-upload .el-upload-list > .el-upload-list__item{
-  width: 50%
+  width: 50%;
+  background-color: #F5F7FA;
+  max-height: 25px;
+}
+.yo-file-upload .el-upload-list > .el-upload-list__item:first-child {
+    margin-top: 5px;
 }
 .yo-file-upload .el-button.is-disabled, .yo-file-upload .el-button.is-disabled:hover, .yo-file-upload .el-button.is-disabled:focus {
   background-color: #ABABAB;
