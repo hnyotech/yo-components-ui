@@ -12,7 +12,9 @@
     <yo-detail-col :rowData="rowData" :label_width="100"></yo-detail-col>
     <yo-file :uploadType="1" :ids.sync="Files" :apiUrl="apiUrl"></yo-file>
     <yo-file :uploadType="3" :ids.sync="Files" :apiUrl="apiUrl" img-viewer="YoPdfViewer"></yo-file>
-    <yo-img></yo-img>
+
+    <yo-file :uploadType="3" :ids.sync="Files2" :apiUrl="apiUrl"></yo-file>
+    <!-- <yo-img></yo-img> -->
     <!-- <yo-input></yo-input>
         
         <el-form>
@@ -124,6 +126,7 @@ export default {
     return {
       apiUrl: process.env.AttachAPI,
       showDialogViewer: false,
+      Files2:null,
       Files:
         "k2037d15529e01f4d1ef87l,k2037g5548pg0020123bc7v,k2039e1524pb0010d31dc05",
       type1: "primary",

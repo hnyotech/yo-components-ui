@@ -46,7 +46,13 @@
         <el-progress type="circle" :percentage="25"></el-progress>
       </template>
       <template v-else>
-        <el-button size="small" type="primary" v-show="!readOnly" :disabled="showFileList.length>=fileLimit" @click.native="uploadBtn">上传</el-button>
+        <el-button
+          size="small"
+          type="primary"
+          v-show="!readOnly"
+          :disabled="fileLimit>0&&showFileList.length>=fileLimit"
+          @click.native="uploadBtn"
+        >上传</el-button>
       </template>
       <div v-if="IsShowTip" slot="tip" class="el-upload__tip">{{Tip}}</div>
     </el-upload>
@@ -159,7 +165,7 @@ export default {
       validator: function(value) {
         if (value) {
           var has = ["YoImgViewer", "YoPdfViewer"].indexOf(value) !== -1;
-          if(!has){
+          if (!has) {
             // console.error("props参数必须匹配下面的值之一:['YoImgViewer','YoPdfViewer']")
           }
           return has;
@@ -315,6 +321,14 @@ export default {
       } else {
         return this.fileLimit;
       }
+    },
+    //分组
+    group: function() {
+      let defStr = "___ImgViewSrcCache_Group_";
+      if (window.location.pathname.length > 0) {
+        defStr = window.location.pathname;
+      }
+      return defStr;
     }
   },
   methods: {
@@ -452,7 +466,23 @@ export default {
       cacheData[that.group] = obj;
       sessionStorage.setItem(that.StorageKey, JSON.stringify(cacheData));
     },
-
+    RemoveSrcCache: function(item) {
+      var id = item.id;
+      var src = item.orgurl;
+      let that = this;
+      let cacheData = JSON.parse(sessionStorage.getItem(that.StorageKey));
+      if (cacheData) {
+        var obj = cacheData[that.group];
+        if (obj) {
+          console.log(obj[id]);
+          if (obj[id]) {
+            delete obj[id];
+            cacheData[that.group] = obj;
+            sessionStorage.setItem(that.StorageKey, JSON.stringify(cacheData));
+          }
+        }
+      }
+    },
     //獲取地址所在index
     GetIndexByCache: function(id) {
       let that = this;
@@ -527,7 +557,8 @@ export default {
     },
     onPreview: function(file) {
       // 点击文件列表中已上传的文件时的钩子
-      // console.log("onPreview.");
+      //   console.log("onPreview:");
+      // console.log(file)
       if (this.isImgType(file.type) || this.isCanPreviewPDFType(file.type)) {
         this.handlePreview(file);
       } else {
@@ -569,7 +600,9 @@ export default {
                 t => t.id !== delFile.id
               );
             }
+
             that.handleId();
+            that.RemoveSrcCache(file);
           })
           .catch(err => {
             astec.showErrorToast(err.Message);
@@ -726,6 +759,7 @@ export default {
             that.fileList.push(item);
             that.showFileList.push(item);
           }
+          that.AddSrcCache(item);
           that.handleId();
           that.$emit("callback", that.AllfileList); // 触发回调
           // 上传成功 调用onSuccess方法，否则没有完成图标
@@ -748,9 +782,9 @@ export default {
       //     that.onRemove(file, null)
       //   })
     },
-    uploadBtn () {
-      if (this.fileList.length>=this.fileLimit) {
-        return false
+    uploadBtn() {
+      if (this.fileList.length >= this.fileLimit) {
+        return false;
       }
     },
 
@@ -768,7 +802,8 @@ export default {
     },
     //预览照片
     handlePreview: function(file) {
-      // console.log(file);
+      console.log("onPreview:");
+      console.log(file);
       if (this.isImgType(file.type)) {
         if (this.imgViewer == "YoPdfViewer") {
           this.handlePreviewPdf(file.orgurl, file.type, file.name);
@@ -911,26 +946,27 @@ export default {
 .yo-file-upload {
   display: flex;
 }
-.yo-file-upload .el-upload-list{
+.yo-file-upload .el-upload-list {
   width: calc(100% - 66px);
   margin-left: 10px;
   display: flex;
   flex-wrap: wrap;
 }
-.without-btn .yo-file-upload .el-upload-list{
+.without-btn .yo-file-upload .el-upload-list {
   margin-left: 65px;
 }
-.yo-file-upload .el-upload-list > .el-upload-list__item{
-  width: calc(50% - 5px);
-  background-color: #F5F7FA;
+.yo-file-upload .el-upload-list > .el-upload-list__item {
+  width: 50%;
+  background-color: #f5f7fa;
   max-height: 25px;
-  margin-left: 5px;
 }
 .yo-file-upload .el-upload-list > .el-upload-list__item:first-child {
-    margin-top: 5px;
+  margin-top: 5px;
 }
-.yo-file-upload .el-button.is-disabled, .yo-file-upload .el-button.is-disabled:hover, .yo-file-upload .el-button.is-disabled:focus {
-  background-color: #ABABAB;
-  border-color: #ABABAB;
+.yo-file-upload .el-button.is-disabled,
+.yo-file-upload .el-button.is-disabled:hover,
+.yo-file-upload .el-button.is-disabled:focus {
+  background-color: #ababab;
+  border-color: #ababab;
 }
 </style>
