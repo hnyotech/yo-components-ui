@@ -921,9 +921,10 @@ export default {
   margin-left: 65px;
 }
 .yo-file-upload .el-upload-list > .el-upload-list__item{
-  width: 50%;
+  width: calc(50% - 5px);
   background-color: #F5F7FA;
   max-height: 25px;
+  margin-left: 5px;
 }
 .yo-file-upload .el-upload-list > .el-upload-list__item:first-child {
     margin-top: 5px;
