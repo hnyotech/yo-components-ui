@@ -1,5 +1,5 @@
 <template>
-  <el-table ref="multipleTable" :data="tableData" :border="border" :show-summary="showSummary" :summary-method="summaryMethod" class="yo-table" style="width: 100%;">
+  <el-table ref="multipleTable" :data="tableData" :border="border" :show-summary="showSummary" :summary-method="summaryMethod" class="yo-table" :class="border ? 'yo-border-table' : ''" style="width: 100%;">
     <el-table-column
       type="index"
       width="50"
@@ -179,7 +179,7 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.yo-table.el-table--border td, .yo-table.el-table--border th, .yo-table >>> .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
+/* .yo-table.el-table--border td, .yo-table.el-table--border th, .yo-table >>> .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
     border-right: 0;
 }
 .yo-table {
@@ -187,12 +187,9 @@ export default {
 }
 .yo-table.el-table--border::after, .yo-table.el-table--group::after {
   display: none
-    /* top: 0;
-    right: 0;
-    width: 1px;
-    height: 100%; */
 }
 .yo-table /deep/ .el-table--border {
   border: none !important;
-}
+} */
+
 </style>

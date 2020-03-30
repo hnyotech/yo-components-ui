@@ -10,6 +10,12 @@
 
     <yo-menu :width="250"></yo-menu>
     <yo-detail-col :rowData="rowData" :label_width="100"></yo-detail-col>
+    <yo-table
+            :tableData="[]"
+            :border="true"
+            :displayData="reportData"
+            :pageData="{ index: 1, size: 10 }"
+          ></yo-table>
     <yo-file :uploadType="1" :ids.sync="Files" :apiUrl="apiUrl"></yo-file>
     <yo-file :uploadType="3" :ids.sync="Files" :apiUrl="apiUrl" img-viewer="YoPdfViewer"></yo-file>
 
@@ -105,6 +111,7 @@ import YoContent from "@/packages/YoContent/src/main.vue";
 import YoCity from "@/packages/YoCity/src/main.vue";
 import YoInput from "@/packages/YoControlsInput/src/main.vue";
 import YoDialogViewer from "@/packages/YoDialogViewer/src/main.vue";
+import YoTable from "@/packages/YoTable/src/main.vue";
 export default {
   name: "examples",
   components: {
@@ -120,7 +127,8 @@ export default {
     YoToolbar,
     YoCity,
     YoInput,
-    YoDialogViewer
+    YoDialogViewer,
+    YoTable
   },
   data() {
     return {
@@ -243,7 +251,66 @@ export default {
         ],
         api: "/api/SysSubSystem/Query",
         methods: "post"
-      }
+      },
+       reportData: [
+        // 近三年的审计报告
+        {
+          key: 'Year',
+          label: '年度',
+          width: 150,
+          align: 'center',
+          tooltip: true
+        },
+        {
+          key: 'AssetsTotal',
+          label: '资产总额',
+          width: 150,
+          align: 'center',
+          tooltip: true
+        },
+        {
+          key: 'LiabilitiesTotal',
+          label: '负债总额',
+          width: 150,
+          align: 'center',
+          tooltip: true
+        },
+        {
+          key: 'OwnersEquity',
+          label: '所有者权益',
+          width: 150,
+          align: 'center',
+          tooltip: true
+        },
+        {
+          key: 'OperatingIncome',
+          label: '营业收入',
+          width: 150,
+          align: 'center',
+          tooltip: true
+        },
+        {
+          key: 'ProfitBeforeTax',
+          label: '利润总额',
+          width: 150,
+          align: 'center',
+          tooltip: true
+        },
+        {
+          key: 'NetProfit',
+          label: '净利润',
+          width: 150,
+          align: 'center',
+          tooltip: true
+        },
+        {
+          key: 'AuditInstitution',
+          label: '审计机构',
+          width: 150,
+          align: 'center',
+          tooltip: true
+        }
+      ]
     };
   },
   methods: {
