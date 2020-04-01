@@ -38,6 +38,7 @@
         class="detail-form"
         ref="form"
         :label-width="labelWidth"
+        :label-suffix="labelSuffix"
         size="medium"
         label-position="left"
       >
@@ -63,7 +64,7 @@
 
           <el-col v-for="(item,index) in realData.formLabel" :key="item.name" :span="item.span">
             <yo-enum v-if="item.type==='enum'" :EnumName="item.enumName" :selValue.sync="realData.params[item.value]" :label="item.name" prop="none"></yo-enum>
-            <el-form-item v-else :label="item.name + '：'" :prop="item.value">
+            <el-form-item v-else :label="item.name" :prop="item.value">
               <el-input
                 v-if="item.type == 'input'"
                 class="user-input"
@@ -119,6 +120,7 @@
               ></el-input>
             </el-form-item>
           </el-col>
+          <slot name="otherFormItem"></slot>
           <slot name="inputSel"></slot>
         </el-row>
       </el-form>
@@ -227,6 +229,11 @@ export default {
   },
 
   props: {
+    labelSuffix: {
+      type: String,
+      default: '：',
+      required: false
+    },
     quicksearchPlaceholder: String,
     showQuick: {
       type: Boolean,
