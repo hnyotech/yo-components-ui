@@ -21,6 +21,7 @@ import AsiasApproveRecord from '../packages/asiasapproverecord/src/main';
 import YoCity from '../packages/YoCity/src/main';
 import YoButton from '../packages/YoButton/src/main';
 import YoGrid from '../packages/YoGrid/src/main';
+import YoGridClient from '../packages/YoGridClient/src/main'; // 客户端grid
 import CheckRecord from '../packages/checkrecord/src/main';
 import YoDetailCol from '../packages/YoDetailCol/src/main';
 import YoEnum from '../packages/YoEnum/src/main';
@@ -56,6 +57,7 @@ const components = [
   AsiasApproveRecord,
   YoCity,
   YoGrid,
+  YoGridClient,
   CheckRecord,
   YoDetailCol,
   YoEnum,
@@ -102,6 +104,7 @@ const yoComponents ={
   AsiasApproveRecord,
   YoCity,
   YoGrid,
+  YoGridClient,
   CheckRecord,
   YoDetailCol,
   YoEnum,
