@@ -7,6 +7,9 @@
         <yo-button :type="type6">危险按钮</yo-button>
       </yo-toolbar>
     </yo-header>
+    
+    <yo-img :ids.sync="imgs" :apiUrl="apiUrl"></yo-img>
+    <yo-img :ids.sync="Files2" :apiUrl="apiUrl"></yo-img>
 
     <yo-menu :width="250"></yo-menu>
     <yo-detail-col :rowData="rowData" :label_width="100"></yo-detail-col>
@@ -16,11 +19,12 @@
             :displayData="reportData"
             :pageData="{ index: 1, size: 10 }"
           ></yo-table>
+
     <yo-file :uploadType="1" :ids.sync="Files" :apiUrl="apiUrl"></yo-file>
     <yo-file :uploadType="3" :ids.sync="Files" :apiUrl="apiUrl" img-viewer="YoPdfViewer"></yo-file>
 
     <yo-file :uploadType="3" :ids.sync="Files2" :apiUrl="apiUrl"></yo-file>
-    <!-- <yo-img></yo-img> -->
+
     <!-- <yo-input></yo-input>
         
         <el-form>
@@ -132,6 +136,7 @@ export default {
   },
   data() {
     return {
+      imgs:'k203i92608u600a4416e0cp,k202pg03351c00a441288i0',
       apiUrl: process.env.AttachAPI,
       showDialogViewer: false,
       Files2:null,

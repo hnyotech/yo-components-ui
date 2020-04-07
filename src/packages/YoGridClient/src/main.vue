@@ -10,7 +10,7 @@
       <div class="search-form-box">
         <div class="search-form-left">
           <el-row :gutter="5">
-            <el-col v-if="realData.IsNeedBusiness" :span="8">
+            <el-col v-if="realData.IsNeedBusiness" :span="6">
               <el-form-item prop="BusinessTypeId">
                 <el-select
                   placeholder="请选择标的类型"
@@ -92,7 +92,7 @@
               :loading="reLoading"
               @click="resetData"
             >重置</yo-button>
-            <span class="el-button-drop pointer" @click="foldbtn">
+            <span class="el-button-drop pointer" v-if="showFold" @click="foldbtn">
               {{Expend ? '收起' : '展开'}}
               <i class="el-icon-arrow-up" v-if="Expend"></i>
               <i class="el-icon-arrow-down" v-if="!Expend"></i>
@@ -104,9 +104,8 @@
     <slot name="btn-box"></slot>
     <ul class="flex-box flex-start annc-state-ul-box">
       <!--  -->
-      <li @click="choseViewState(10, '')" :class="[ViewStateIndex === 10 ? 'active' : '']">全部</li>
       <li
-        v-for="(item, index) in AnncClientViewState"
+        v-for="(item, index) in realData.ViewStateList"
         :key="item.Value"
         @click="choseViewState(index, item.Value)"
         :class="[ViewStateIndex === index ? 'active' : '']"
@@ -164,7 +163,7 @@ export default {
       searchLoading: false,
       loading: false,
       realData: this.gridData,
-      ViewStateIndex: 10,
+      ViewStateIndex: 0,
       AnncClientViewState: [
         { Value: 70, Description: '已审核' },
         { Value: 80, Description: '未审核' }
@@ -219,7 +218,6 @@ export default {
       this.getBusinessPT()
     }
     this.getList()
-    console.log(this.realData)
   },
   methods: {
     getBusinessPT () {
@@ -249,7 +247,8 @@ export default {
     // 选择视图状态时
     choseViewState (index, value) {
       this.ViewStateIndex = index
-      this.searchForm.QualificationViewState = value
+      this.realData.params.PageIndex = 1
+      this.realData.params[this.realData.ViewStateKey] = value
       this.searchData()
     },
     searchData () {
@@ -269,6 +268,7 @@ export default {
       if (this.isReserveParam.is) {
         this.isReserveParam.Params.forEach(element => {
           this.realData.params[element.Name] = element.Value
+          this.ViewStateIndex = 0
         })
       }
       this.getList()
@@ -300,6 +300,8 @@ export default {
           .post(that.realData.api, that.realData.params)
           .then(res => {
             that.loading = false
+            that.reLoading = false
+            that.searchLoading = false
             if (res) {
               tempRes = res
             }
@@ -308,20 +310,11 @@ export default {
           })
           .catch(() => {
             that.loading = false
+            that.reLoading = false
+            that.searchLoading = false
             that.$emit('update:requireData', tempRes)
           })
       }
-    },
-    // 获取项目状态的枚举
-    getStateList () {
-      var that = this
-      this.$http
-        .get(
-          'api/Enum/GetEnumItems?fullname=Astec.Assets.Entity.TransactionViewState_Enum'
-        )
-        .then(function (res) {
-          that.States = res
-        })
     }
   }
 }

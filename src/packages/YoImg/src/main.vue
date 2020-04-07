@@ -2,18 +2,18 @@
   <div class="preImg">
     <!-- <img v-for="file in fileList" :src="file.url" :key="file.id"  :title="file.name" @click="handlePreview(file.orgurl,file.name)"> -->
     <!-- 文件 -->
-    <div v-if="fileList2.length > 0 ? true : false">
+    <div v-if="fileList.length > 0 ? true : false">
       <div
-        v-for="file in fileList2"
+        v-for="file in fileList"
         :key="file.id"
-        @click="handleDownLoad(file.orgurl)"
-        class="text file-item-img"
+        @click="handleDownLoad(file.orgurl, file)"
+        class="text file-item-img file-item-img2"
       >
-        <i class="el-icon-download marginright"></i>
+        <i class="el-icon-document marginright"></i>
         {{file.name}}
       </div>
     </div>
-    <div v-if="fileList2.length === 0 && fileList.length === 0">
+    <div v-if="fileList.length === 0">
       <div class="text file-item-img nofile">
         <i class="el-icon-warning marginright"></i>暂无文件
       </div>
@@ -24,7 +24,7 @@
           <img :src="file.url" width="200px" height="123px" style="margin-bottom:10px;" :title="file.name" @click="handlePreview(file.orgurl,file.name)" alt="暂无图片">
       </el-col>
     </el-row>-->
-    <div class="flexpic">
+    <div class="flexpic" v-if="false">
       <div v-for="file in fileList" :key="file.id" style="margin-right:3px;">
         <!-- <img    alt="暂无图片"> -->
         <el-image
@@ -182,7 +182,7 @@ export default {
                 file.sign +
                 "&timestamp=" +
                 file.timestamp;
-              that.fileList.push(item);
+              // that.fileList.push(item);
               that.AddSrcCache(item); //添加到預覽緩存
             } else {
               // 非图片
@@ -196,10 +196,9 @@ export default {
                 "&timestamp=" +
                 file.timestamp;
               item.url = item.orgurl;
-              that.fileList2.push(item);
+              // that.fileList2.push(item);
             }
-
-            // that.fileList.push(item);
+            that.fileList.push(item);
           });
         })
         .catch(err => {
@@ -311,9 +310,13 @@ export default {
       }
     },
     // 下载
-    handleDownLoad: function(url) {
+    handleDownLoad: function(url, item) {
       if (!this.isPreviw) {
         return;
+      }
+      if(this.isImgType(item.type)){
+        this.handlePreview(item)
+        return
       }
       if (url.length > 0) {
         url = url.toLowerCase().replace("showimage", "download");
@@ -334,10 +337,14 @@ export default {
 
 .file-item-img {
   display: inline-block;
+  width: calc(50% - 18px);
   margin-bottom: 5px;
   margin-right: 10px;
-  padding: 12px 10px;
+  padding: 3px 10px 4px 2px;
   background-color: #eee;
+}
+.file-item-img2:nth-of-type(2n) {
+  margin-right: 0;
 }
 .file-item-img:hover {
   cursor: pointer;
@@ -363,7 +370,7 @@ export default {
   clear: both;
 }
 .marginright {
-  margin-right: 5px;
+  margin-right: 3px;
 }
 .flexpic {
   display: flex;
