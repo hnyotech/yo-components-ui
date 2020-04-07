@@ -342,16 +342,17 @@ export default {
   margin-right: 10px;
   padding: 3px 10px 4px 2px;
   background-color: #eee;
+  border-radius: 2px;
 }
 .file-item-img2:nth-of-type(2n) {
   margin-right: 0;
 }
 .file-item-img:hover {
   cursor: pointer;
-  background-color: #365fa4;
-  color: #fff;
+  color: #365fa4;
 }
 .nofile {
+   width: auto;
   background-color: #eee;
   color: #999;
 }

@@ -11,19 +11,19 @@
     <yo-img :ids.sync="imgs" :apiUrl="apiUrl"></yo-img>
     <yo-img :ids.sync="Files2" :apiUrl="apiUrl"></yo-img>
 
-    <yo-menu :width="250"></yo-menu>
-    <yo-detail-col :rowData="rowData" :label_width="100"></yo-detail-col>
-    <yo-table
+    <!-- <yo-menu :width="250"></yo-menu> -->
+    <!-- <yo-detail-col :rowData="rowData" :label_width="100"></yo-detail-col> -->
+    <!-- <yo-table
             :tableData="[]"
             :border="true"
             :displayData="reportData"
             :pageData="{ index: 1, size: 10 }"
-          ></yo-table>
+          ></yo-table> -->
 
-    <yo-file :uploadType="1" :ids.sync="Files" :apiUrl="apiUrl"></yo-file>
+    <!-- <yo-file :uploadType="1" :ids.sync="Files" :apiUrl="apiUrl"></yo-file>
     <yo-file :uploadType="3" :ids.sync="Files" :apiUrl="apiUrl" img-viewer="YoPdfViewer"></yo-file>
 
-    <yo-file :uploadType="3" :ids.sync="Files2" :apiUrl="apiUrl"></yo-file>
+    <yo-file :uploadType="3" :ids.sync="Files2" :apiUrl="apiUrl"></yo-file> -->
 
     <!-- <yo-input></yo-input>
         
@@ -74,7 +74,7 @@
             </el-table>
         </yo-grid>
     </yo-content>-->
-    <yo-button :type="type2" @click="showPdfViewer">弹出预览</yo-button>
+    <!-- <yo-button :type="type2" @click="showPdfViewer">弹出预览</yo-button> -->
     <yo-dialog-viewer
       title="测试一下"
       v-if="showDialogViewer"
