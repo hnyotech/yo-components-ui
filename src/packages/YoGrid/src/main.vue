@@ -44,7 +44,7 @@
       >
         <el-row :gutter="40">
           <el-col v-if="realData.IsNeedBusiness" :span="8">
-            <el-form-item label="标的类型：" prop="BusinessTypeId">
+            <el-form-item label="标的类型" prop="BusinessTypeId">
               <el-select
                 placeholder="请选择标的类型"
                 v-model="realData.params.BusinessTypeId"
