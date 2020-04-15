@@ -372,6 +372,7 @@ export default {
         });
       }
       this.$emit('reset', this.realData.params)
+      
       this.search();
     },
     clearData(data) {
