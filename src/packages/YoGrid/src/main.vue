@@ -371,6 +371,7 @@ export default {
           this.realData.params[element.Name] = element.Value;
         });
       }
+      this.$emit('reset', this.realData.params)
       this.search();
     },
     clearData(data) {
@@ -394,8 +395,9 @@ export default {
             data: that.realData.params
           })
           .then(res => {
-            if (res.TotalCount > 0 && that.realData.params.PageIndex >= 1 && res.Items.length === 0) {
-              this.search('isPage')
+            if (res.TotalCount > 0 && that.realData.params.PageIndex > 1 && res.Items.length === 0) {
+              that.realData.params.PageIndex = 1
+              that.search('isPage')
               return
             }
             this.searchLoading = false;
@@ -423,14 +425,14 @@ export default {
             that.PageIndex = that.realData.params.PageIndex;
             that.PageSize = that.realData.params.PageSize;
             that.TotalCount = res.TotalCount;
+            // res.PageIndex = that.PageIndex;
+            // res.PageSize = that.PageSize;
             that.requireData = res;
             // sessionStorage.setItem('paramsList',JSON.stringify(paramsList))
             if (!that.IsNotNeedSaveParams) {
               that.$store.commit("UPDATE_PARAMSlIST", paramsList);
             }
             // resolve(res);
-            res.PageIndex = that.realData.params.PageIndex;
-            res.PageSize = that.realData.params.PageSize;
             that.$emit("update:requireData", res);
             this.loading = false;
           })

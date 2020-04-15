@@ -102,7 +102,7 @@
       </div>
     </el-form>
     <slot name="btn-box"></slot>
-    <ul class="flex-box flex-start annc-state-ul-box">
+    <ul class="flex-box flex-start annc-state-ul-box" v-if="realData.ViewStateKey">
       <!--  -->
       <li
         v-for="(item, index) in realData.ViewStateList"

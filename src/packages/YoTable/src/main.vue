@@ -1,9 +1,18 @@
 <template>
-  <el-table ref="multipleTable" :data="tableData" :border="border" :show-summary="showSummary" :summary-method="summaryMethod" class="yo-table" :class="border ? 'yo-border-table' : ''" style="width: 100%;">
+  <el-table
+    ref="multipleTable"
+    :data="tableData.Items"
+    :border="border"
+    :show-summary="showSummary"
+    :summary-method="summaryMethod"
+    class="yo-table"
+    :class="border ? 'yo-border-table' : ''"
+    style="width: 100%;"
+  >
     <el-table-column
       type="index"
       width="50"
-      :index="((pageData.index-1)*pageData.size+1)"
+      :index="((tableData.PageIndex-1)*tableData.PageSize+1)"
       align="center"
       label="序号"
     ></el-table-column>
@@ -45,30 +54,24 @@
 </template>
 <script>
 export default {
-  name: 'YoTable',
+  name: "YoTable",
   props: {
     tableData: {
-      type: Array,
+      type: Object,
       required: true,
-      default: function () {
-        return []
+      default: function() {
+        return {
+          PageIndex:1,
+          PageSize:10,
+          Items: []
+        };
       }
     },
     displayData: {
       type: Array,
       required: true,
-      default: function () {
-        return []
-      }
-    },
-    pageData: {
-      type: Object,
-      required: true,
-      default: function () {
-        return {
-          index: 1,
-          size: 10
-        }
+      default: function() {
+        return [];
       }
     },
     showSummary: {
@@ -80,7 +83,7 @@ export default {
       type: Function,
       required: false,
       default: () => {
-        return []
+        return [];
       }
     },
     border: {
@@ -89,7 +92,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       isLoading2: false
       // requireData: {
@@ -169,9 +172,9 @@ export default {
       //     }
       //   ]
       // }
-    }
+    };
   }
-}
+};
 </script>
 <style scoped>
 .otw {
@@ -191,5 +194,4 @@ export default {
 .yo-table /deep/ .el-table--border {
   border: none !important;
 } */
-
 </style>
