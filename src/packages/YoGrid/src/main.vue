@@ -231,7 +231,7 @@
       } else {
         this.realData.params.YoGridCollapse = this.defaultShowHidden;
       }
-      this.search("isPage");
+      this.allowSearch("isPage");
       if (this.realData.IsNeedBusiness) {
         this.getBusinessPT()
       }
