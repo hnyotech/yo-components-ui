@@ -394,6 +394,10 @@
           if (that.oldParams[a] !== that.realData.params[a]) {
             that.allowSearch(data)
             return false
+          } else {
+            that.loading = false;
+            that.searchLoading = false;
+            that.reLoading = false;
           }
         }
       },
