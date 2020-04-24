@@ -390,16 +390,17 @@
       // table数据搜索函数
       search(data) {
         let that = this;
-        for (let a in that.oldParams) {
-          if (that.oldParams[a] !== that.realData.params[a]) {
-            that.allowSearch(data)
-            return false
-          } else {
-            that.loading = false;
-            that.searchLoading = false;
-            that.reLoading = false;
-          }
-        }
+        that.allowSearch(data)
+        // for (let a in that.oldParams) {
+        //   if (that.oldParams[a] !== that.realData.params[a]) {
+        //     that.allowSearch(data)
+        //     return false
+        //   } else {
+        //     that.loading = false;
+        //     that.searchLoading = false;
+        //     that.reLoading = false;
+        //   }
+        // }
       },
       allowSearch(data) {
         let that = this;
