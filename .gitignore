@@ -15,5 +15,3 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
-src/examples/index/index.vue
-package-lock.json
