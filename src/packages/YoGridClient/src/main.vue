@@ -44,7 +44,7 @@
                   :format="item.format"
                   :value-format="item.format"
                   type="date"
-                  placeholder="请选择日期"
+                  :placeholder="'请选择' + item.name"
                   v-model="realData.params[item.value]"
                   style="width:100%"
                   clearable
@@ -54,7 +54,7 @@
                   :format="item.format"
                   :value-format="item.format"
                   type="datetime"
-                  placeholder="请选择时间"
+                  :placeholder="'请选择' + item.name"
                   v-model="realData.params[item.value]"
                   style="width:100%"
                   clearable
