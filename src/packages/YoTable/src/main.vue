@@ -5,6 +5,7 @@
     :border="border"
     :show-summary="showSummary"
     :summary-method="summaryMethod"
+    @selection-change="handleSelectionChange"
     class="yo-table"
     :class="border ? 'yo-border-table' : ''"
     style="width: 100%;"
@@ -173,6 +174,11 @@ export default {
       //   ]
       // }
     };
+  },
+  methods: {
+    handleSelectionChange (val) {
+      this.$emit('selectChange', val)
+    }
   }
 };
 </script>
