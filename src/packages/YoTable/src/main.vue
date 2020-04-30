@@ -11,6 +11,13 @@
     style="width: 100%;"
   >
     <el-table-column
+      type="selection"
+      key="selection"
+      align="center"
+      v-if="IsNeedSelect"
+      width="50">
+    </el-table-column>
+    <el-table-column
       type="index"
       width="50"
       :index="((tableData.PageIndex-1)*tableData.PageSize+1)"
@@ -86,6 +93,11 @@ export default {
       default: () => {
         return [];
       }
+    },
+    IsNeedSelect: {
+      type: Boolean,
+      required: false,
+      default: false
     },
     border: {
       type: Boolean,
