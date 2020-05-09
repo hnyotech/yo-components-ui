@@ -5,10 +5,18 @@
     :border="border"
     :show-summary="showSummary"
     :summary-method="summaryMethod"
+    @selection-change="handleSelectionChange"
     class="yo-table"
     :class="border ? 'yo-border-table' : ''"
     style="width: 100%;"
   >
+    <el-table-column
+      type="selection"
+      key="selection"
+      align="center"
+      v-if="IsNeedSelect"
+      width="50">
+    </el-table-column>
     <el-table-column
       type="index"
       width="50"
@@ -85,6 +93,11 @@ export default {
       default: () => {
         return [];
       }
+    },
+    IsNeedSelect: {
+      type: Boolean,
+      required: false,
+      default: false
     },
     border: {
       type: Boolean,
@@ -173,6 +186,11 @@ export default {
       //   ]
       // }
     };
+  },
+  methods: {
+    handleSelectionChange (val) {
+      this.$emit('selectChange', val)
+    }
   }
 };
 </script>

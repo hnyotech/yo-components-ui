@@ -33,49 +33,49 @@
         <yo-city :api="''" :labelWidth="'120'" :label="'地址：'" @selectchange="selectchange()"></yo-city>
     </el-form>-->
 
-    <yo-content>
-      <yo-grid ref="YoGrid"
-               :quicksearchPlaceholder="'快速搜索公告编号'"
-               :requireData.sync="requireData"
-               :gridData="gridData"
-               :showPagination="true"
-               :quickSearchVal="'AnncCode'"
-               :tabsAlign="'left'"
-               :unitGroup="true"
-               :unitAlign="'right'"
-               :needtabs="false">
-        <el-table ref="multipleTable" :data="requireData.Items" style="width: 100%">
-          <el-table-column
-            v-for="item in gridData.table"
-            :key="item.key"
-            :align="item.align"
-            :prop="item.key"
-            :label="item.label"
-            :min-width="item.width"
-            :show-overflow-tooltip="item.tooltip"
-          ></el-table-column>
-          <el-table-column align="center" label="操作">
-            <template slot-scope="scope">
-              <el-button
-                size="small"
-                type="info"
-                icon="el-icon-edit"
-                @click="addNewOrg(scope.$index, scope.row)"
-              >编辑
-              </el-button>
-              <el-button
-                size="small"
-                type="danger"
-                icon="el-icon-delete"
-                v-if="scope.row.Id.length>20"
-                @click="handleDelete(scope.$index, scope.row)"
-              >删除
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </yo-grid>
-    </yo-content>
+    <!--    <yo-content>-->
+    <!--      <yo-grid ref="YoGrid"-->
+    <!--               :quicksearchPlaceholder="'快速搜索公告编号'"-->
+    <!--               :requireData.sync="requireData"-->
+    <!--               :gridData="gridData"-->
+    <!--               :showPagination="true"-->
+    <!--               :quickSearchVal="'AnncCode'"-->
+    <!--               :tabsAlign="'left'"-->
+    <!--               :unitGroup="true"-->
+    <!--               :unitAlign="'right'"-->
+    <!--               :needtabs="false">-->
+    <!--        <el-table ref="multipleTable" :data="requireData.Items" style="width: 100%">-->
+    <!--          <el-table-column-->
+    <!--            v-for="item in gridData.table"-->
+    <!--            :key="item.key"-->
+    <!--            :align="item.align"-->
+    <!--            :prop="item.key"-->
+    <!--            :label="item.label"-->
+    <!--            :min-width="item.width"-->
+    <!--            :show-overflow-tooltip="item.tooltip"-->
+    <!--          ></el-table-column>-->
+    <!--          <el-table-column align="center" label="操作">-->
+    <!--            <template slot-scope="scope">-->
+    <!--              <el-button-->
+    <!--                size="small"-->
+    <!--                type="info"-->
+    <!--                icon="el-icon-edit"-->
+    <!--                @click="addNewOrg(scope.$index, scope.row)"-->
+    <!--              >编辑-->
+    <!--              </el-button>-->
+    <!--              <el-button-->
+    <!--                size="small"-->
+    <!--                type="danger"-->
+    <!--                icon="el-icon-delete"-->
+    <!--                v-if="scope.row.Id.length>20"-->
+    <!--                @click="handleDelete(scope.$index, scope.row)"-->
+    <!--              >删除-->
+    <!--              </el-button>-->
+    <!--            </template>-->
+    <!--          </el-table-column>-->
+    <!--        </el-table>-->
+    <!--      </yo-grid>-->
+    <!--    </yo-content>-->
     <!-- <yo-button :type="type2" @click="showPdfViewer">弹出预览</yo-button> -->
     <!--    <yo-dialog-viewer-->
     <!--      title="测试一下"-->
@@ -101,6 +101,15 @@
     <!--    <yo-dialog-viewer  v-if="false"   :on-close="closePdfViewer">-->
     <!--        <embed src="http://localhost:50070/api/Attach/ShowPDF?id=k2037g5548pg0020123bc7v&sign=961a716d2ad7b7ace05ecb181ec1917a&timestamp=1583759031#view=FitH,top&" />-->
     <!--    </yo-dialog-viewer>-->
+    <yo-file
+      :uploadType="3"
+      :ids.sync="formData.Files"
+      :apiUrl="apiUrl"
+      :isShowTip="false"
+      :fileLimit="10"
+      :isMultiple="true"
+      :allowAnonymous="true"
+    ></yo-file>
   </div>
 </template>
 <script>
@@ -139,6 +148,10 @@
     },
     data() {
       return {
+        formData: {
+          Files: ''
+        },
+        apiUrl: '',
         imgs: 'k203i92608u600a4416e0cp,k202pg03351c00a441288i0',
         apiUrl: process.env.AttachAPI,
         showDialogViewer: false,

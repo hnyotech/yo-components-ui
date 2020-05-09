@@ -226,7 +226,6 @@ export default {
       if (this.showFileList != null && this.showFileList.length > 0) {
         allList = allList.concat(this.showFileList);
       }
-
       return allList;
     },
     IsShow: function() {
@@ -470,11 +469,19 @@ export default {
       var id = item.id;
       var src = item.orgurl;
       let that = this;
+      console.log(item)
+      for(let a in that.fileList){
+        if(that.fileList[a].id == item.id){
+          that.fileList.splice(a,1)
+          return false
+        }
+      }
+
       let cacheData = JSON.parse(sessionStorage.getItem(that.StorageKey));
       if (cacheData) {
         var obj = cacheData[that.group];
         if (obj) {
-          console.log(obj[id]);
+          // console.log(obj[id]);
           if (obj[id]) {
             delete obj[id];
             cacheData[that.group] = obj;
@@ -482,6 +489,7 @@ export default {
           }
         }
       }
+      console.log(that.fileList)
     },
     //獲取地址所在index
     GetIndexByCache: function(id) {
@@ -615,6 +623,19 @@ export default {
     beforeUpload: function(file) {
       // 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
       // console.log("beforeUpload..");
+      // console.log(file)
+      let sameFileName = false
+      for(let a in this.fileList){
+        if(this.fileList[a].name == file.name){
+          sameFileName = true
+        }
+      }
+      if(sameFileName){
+        this.$message.error(
+          "上传附件不可重名!"
+        );
+        return false;
+      }
       if (this.fileSize > 0 && file.size > this.fileSize) {
         this.$message.error(
           "上传附件大小不能超过" +
@@ -794,7 +815,7 @@ export default {
       if (that.AllfileList && that.AllfileList.length > 0 && file.name) {
         that.AllfileList.forEach(function(item) {
           if (item.name == file.name) {
-            // console.log("找到了");
+            console.log(item);
             that.handlePreview(item.orgurl, item, name);
           }
         });

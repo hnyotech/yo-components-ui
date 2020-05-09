@@ -62,7 +62,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col v-for="(item,index) in realData.formLabel" :key="item.name" :span="item.span">
+          <el-col v-for="(item,index) in realData.formLabel" :key="item.key" :span="item.span">
             <yo-enum v-if="item.type==='enum'" :EnumName="item.enumName" :selValue.sync="realData.params[item.value]"
                      :label="item.name" prop="none"></yo-enum>
             <el-form-item v-else :label="item.name" :prop="item.value">
