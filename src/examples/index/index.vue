@@ -110,6 +110,24 @@
       :isMultiple="true"
       :allowAnonymous="true"
     ></yo-file>
+    <yo-file
+      :uploadType="3"
+      :ids.sync="formData.Files2"
+      :apiUrl="apiUrl"
+      :isShowTip="false"
+      :fileLimit="10"
+      :isMultiple="true"
+      :allowAnonymous="true"
+    ></yo-file>
+    <yo-file
+      :uploadType="3"
+      :ids.sync="formData.Files3"
+      :apiUrl="apiUrl"
+      :isShowTip="false"
+      :fileLimit="10"
+      :isMultiple="true"
+      :allowAnonymous="true"
+    ></yo-file>
   </div>
 </template>
 <script>
@@ -149,7 +167,9 @@
     data() {
       return {
         formData: {
-          Files: ''
+          Files: '',
+          Files2: '',
+          Files3: ''
         },
         apiUrl: '',
         imgs: 'k203i92608u600a4416e0cp,k202pg03351c00a441288i0',
