@@ -388,13 +388,15 @@
           });
       },
       SubjectTypeIdsChange(val) {
+        console.log(val)
         this.SubjectTypeIdsBusinessTypeIds = []
         for (let a in this.SubjectTypeIds) {
           if (this.SubjectTypeIds[a].BusinessTypeId === val) {
             this.SubjectTypeIdsBusinessTypeIds = this.SubjectTypeIds[a].Children
             return false
           } else {
-
+            this.SubjectTypeIdsBusinessTypeIds = []
+            this.realData.params.BusinessTypeId = null
           }
         }
       },
@@ -455,10 +457,10 @@
         this.search();
       },
       clearData(data) {
-        this.realData.params.data = null;
         if (data === 'BusinessTypeParentId') {
-          this.realData.params.BusinessTypeId = ''
+          this.realData.params.BusinessTypeId = null
         }
+        this.realData.params.data = null;
       },
       // table数据搜索函数
       search(data) {
