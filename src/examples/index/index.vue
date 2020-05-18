@@ -33,49 +33,49 @@
         <yo-city :api="''" :labelWidth="'120'" :label="'地址：'" @selectchange="selectchange()"></yo-city>
     </el-form>-->
 
-    <!--    <yo-content>-->
-    <!--      <yo-grid ref="YoGrid"-->
-    <!--               :quicksearchPlaceholder="'快速搜索公告编号'"-->
-    <!--               :requireData.sync="requireData"-->
-    <!--               :gridData="gridData"-->
-    <!--               :showPagination="true"-->
-    <!--               :quickSearchVal="'AnncCode'"-->
-    <!--               :tabsAlign="'left'"-->
-    <!--               :unitGroup="true"-->
-    <!--               :unitAlign="'right'"-->
-    <!--               :needtabs="false">-->
-    <!--        <el-table ref="multipleTable" :data="requireData.Items" style="width: 100%">-->
-    <!--          <el-table-column-->
-    <!--            v-for="item in gridData.table"-->
-    <!--            :key="item.key"-->
-    <!--            :align="item.align"-->
-    <!--            :prop="item.key"-->
-    <!--            :label="item.label"-->
-    <!--            :min-width="item.width"-->
-    <!--            :show-overflow-tooltip="item.tooltip"-->
-    <!--          ></el-table-column>-->
-    <!--          <el-table-column align="center" label="操作">-->
-    <!--            <template slot-scope="scope">-->
-    <!--              <el-button-->
-    <!--                size="small"-->
-    <!--                type="info"-->
-    <!--                icon="el-icon-edit"-->
-    <!--                @click="addNewOrg(scope.$index, scope.row)"-->
-    <!--              >编辑-->
-    <!--              </el-button>-->
-    <!--              <el-button-->
-    <!--                size="small"-->
-    <!--                type="danger"-->
-    <!--                icon="el-icon-delete"-->
-    <!--                v-if="scope.row.Id.length>20"-->
-    <!--                @click="handleDelete(scope.$index, scope.row)"-->
-    <!--              >删除-->
-    <!--              </el-button>-->
-    <!--            </template>-->
-    <!--          </el-table-column>-->
-    <!--        </el-table>-->
-    <!--      </yo-grid>-->
-    <!--    </yo-content>-->
+    <yo-content>
+      <yo-grid ref="YoGrid"
+               :quicksearchPlaceholder="'快速搜索公告编号'"
+               :requireData.sync="requireData"
+               :gridData="gridData"
+               :showPagination="true"
+               :quickSearchVal="'AnncCode'"
+               :tabsAlign="'left'"
+               :unitGroup="true"
+               :unitAlign="'right'"
+               :needtabs="false">
+        <el-table ref="multipleTable" :data="requireData.Items" style="width: 100%">
+          <el-table-column
+            v-for="item in gridData.table"
+            :key="item.key"
+            :align="item.align"
+            :prop="item.key"
+            :label="item.label"
+            :min-width="item.width"
+            :show-overflow-tooltip="item.tooltip"
+          ></el-table-column>
+          <el-table-column align="center" label="操作">
+            <template slot-scope="scope">
+              <el-button
+                size="small"
+                type="info"
+                icon="el-icon-edit"
+                @click="addNewOrg(scope.$index, scope.row)"
+              >编辑
+              </el-button>
+              <el-button
+                size="small"
+                type="danger"
+                icon="el-icon-delete"
+                v-if="scope.row.Id.length>20"
+                @click="handleDelete(scope.$index, scope.row)"
+              >删除
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </yo-grid>
+    </yo-content>
     <!-- <yo-button :type="type2" @click="showPdfViewer">弹出预览</yo-button> -->
     <!--    <yo-dialog-viewer-->
     <!--      title="测试一下"-->
@@ -110,24 +110,24 @@
       :isMultiple="true"
       :allowAnonymous="true"
     ></yo-file>
-    <yo-file
-      :uploadType="3"
-      :ids.sync="formData.Files2"
-      :apiUrl="apiUrl"
-      :isShowTip="false"
-      :fileLimit="10"
-      :isMultiple="true"
-      :allowAnonymous="true"
-    ></yo-file>
-    <yo-file
-      :uploadType="3"
-      :ids.sync="formData.Files3"
-      :apiUrl="apiUrl"
-      :isShowTip="false"
-      :fileLimit="10"
-      :isMultiple="true"
-      :allowAnonymous="true"
-    ></yo-file>
+    <!--    <yo-file-->
+    <!--      :uploadType="3"-->
+    <!--      :ids.sync="formData.Files2"-->
+    <!--      :apiUrl="apiUrl"-->
+    <!--      :isShowTip="false"-->
+    <!--      :fileLimit="10"-->
+    <!--      :isMultiple="true"-->
+    <!--      :allowAnonymous="true"-->
+    <!--    ></yo-file>-->
+    <!--    <yo-file-->
+    <!--      :uploadType="3"-->
+    <!--      :ids.sync="formData.Files3"-->
+    <!--      :apiUrl="apiUrl"-->
+    <!--      :isShowTip="false"-->
+    <!--      :fileLimit="10"-->
+    <!--      :isMultiple="true"-->
+    <!--      :allowAnonymous="true"-->
+    <!--    ></yo-file>-->
   </div>
 </template>
 <script>
@@ -227,6 +227,7 @@
           Item: []
         },
         gridData: {
+          IsNeedSubjectType:true,
           params: {
             Name: "",
             PageSize: 10,

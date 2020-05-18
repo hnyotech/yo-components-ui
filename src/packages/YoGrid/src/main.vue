@@ -43,6 +43,44 @@
         label-position="left"
       >
         <el-row :gutter="40">
+          <el-col v-if="realData.IsNeedSubjectType" :span="8">
+            <el-form-item label="业务类型" prop="BusinessTypeParentId">
+              <el-select
+                placeholder="请选择业务类型"
+                v-model="realData.params.BusinessTypeParentId"
+                @change="SubjectTypeIdsChange"
+                clearable
+                style="width:100%"
+                @clear="clearData('BusinessTypeParentId')"
+              >
+                <el-option
+                  v-for="item in SubjectTypeIds"
+                  :key="item.BusinessTypeId"
+                  :label="item.BusinessTypeName"
+                  :value="item.BusinessTypeId"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col v-if="realData.IsNeedSubjectType" :span="8">
+            <el-form-item label="标的类型" prop="BusinessTypeId">
+              <el-select
+                placeholder="请选择标的类型"
+                v-model="realData.params.BusinessTypeId"
+                clearable
+                style="width:100%"
+                @clear="clearData('BusinessTypeId')"
+              >
+                <el-option
+                  v-for="item in SubjectTypeIdsBusinessTypeIds"
+                  :key="item.BusinessTypeId"
+                  :label="item.BusinessTypeName"
+                  :value="item.BusinessTypeId"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+
           <el-col v-if="realData.IsNeedBusiness" :span="8">
             <el-form-item label="标的类型" prop="BusinessTypeId">
               <el-select
@@ -210,7 +248,9 @@
         oldParams: {},
         TotalCount: 0,
         loading: false,
-        BusinessTypeIds: [] // 标的类型
+        BusinessTypeIds: [],// 标的类型
+        SubjectTypeIds: [], // 业务类型
+        SubjectTypeIdsBusinessTypeIds: [] // 业务类型
       };
     },
     beforeCreate() {
@@ -220,7 +260,7 @@
     },
     mounted: function () {
       // console.log(this.$store)
-      var paramsList = this.$store.getters.paramsList;
+      let paramsList = this.$store.getters.paramsList;
       for (let i = 0; i < paramsList.length; i++) {
         if (paramsList[i][this.$route.name]) {
           this.realData.params = paramsList[i][this.$route.name];
@@ -234,6 +274,9 @@
       this.allowSearch("isPage");
       if (this.realData.IsNeedBusiness) {
         this.getBusinessPT()
+      }
+      if (this.realData.IsNeedSubjectType) {
+        this.getSubjectTypeIds()
       }
     },
 
@@ -342,6 +385,32 @@
           )
           .then(res => {
             that.BusinessTypeIds = res;
+          });
+      },
+      SubjectTypeIdsChange(val) {
+        this.SubjectTypeIdsBusinessTypeIds = []
+        for (let a in this.SubjectTypeIds) {
+          if (this.SubjectTypeIds[a].BusinessTypeId === val) {
+            this.SubjectTypeIdsBusinessTypeIds = this.SubjectTypeIds[a].Children
+            return false
+          } else {
+
+          }
+        }
+      },
+      getSubjectTypeIds() {
+        this.realData.params.BusinessTypeParentId = ''
+        let that = this
+        that.$http
+          .post(
+            "/api/TradingOrg/QueryAllBusinessTypeList"
+          )
+          .then(res => {
+            this.SubjectTypeIds = []
+            this.SubjectTypeIdsBusinessTypeIds = []
+            if (res) {
+              that.SubjectTypeIds = res;
+            }
           });
       },
       chooseSaler(index) {
