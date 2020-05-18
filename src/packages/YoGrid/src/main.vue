@@ -456,6 +456,9 @@
       },
       clearData(data) {
         this.realData.params.data = null;
+        if (data === 'BusinessTypeParentId') {
+          this.realData.params.BusinessTypeId = ''
+        }
       },
       // table数据搜索函数
       search(data) {
