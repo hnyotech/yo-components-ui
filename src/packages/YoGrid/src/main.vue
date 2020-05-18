@@ -400,6 +400,7 @@
       },
       getSubjectTypeIds() {
         this.realData.params.BusinessTypeParentId = ''
+        this.realData.params.BusinessTypeId = ''
         let that = this
         that.$http
           .post(
