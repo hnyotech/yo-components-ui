@@ -33,6 +33,10 @@
         <yo-city :api="''" :labelWidth="'120'" :label="'地址：'" @selectchange="selectchange()"></yo-city>
     </el-form>-->
 
+    <yo-date-with-btn
+      :date="null"
+      :displayText="'直至项目结束'"
+    ></yo-date-with-btn>
     <yo-file
       :uploadType="3"
       :ids.sync="formData.Files"
@@ -146,6 +150,7 @@
   import YoContent from "@/packages/YoContent/src/main.vue";
   import YoCity from "@/packages/YoCity/src/main.vue";
   import YoInput from "@/packages/YoControlsInput/src/main.vue";
+  import YoDateWithBtn from "@/packages/YoDateWithBtn/src/main.vue";
   import YoDialogViewer from "@/packages/YoDialogViewer/src/main.vue";
   import YoTable from "@/packages/YoTable/src/main.vue";
 
@@ -153,6 +158,7 @@
     name: "examples",
     components: {
       YoHeader,
+      YoDateWithBtn,
       YoButton,
       YoMenu,
       YoDetailCol,
