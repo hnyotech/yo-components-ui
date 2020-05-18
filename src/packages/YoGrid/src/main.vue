@@ -573,7 +573,7 @@
                 item => item.Name === key
               );
               if (keyName) {
-                keyName = null;
+                this.realData.params[key] = keyName.Value;
               } else {
                 this.realData.params[key] = "";
               }
