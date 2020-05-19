@@ -245,12 +245,12 @@
       };
     },
     created: function () {
-      sessionStorage.setItem(that.StorageKey, JSON.stringify([]));
+      sessionStorage.setItem(this.StorageKey, JSON.stringify([]));
       // console.log("created:" + this.ids);
       this.loadData(this.ids);
     },
     mounted: function () {
-      sessionStorage.setItem(that.StorageKey, JSON.stringify([]));
+      sessionStorage.setItem(this.StorageKey, JSON.stringify([]));
     },
     watch: {
       ids: function (val) {
