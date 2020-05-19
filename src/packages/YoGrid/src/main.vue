@@ -25,7 +25,7 @@
         <YoButton slot="append" icon="el-icon-search" @click="handleQuickSearch"></YoButton>
       </el-input>
     </div>
-    <div v-show="!defaultShowHidden" class="cos_hide_box">
+    <div v-show="!defaultShowHidden && isShowQuick" class="cos_hide_box">
       <span class="cos_hide" @click="handleCollapse">
         收起
         <i class="el-icon-arrow-up"></i>
@@ -292,6 +292,11 @@
         default: true,
         required: false
       }, // 是否显示快速搜索
+      isShowQuick: {
+        type: Boolean,
+        default: true,
+        required: false
+      }, // 是否不显示快速搜索
       showPagination: {
         type: Boolean,
         default: true,
