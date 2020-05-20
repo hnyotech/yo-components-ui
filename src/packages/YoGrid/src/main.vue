@@ -500,6 +500,7 @@
               data: that.realData.params
             })
             .then(res => {
+              this.loading = false;
               if (res.TotalCount > 0 && that.realData.params.PageIndex > 1 && res.Items.length === 0) {
                 that.realData.params.PageIndex = 1
                 that.search('isPage')
@@ -539,7 +540,7 @@
               }
               // resolve(res);
               that.$emit("update:requireData", res);
-              this.loading = false;
+              // this.loading = false;
             })
             .catch(() => {
               this.searchLoading = false;
