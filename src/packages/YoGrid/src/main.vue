@@ -259,11 +259,14 @@
       this.oldParams = JSON.parse(JSON.stringify(this.realData.params))
     },
     mounted: function () {
-      // console.log(this.$store)
       let paramsList = this.$store.getters.paramsList;
       for (let i = 0; i < paramsList.length; i++) {
         if (paramsList[i][this.$route.name]) {
-          this.realData.params = paramsList[i][this.$route.name];
+          for(let a in this.realData.params){
+            if(paramsList[i][this.$route.name][a]) {
+              this.$set(this.realData.params, a, paramsList[i][this.$route.name][a])
+            }
+          }
         }
       }
       if (this.realData.params.hasOwnProperty("YoGridCollapse")) {
@@ -279,7 +282,6 @@
         this.getSubjectTypeIds()
       }
     },
-
     props: {
       labelSuffix: {
         type: String,
@@ -365,21 +367,6 @@
         required: false
       }
     },
-    computed: {},
-
-    watch: {
-      pageIndex: function (val, oldVal) {
-        // console.log("pageIndex changed: val=" + val + "oldVal = " + oldVal);
-        // this.$emit("page-change", this.pageIndex, this.pageSize);
-      },
-
-      pageSize: function (val, oldVal) {
-        // console.log(this.pageSize)
-        // console.log("pageSize changed: val=" + val + "oldVal = " + oldVal);
-        // this.$emit("page-change", this.pageIndex, this.pageSize);
-      }
-    },
-
     methods: {
       getBusinessPT() {
         let that = this
@@ -393,7 +380,6 @@
           });
       },
       SubjectTypeIdsChange(val) {
-        console.log(val)
         this.SubjectTypeIdsBusinessTypeIds = []
         for (let a in this.SubjectTypeIds) {
           if (this.SubjectTypeIds[a].BusinessTypeId === val) {
@@ -471,24 +457,12 @@
       search(data) {
         let that = this;
         that.allowSearch(data)
-        // for (let a in that.oldParams) {
-        //   if (that.oldParams[a] !== that.realData.params[a]) {
-        //     that.allowSearch(data)
-        //     return false
-        //   } else {
-        //     that.loading = false;
-        //     that.searchLoading = false;
-        //     that.reLoading = false;
-        //   }
-        // }
       },
       allowSearch(data) {
         let that = this;
         that.oldParams = JSON.parse(JSON.stringify(that.realData.params))
         that.loading = true;
         let paramsList = that.$store.getters.paramsList;
-        // return new Promise(function(resolve,reject){
-        // console.log(that.params)
         if (!data) {
           that.realData.params.PageIndex = 1;
         }
@@ -547,30 +521,11 @@
               this.reLoading = false;
             });
         }
-        // })
       },
       handleCollapse() {
-        // for (var key in this.realData.params) {
-        //   if (key === 'PageIndex') {
-        //     this.realData.params[key] = 1
-        //   } else if (key === 'PageSize') {
-        //     this.realData.params[key] = 10
-        //   } else {
-        //     this.realData.params[key] = ''
-        //   };
-        // };
         this.defaultShowHidden = !this.defaultShowHidden;
         this.realData.params.YoGridCollapse = this.defaultShowHidden;
       },
-      // handleReset() {
-      //     this.pageIndex = 1;
-      //     this.$emit("reset");
-      // },
-      // handleSearch() {
-      //     this.pageIndex = 1;
-      //     this.$emit("search");
-      // },
-
       handleQuickSearch() {
         let val = this.realData.params[this.quickSearch];
         for (var key in this.realData.params) {
@@ -595,86 +550,19 @@
           }
         }
         this.realData.params[this.quickSearch] = val;
-        // if(this.isReserveParam.is){ // 解决公告审核重置和快速搜索给公告状态赋值的问题。
-        //   this.isReserveParam.Params.forEach(element => {
-        //     this.realData.params[element.Name] = element.Value
-        //   })
-        // }
         this.search();
       },
-
       handleQuickSearchFromInput() {
         this.search();
       },
-
       handleSizeChange(val) {
         this.realData.params.PageSize = val;
         this.search("isPage");
-        // console.log("handleSizeChange val=" + val);
-        // let needEmit = false;
-
-        // if (this.pageSize) {
-        //     if (this.pageSize == val) {
-        //         needEmit = false;
-        //     }
-        //     else if (this.pageSize == 0 && val == 1) {
-        //         needEmit = false;
-        //     } else {
-        //         needEmit = true;
-        //     }
-        // } else if (val == 1 || val == 0) {
-        //     needEmit = false;
-        // } else {
-        //     needEmit = true;
-        // }
-
-        // console.log("handleSizeChange val=" + val + ", needEmit= " + needEmit);
-
-        // if (needEmit) {
-        //     this.pageSize = val;
-        // }
       },
       handleIndexChange(val) {
         this.realData.params.PageIndex = val;
         this.search("isPage");
-        // console.log("handleIndexChange val=" + val);
-        // let needEmit = false;
-        // if (this.pageIndex) {
-        //     if (this.pageIndex == val) {
-        //         needEmit = false;
-        //     } else if (this.pageIndex == 0 && val == 1) {
-        //         needEmit = false;
-        //     } else {
-        //         needEmit = true;
-        //     }
-        // } else if (val == 0 || val == 1) {
-        //     needEmit = false;
-        // } else {
-        //     needEmit = true;
-        // }
-        // if (needEmit) {
-        //     this.pageIndex = val;
-        // }
       }
-      // setPageIndex(val) {
-      //      this.pageIndex=val;
-      // },
-      // setPageSize(val) {
-      //  this.pageSize=val;
-      // },
-      // getPageIndex() {
-      //     return this.pageIndex;
-      // },
-      // getPageSize() {
-      //     console.log(this.pageSize)
-      //     return this.pageSize;
-      // },
-      // getSearchString() {
-      //     return this.quickSearch;
-      // },
-      // setSearchString(quicksearch) {
-      //     this.quickSearch = quicksearch;
-      // }
     }
   };
 </script>

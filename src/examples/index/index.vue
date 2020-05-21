@@ -253,9 +253,9 @@
           Item: []
         },
         gridData: {
-          IsNeedSubjectType:true,
           params: {
             Name: "",
+            IsPublish: true,
             PageSize: 10,
             PageIndex: 1
           },
