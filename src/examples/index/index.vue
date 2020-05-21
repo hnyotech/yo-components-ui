@@ -73,6 +73,17 @@
                :unitGroup="true"
                :unitAlign="'right'"
                :needtabs="false">
+        <template slot="otherFormItem">
+          <el-col :span="8">
+            <yo-city
+              ref="myCity"
+              api="http://dev.hnyotech.com.cn:1010/baseapi/api/City/QueryList"
+              :city-code="gridData.params.CityCode"
+              @selectchange="selectCityCode"
+              label="地区"
+            ></yo-city>
+          </el-col>
+        </template>
         <el-table ref="multipleTable" :data="requireData.Items" style="width: 100%">
           <el-table-column
             v-for="item in gridData.table"
@@ -254,6 +265,7 @@
         },
         gridData: {
           params: {
+            CityCode: null,
             Name: "",
             IsPublish: true,
             PageSize: 10,

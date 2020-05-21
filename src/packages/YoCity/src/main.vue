@@ -77,6 +77,16 @@ export default {
         if (selItem.Level != 3) {
           this.loadData(selItem.Code, 1)// 市
         }
+      }else if(val === '' || val === null){
+        this.mycityForm = {
+          provinceCode: '',
+            provinceName: '',
+            cityName: '',
+            cityCode: '',
+            countyName: '',
+            countyCode: '',
+            selCityCode: ''
+        }
       }
       this.isLoad = false
     },
