@@ -1,5 +1,6 @@
 <template>
-  <div class="my-grid" @keyup.enter="searchTableData" @submit.native.prevent>
+  <div class="my-grid" @keyup.enter="searchTableData">
+    // @submit.native.prevent
     <div class="my-grid__header" v-if="defaultShowHidden">
       <YoToolBar v-if="$slots.toolbar">
         <slot name="toolbar"></slot>
