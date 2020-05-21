@@ -1,6 +1,6 @@
 <template>
   <div class="my-grid" @keyup.enter="searchTableData" @submit.prevent>
-    <div class="my-grid__header" v-if="defaultShowHidden">
+    <div class="my-grid__header" v-if="defaultShowHidden && isSearch">
       <YoToolBar v-if="$slots.toolbar">
         <slot name="toolbar"></slot>
       </YoToolBar>
@@ -25,14 +25,14 @@
         <YoButton slot="append" icon="el-icon-search" @click="handleQuickSearch"></YoButton>
       </el-input>
     </div>
-    <div v-show="!defaultShowHidden && isShowQuick" class="cos_hide_box">
+    <div v-show="!defaultShowHidden && isShowQuick && isSearch" class="cos_hide_box">
       <span class="cos_hide" @click="handleCollapse">
         收起
         <i class="el-icon-arrow-up"></i>
       </span>
     </div>
     <div class="divider_cos"></div>
-    <div v-show="!defaultShowHidden" class="my-grid__moresearch">
+    <div v-show="!defaultShowHidden && isSearch" class="my-grid__moresearch">
       <el-form
         :model="realData.params"
         class="detail-form"
@@ -289,6 +289,16 @@
         required: false
       },
       quicksearchPlaceholder: String,
+      paginationCallBack: {
+        type: Function,
+        default: ()=>{},
+        required: false
+      },// 分页回调
+      isSearch: {
+        type: Boolean,
+        default: true,
+        required: false
+      }, // 是否显示搜索
       showQuick: {
         type: Boolean,
         default: true,
@@ -558,10 +568,12 @@
       handleSizeChange(val) {
         this.realData.params.PageSize = val;
         this.search("isPage");
+        this.paginationCallBack(this.realData.params)
       },
       handleIndexChange(val) {
         this.realData.params.PageIndex = val;
         this.search("isPage");
+        this.paginationCallBack(this.realData.params)
       }
     }
   };

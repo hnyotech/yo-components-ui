@@ -33,33 +33,33 @@
         <yo-city :api="''" :labelWidth="'120'" :label="'地址：'" @selectchange="selectchange()"></yo-city>
     </el-form>-->
 
-    <yo-date-with-btn
-      :date="null"
-      :displayText="'直至项目结束'"
-    ></yo-date-with-btn>
+<!--    <yo-date-with-btn-->
+<!--      :date="null"-->
+<!--      :displayText="'直至项目结束'"-->
+<!--    ></yo-date-with-btn>-->
 
 
-    <yo-file
-      :uploadType="3"
-      :ids.sync="formData.Files"
-      :apiUrl="apiUrl"
-      :isShowTip="false"
-      :fileLimit="10"
-      :isMultiple="true"
-      :allowAnonymous="true"
-      :fileType="2"
-      :isShowFileList="false"
-    ></yo-file>
+<!--    <yo-file-->
+<!--      :uploadType="3"-->
+<!--      :ids.sync="formData.Files"-->
+<!--      :apiUrl="apiUrl"-->
+<!--      :isShowTip="false"-->
+<!--      :fileLimit="10"-->
+<!--      :isMultiple="true"-->
+<!--      :allowAnonymous="true"-->
+<!--      :fileType="2"-->
+<!--      :isShowFileList="false"-->
+<!--    ></yo-file>-->
 
-    <yo-file
-      :uploadType="3"
-      :ids.sync="formData.Files2"
-      :apiUrl="apiUrl"
-      :isShowTip="false"
-      :fileLimit="10"
-      :isMultiple="true"
-      :allowAnonymous="true"
-    ></yo-file>
+<!--    <yo-file-->
+<!--      :uploadType="3"-->
+<!--      :ids.sync="formData.Files2"-->
+<!--      :apiUrl="apiUrl"-->
+<!--      :isShowTip="false"-->
+<!--      :fileLimit="10"-->
+<!--      :isMultiple="true"-->
+<!--      :allowAnonymous="true"-->
+<!--    ></yo-file>-->
 
 
     <yo-content>
@@ -68,22 +68,24 @@
                :requireData.sync="requireData"
                :gridData="gridData"
                :showPagination="true"
+               :paginationCallBack="paginationCallBack"
+               :isSearch="false"
                :quickSearchVal="'AnncCode'"
                :tabsAlign="'left'"
                :unitGroup="true"
                :unitAlign="'right'"
                :needtabs="false">
-        <template slot="otherFormItem">
-          <el-col :span="8">
-            <yo-city
-              ref="myCity"
-              api="http://dev.hnyotech.com.cn:1010/baseapi/api/City/QueryList"
-              :city-code="gridData.params.CityCode"
-              @selectchange="selectCityCode"
-              label="地区"
-            ></yo-city>
-          </el-col>
-        </template>
+<!--        <template slot="otherFormItem">-->
+<!--          <el-col :span="8">-->
+<!--            <yo-city-->
+<!--              ref="myCity"-->
+<!--              api="http://dev.hnyotech.com.cn:1010/baseapi/api/City/QueryList"-->
+<!--              :city-code="gridData.params.CityCode"-->
+<!--              @selectchange="selectCityCode"-->
+<!--              label="地区"-->
+<!--            ></yo-city>-->
+<!--          </el-col>-->
+<!--        </template>-->
         <el-table ref="multipleTable" :data="requireData.Items" style="width: 100%">
           <el-table-column
             v-for="item in gridData.table"
@@ -394,6 +396,9 @@
       };
     },
     methods: {
+      paginationCallBack(data){
+        console.log(data)
+      },
       selectchange(val) {
         console.log(val);
       },
