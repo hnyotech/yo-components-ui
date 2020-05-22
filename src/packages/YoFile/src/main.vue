@@ -45,6 +45,15 @@
         <!-- <el-button size="small" type="primary">选择</el-button> -->
         <el-progress type="circle" :percentage="25"></el-progress>
       </template>
+      <template v-else-if="uploadType==4">
+        <el-button
+          size="small"
+          type="text"
+          v-show="fileList.length<2"
+          @click.native="uploadBtn"
+        >上传
+        </el-button>
+      </template>
       <template v-else>
         <el-button
           size="small"
