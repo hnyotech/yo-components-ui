@@ -69,7 +69,8 @@
       <div v-if="IsShowTip" slot="tip" class="el-upload__tip">{{Tip}}</div>
     </el-upload>
 
-    <ul class="el-upload-list el-upload-list--text" v-if="fileList && fileList.length > 0 && fileType === 2 && isShowFileList === false">
+    <ul class="el-upload-list el-upload-list--text"
+        v-if="fileList && fileList.length > 0 && fileType === 2 && isShowFileList === false">
       <li
         tabindex="0"
         class="el-upload-list__item is-success"
@@ -274,7 +275,8 @@
         this.loadData(this.ids);
       },
       fileList: function (val) {
-        this.fileLists = val;
+        // this.fileLists = val;
+        this.$emit('update:fileList', val);
       },
       showFileList: function (newVal, fromVal) {
         // console.log(newVal)
