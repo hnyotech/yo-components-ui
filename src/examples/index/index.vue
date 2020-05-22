@@ -33,33 +33,33 @@
         <yo-city :api="''" :labelWidth="'120'" :label="'地址：'" @selectchange="selectchange()"></yo-city>
     </el-form>-->
 
-<!--    <yo-date-with-btn-->
-<!--      :date="null"-->
-<!--      :displayText="'直至项目结束'"-->
-<!--    ></yo-date-with-btn>-->
+    <!--    <yo-date-with-btn-->
+    <!--      :date="null"-->
+    <!--      :displayText="'直至项目结束'"-->
+    <!--    ></yo-date-with-btn>-->
 
 
-<!--    <yo-file-->
-<!--      :uploadType="3"-->
-<!--      :ids.sync="formData.Files"-->
-<!--      :apiUrl="apiUrl"-->
-<!--      :isShowTip="false"-->
-<!--      :fileLimit="10"-->
-<!--      :isMultiple="true"-->
-<!--      :allowAnonymous="true"-->
-<!--      :fileType="2"-->
-<!--      :isShowFileList="false"-->
-<!--    ></yo-file>-->
+    <!--    <yo-file-->
+    <!--      :uploadType="3"-->
+    <!--      :ids.sync="formData.Files"-->
+    <!--      :apiUrl="apiUrl"-->
+    <!--      :isShowTip="false"-->
+    <!--      :fileLimit="10"-->
+    <!--      :isMultiple="true"-->
+    <!--      :allowAnonymous="true"-->
+    <!--      :fileType="2"-->
+    <!--      :isShowFileList="false"-->
+    <!--    ></yo-file>-->
 
-<!--    <yo-file-->
-<!--      :uploadType="3"-->
-<!--      :ids.sync="formData.Files2"-->
-<!--      :apiUrl="apiUrl"-->
-<!--      :isShowTip="false"-->
-<!--      :fileLimit="10"-->
-<!--      :isMultiple="true"-->
-<!--      :allowAnonymous="true"-->
-<!--    ></yo-file>-->
+    <!--    <yo-file-->
+    <!--      :uploadType="3"-->
+    <!--      :ids.sync="formData.Files2"-->
+    <!--      :apiUrl="apiUrl"-->
+    <!--      :isShowTip="false"-->
+    <!--      :fileLimit="10"-->
+    <!--      :isMultiple="true"-->
+    <!--      :allowAnonymous="true"-->
+    <!--    ></yo-file>-->
 
 
     <yo-content>
@@ -69,23 +69,23 @@
                :gridData="gridData"
                :showPagination="true"
                :paginationCallBack="paginationCallBack"
-               :isSearch="false"
+               :isSearch="true"
                :quickSearchVal="'AnncCode'"
                :tabsAlign="'left'"
                :unitGroup="true"
                :unitAlign="'right'"
                :needtabs="false">
-<!--        <template slot="otherFormItem">-->
-<!--          <el-col :span="8">-->
-<!--            <yo-city-->
-<!--              ref="myCity"-->
-<!--              api="http://dev.hnyotech.com.cn:1010/baseapi/api/City/QueryList"-->
-<!--              :city-code="gridData.params.CityCode"-->
-<!--              @selectchange="selectCityCode"-->
-<!--              label="地区"-->
-<!--            ></yo-city>-->
-<!--          </el-col>-->
-<!--        </template>-->
+        <!--        <template slot="otherFormItem">-->
+        <!--          <el-col :span="8">-->
+        <!--            <yo-city-->
+        <!--              ref="myCity"-->
+        <!--              api="http://dev.hnyotech.com.cn:1010/baseapi/api/City/QueryList"-->
+        <!--              :city-code="gridData.params.CityCode"-->
+        <!--              @selectchange="selectCityCode"-->
+        <!--              label="地区"-->
+        <!--            ></yo-city>-->
+        <!--          </el-col>-->
+        <!--        </template>-->
         <el-table ref="multipleTable" :data="requireData.Items" style="width: 100%">
           <el-table-column
             v-for="item in gridData.table"
@@ -118,7 +118,6 @@
         </el-table>
       </yo-grid>
     </yo-content>
-
 
 
     <!-- <yo-button :type="type2" @click="showPdfViewer">弹出预览</yo-button> -->
@@ -267,9 +266,8 @@
         },
         gridData: {
           params: {
-            CityCode: null,
-            Name: "",
-            IsPublish: true,
+            start: null,
+            end: null,
             PageSize: 10,
             PageIndex: 1
           },
@@ -281,24 +279,24 @@
               span: 8
             },
             {
-              value: "Name",
-              name: "枚举",
-              type: "select",
-              span: 8,
-              options: [
-                {
-                  Name: "3444",
-                  Value: "Value",
-                  Description: "Description date"
-                }
-              ]
-            },
-            {
-              value: "Name",
+              value: "start",
               name: "时间",
               type: "date",
               span: 8,
-              format: "yyyy-MM-dd"
+              format: "yyyy-MM-dd",
+              pickerOptions: {
+                disabledDate: this.pickerOptionsStart
+              }
+            },
+            {
+              value: "end",
+              name: "时间",
+              type: "date",
+              span: 8,
+              format: "yyyy-MM-dd",
+              pickerOptions: {
+                disabledDate: this.pickerOptionsEnd
+              }
             }
           ],
           table: [
@@ -396,7 +394,31 @@
       };
     },
     methods: {
-      paginationCallBack(data){
+      pickerOptionsStart(date) {
+        if (this.gridData.params.end === null) {
+          return false
+        } else {
+          let year = 1000 * 60 * 60 * 24 * 365
+          if (new Date(date).getTime() < new Date(this.gridData.params.end).getTime() - year) {
+            return true
+          } else {
+            return false
+          }
+        }
+      },
+      pickerOptionsEnd(date) {
+        if (this.gridData.params.start === null) {
+          return false
+        } else {
+          let year = 1000 * 60 * 60 * 24 * 365
+          if (new Date(date).getTime() > year + new Date(this.gridData.params.start).getTime()) {
+            return true
+          } else {
+            return false
+          }
+        }
+      },
+      paginationCallBack(data) {
         console.log(data)
       },
       selectchange(val) {

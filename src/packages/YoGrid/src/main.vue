@@ -115,6 +115,7 @@
               <el-date-picker
                 v-if="item.type=='date'"
                 :format="item.format"
+                :picker-options="item.pickerOptions"
                 :value-format="item.format"
                 type="date"
                 placeholder="请选择日期"
