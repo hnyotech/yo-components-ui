@@ -133,12 +133,6 @@
         required: false,
         default: null
       },
-      // 本次上传的文件数组
-      fileLists: {
-        type: Array,
-        required: false,
-        default: []
-      },
       // 文件上传组件类型  1默认  2可修改文件名
       fileType: {
         type: Number,
@@ -275,7 +269,6 @@
         this.loadData(this.ids);
       },
       fileList: function (val) {
-        // this.fileLists = val;
         this.$emit('update:fileList', val);
       },
       showFileList: function (newVal, fromVal) {
