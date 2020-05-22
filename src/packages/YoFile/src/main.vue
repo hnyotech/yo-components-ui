@@ -49,6 +49,7 @@
         <el-button
           size="small"
           type="text"
+          class="table-btn"
           v-show="fileList.length<2"
           @click.native="uploadBtn"
         >上传
