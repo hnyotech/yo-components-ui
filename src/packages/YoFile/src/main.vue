@@ -18,6 +18,7 @@
       ref="upload"
       v-show="IsShow"
       class="avatar-uploader yo-file-upload"
+      :class="fileList.length>=2?'table-upload-type':''"
       :with-credentials="true"
       :action="action"
       :multiple="IsMultiple"
