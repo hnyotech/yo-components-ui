@@ -365,3 +365,9 @@
     }
   };
 </script>
+
+<style scoped>
+.el-image-viewer__img {
+  z-index: 2001;
+}
+</style>
