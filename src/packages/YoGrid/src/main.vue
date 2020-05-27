@@ -220,7 +220,6 @@
 </template>
 
 <script>
-  import YoEnum from '../../YoEnum/src/main';
   import YoButton from "../../YoButton/src/main.vue";
   import SelectSaler from "./SelSaler.vue";
 
@@ -260,29 +259,22 @@
       this.oldParams = JSON.parse(JSON.stringify(this.realData.params))
     },
     mounted: function () {
-      let paramsList = this.$store.getters.paramsList;
-      for (let i = 0; i < paramsList.length; i++) {
-        if (paramsList[i][this.$route.name]) {
-          for(let a in this.realData.params){
-            if(paramsList[i][this.$route.name][a]) {
-              this.$set(this.realData.params, a, paramsList[i][this.$route.name][a])
-            }
-          }
-        }
-      }
-      if (this.realData.params.hasOwnProperty("YoGridCollapse")) {
-        this.defaultShowHidden = this.realData.params.YoGridCollapse;
-      } else {
-        this.realData.params.YoGridCollapse = this.defaultShowHidden;
-      }
-      this.allowSearch("isPage");
       if (this.realData.IsNeedBusiness) {
         this.getBusinessPT()
       }
       if (this.realData.IsNeedSubjectType) {
         this.getSubjectTypeIds()
       }
+      this.seesionParams()
+      this.urlParams()
+      if (this.realData.params.hasOwnProperty("YoGridCollapse")) {
+        this.defaultShowHidden = this.realData.params.YoGridCollapse;
+      } else {
+        this.realData.params.YoGridCollapse = this.defaultShowHidden;
+      }
+      this.allowSearch("isPage");
     },
+    computed: {},
     props: {
       labelSuffix: {
         type: String,
@@ -292,7 +284,8 @@
       quicksearchPlaceholder: String,
       paginationCallBack: {
         type: Function,
-        default: ()=>{},
+        default: () => {
+        },
         required: false
       },// 分页回调
       isSearch: {
@@ -314,16 +307,7 @@
         type: Boolean,
         default: true,
         required: false
-      }, // 是否显示分页
-      // totalRecord: {
-      //     type: Number,
-      //     required: false
-      // },
-      // defaultPageSize: {
-      //     type: Number,
-      //     required: false,
-      //     default:10
-      // },
+      },
       unitGroup: {
         type: Boolean,
         default: false,
@@ -379,6 +363,35 @@
       }
     },
     methods: {
+      seesionParams() {
+        let paramsList = this.$store.getters.paramsList;
+        for (let i = 0; i < paramsList.length; i++) {
+          if (paramsList[i][this.$route.name]) {
+            for (let a in this.realData.params) {
+              if (paramsList[i][this.$route.name][a]) {
+                this.$set(this.realData.params, a, paramsList[i][this.$route.name][a])
+              }
+            }
+          }
+        }
+      },
+      urlParams() {
+        let queryParams = this.$route.query
+        if (queryParams) {
+          for (let i in queryParams) {
+            for (let a in this.realData.params) {
+              if (i == a) {
+                this.defaultShowHidden = false
+                if (i === 'PageIndex' || a === 'PageIndex' || i === 'PageSize' || a === 'PageSize') {
+                  this.$set(this.realData.params, a, Number(queryParams[i]) + 0)
+                } else {
+                  this.$set(this.realData.params, a, queryParams[i])
+                }
+              }
+            }
+          }
+        }
+      },
       getBusinessPT() {
         let that = this
         let tradingOrgId = that.$store.getters.user.TradingOrgId;
@@ -516,8 +529,6 @@
               that.PageIndex = that.realData.params.PageIndex;
               that.PageSize = that.realData.params.PageSize;
               that.TotalCount = res.TotalCount;
-              // res.PageIndex = that.PageIndex;
-              // res.PageSize = that.PageSize;
               that.requireData = res;
               // sessionStorage.setItem('paramsList',JSON.stringify(paramsList))
               if (!that.IsNotNeedSaveParams) {
