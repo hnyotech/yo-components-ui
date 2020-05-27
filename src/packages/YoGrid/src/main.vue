@@ -382,10 +382,10 @@
             for (let a in this.realData.params) {
               if (i == a) {
                 this.defaultShowHidden = false
-                if (i === 'PageIndex' || a === 'PageIndex' || i === 'PageSize' || a === 'PageSize') {
-                  this.$set(this.realData.params, a, Number(queryParams[i]) + 0)
-                } else {
+                if (isNaN(Number(queryParams[i])) || queryParams[i] === '' || queryParams[i] === null) {
                   this.$set(this.realData.params, a, queryParams[i])
+                } else {
+                  this.$set(this.realData.params, a, Number(queryParams[i]) + 0)
                 }
               }
             }
