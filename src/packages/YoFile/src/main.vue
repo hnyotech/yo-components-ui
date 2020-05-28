@@ -53,7 +53,7 @@
           class="table-btn"
           v-show="fileList.length<2"
           @click.native="uploadBtn"
-        >上传
+        >{{uploadBtnName}}
         </el-button>
       </template>
       <template v-else>
@@ -63,7 +63,7 @@
           v-show="!readOnly"
           :disabled="fileLimit>0&&showFileList.length>=fileLimit"
           @click.native="uploadBtn"
-        >上传
+        >{{uploadBtnName}}
         </el-button>
       </template>
       <div v-if="IsShowTip" slot="tip" class="el-upload__tip">{{Tip}}</div>
@@ -132,6 +132,11 @@
         type: String,
         required: false,
         default: null
+      },
+      uploadBtnName: {
+        type: String,
+        required: false,
+        default: '上传'
       },
       // 文件上传组件类型  1默认  2可修改文件名
       fileType: {

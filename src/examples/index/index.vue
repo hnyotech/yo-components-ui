@@ -51,15 +51,17 @@
     <!--      :isShowFileList="false"-->
     <!--    ></yo-file>-->
 
-    <!--    <yo-file-->
-    <!--      :uploadType="3"-->
-    <!--      :ids.sync="formData.Files2"-->
-    <!--      :apiUrl="apiUrl"-->
-    <!--      :isShowTip="false"-->
-    <!--      :fileLimit="10"-->
-    <!--      :isMultiple="true"-->
-    <!--      :allowAnonymous="true"-->
-    <!--    ></yo-file>-->
+        <yo-file
+          :uploadType="3"
+          :ids.sync="formData.Files2"
+          :apiUrl="apiUrl"
+          :isShowTip="false"
+          :fileLimit="1"
+          :isMultiple="true"
+          :allowAnonymous="true"
+          :uploadBtnName="'批量导入'"
+        >
+        </yo-file>
 
 
     <yo-content>
