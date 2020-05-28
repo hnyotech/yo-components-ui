@@ -51,7 +51,7 @@
           size="small"
           type="text"
           class="table-btn"
-          v-show="fileList.length<2"
+          v-show="fileList.length<2&&!readOnly"
           @click.native="uploadBtn"
         >{{uploadBtnName}}
         </el-button>
