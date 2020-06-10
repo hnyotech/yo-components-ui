@@ -66,8 +66,9 @@
         >{{uploadBtnName}}
         </el-button>
       </template>
-      <div v-if="IsShowTip" slot="tip" class="el-upload__tip">{{Tip}}</div>
+      <!-- <div v-if="IsShowTip" slot="tip" class="el-upload__tip">{{Tip}}</div> -->
     </el-upload>
+    <div v-if="IsShowTip" slot="tip" class="el-upload__tip">{{Tip}}</div>
 
     <ul class="el-upload-list el-upload-list--text"
         v-if="fileList && fileList.length > 0 && fileType === 2 && isShowFileList === false">
@@ -535,7 +536,7 @@
         var id = item.id;
         var src = item.orgurl;
         let that = this;
-        console.log(item)
+        // console.log(item)
         for (let a in that.fileList) {
           if (that.fileList[a].id == item.id) {
             that.fileList.splice(a, 1)
@@ -555,7 +556,7 @@
             }
           }
         }
-        console.log(that.fileList)
+        // console.log(that.fileList)
       },
       //獲取地址所在index
       GetIndexByCache: function (id) {
