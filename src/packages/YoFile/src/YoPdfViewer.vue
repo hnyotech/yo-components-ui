@@ -58,6 +58,7 @@
       />
       <a href ref="download_a" target="_blank" v-show="false"></a>
       <embed
+        width="100%" height="100%"
         v-if="isPdf"
         :src="realpdfSrc"
         :type="mimeType"
