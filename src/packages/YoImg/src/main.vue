@@ -109,7 +109,7 @@ export default {
   mounted: function() {},
   watch: {
     ids: function(val) {
-      console.log("watch ids:" + val);
+      // console.log("watch ids:" + val);
       // 变化后 持续加载附件
       this.loadData(this.ids);
     }
@@ -149,7 +149,7 @@ export default {
         return false;
       }
       var newIds = loadId.join(",");
-      console.log("loadData:" + newIds);
+      // console.log("loadData:" + newIds);
       var param = {};
       param["ids"] = newIds;
       that.$http
