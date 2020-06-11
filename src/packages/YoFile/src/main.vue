@@ -273,8 +273,12 @@
         // 变化后 持续加载附件
         this.loadData(this.ids);
       },
-      fileList: function (val) {
-        this.$emit('update:fileList', val);
+      fileList: {
+        handler(val) {
+          this.$emit('update:fileList', val);
+        },
+        deep: true,
+        immediate: true
       },
       showFileList: function (newVal, fromVal) {
         // console.log(newVal)
