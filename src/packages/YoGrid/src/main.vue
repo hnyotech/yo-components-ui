@@ -453,13 +453,18 @@
       },
       reset() {
         this.reLoading = true;
-        for (var key in this.realData.params) {
+        for (let key in this.realData.params) {
           if (key === "PageIndex") {
             this.realData.params[key] = 1;
           } else if (key === "PageSize") {
             this.realData.params[key] = 10;
           } else {
-            this.realData.params[key] = "";
+            for (let i in this.oldParams) {
+              if (key === i) {
+                this.realData.params[key] = this.oldParams[i];
+              }
+            }
+            // this.realData.params[key] = "";
           }
         }
         if (this.isReserveParam.is) {
@@ -484,7 +489,6 @@
       },
       allowSearch(data) {
         let that = this;
-        that.oldParams = JSON.parse(JSON.stringify(that.realData.params))
         that.loading = true;
         let paramsList = that.$store.getters.paramsList;
         if (!data) {

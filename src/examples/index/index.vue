@@ -56,7 +56,7 @@
           :ids.sync="formData.Files2"
           :apiUrl="apiUrl"
           :isShowTip="false"
-          :fileLimit="1"
+          :fileLimit="5"
           :isMultiple="true"
           :allowAnonymous="true"
           :uploadBtnName="'批量导入'"
