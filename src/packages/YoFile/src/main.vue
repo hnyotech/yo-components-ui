@@ -18,7 +18,7 @@
       ref="upload"
       v-show="IsShow"
       class="avatar-uploader yo-file-upload"
-      :class="fileList.length>=2?'table-upload-type':''"
+      :class="fileList.length>=fileLimit?'table-upload-type':''"
       :with-credentials="true"
       :action="action"
       :multiple="IsMultiple"
@@ -51,7 +51,7 @@
           size="small"
           type="text"
           class="table-btn"
-          v-show="fileList.length<2&&!readOnly"
+          v-show="fileList.length<fileLimit&&!readOnly"
           @click.native="uploadBtn"
         >{{uploadBtnName}}
         </el-button>
