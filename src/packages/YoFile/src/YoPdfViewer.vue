@@ -57,15 +57,16 @@
         @mousedown="handleImgMouseDown"
       />
       <a href ref="download_a" target="_blank" v-show="false"></a>
-      <embed
-        width="100%" height="100%"
-        v-if="isPdf"
-        :src="realpdfSrc"
-        :type="mimeType"
-        class="el-image-viewer__img"
-        :style="pdfStyle"
-        @load="handlePdfLoad"
-      />
+      <div v-show="edgeShow" id="temppdf" style="width: 100%;height: 100%;">
+        <embed
+          v-if="isPdf"
+          :src="realpdfSrc"
+          :type="mimeType"
+          class="el-image-viewer__img"
+          :style="pdfStyle"
+          @load="handlePdfLoad"
+        />
+      </div>
     </yo-dialog-viewer>
   </div>
 </template>
@@ -148,6 +149,7 @@
     components: {YoDialogViewer},
     data: function () {
       return {
+        edgeShow: false,
         isShow: false, //没什么作用 不显示也不糊加载
         realpdfSrc: "", //实际显示的PDF地址
         loading: true,
@@ -171,11 +173,6 @@
         }
       };
     },
-    // watch:{
-    //   src:function (val) {
-    //     console.log("src="+val)
-    //   }
-    // },
     computed: {
       //pdf实际地址带显示控制，详见https://www.adobe.com/content/dam/acom/en/devnet/acrobat/pdfs/pdf_open_parameters.pdf
       pdfSrc: function () {
@@ -199,7 +196,7 @@
               _src += "view=FitH,top&";
             }
           }
-          console.log("PDF Src:" + _src);
+          // console.log("PDF Src:" + _src);
         }
 
         return _src;
@@ -272,7 +269,6 @@
         return this.index === this.urlList.length - 1;
       }
     },
-
     methods: {
       //显示错误提示
       showerr(msg) {
@@ -312,15 +308,22 @@
       },
       initSrc() {
         //測試pdf地址 沒問題才顯示
-        var that = this;
+        let that = this;
         if (that.isPdf) {
           that.loading = true;
-          var instance = that.$http.create();
+          this.edgeShow = false;
+          let instance = that.$http.create();
           instance
             .options(that.src)
             .then(resp => {
               if (resp.status == 200) {
                 that.realpdfSrc = that.pdfSrc;
+                that.$nextTick(function () {
+                  let html = document.querySelector('#temppdf').innerHTML
+                  document.querySelector('#temppdf').innerHTML = ''
+                  document.querySelector('#temppdf').innerHTML = html
+                  this.edgeShow = true;
+                })
               } else if (resp.status == 204) {
                 //接口主動返回的204 表示內容還沒有 友好提示
                 that.showerr("文件正在转码，请稍后再试...");
