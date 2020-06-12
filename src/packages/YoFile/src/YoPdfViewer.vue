@@ -483,20 +483,23 @@
     cursor: default;
   }
 
-  /* 滚动条的不显示和美化，不好实现，别折腾了--来自前辈的关爱 */
-  /* .el-image-viewer__img::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: #f5f5f5;
+  #app div.el-image-viewer__mask {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: .5;
+    background: #000;
+    z-index: 999;
   }
-  .el-image-viewer__img::-webkit-scrollbar {
-    width: 12px;
-    background-color: #f5f5f5;
+
+  #app span.el-image-viewer__close {
+    z-index: 9999;
+    position: fixed;
+    color: #fff;
   }
-  .el-image-viewer__img::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #555;
-  }
-  .el-image-viewer__img::-webkit-scrollbar {display:none} */
+
 </style>

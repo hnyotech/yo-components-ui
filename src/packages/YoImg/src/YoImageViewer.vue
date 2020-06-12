@@ -370,4 +370,11 @@
 .el-image-viewer__img {
   z-index: 2001;
 }
+.el-image-viewer__wrapper .el-image-viewer__mask {
+  z-index: 1;
+}
+
+.el-image-viewer__wrapper .el-image-viewer__btn {
+  z-index: 2003;
+}
 </style>
