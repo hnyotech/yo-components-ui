@@ -139,6 +139,13 @@
         required: false,
         default: '上传'
       },
+      fileListArr: {
+        type: Array,
+        required: false,
+        default: () => {
+          return []
+        }
+      },
       // 文件上传组件类型  1默认  2可修改文件名
       fileType: {
         type: Number,
@@ -263,16 +270,30 @@
       };
     },
     created: function () {
-      // console.log("created:" + this.ids);
       this.loadData(this.ids);
     },
     mounted: function () {
     },
     watch: {
       ids: function (val) {
-        // console.log("watch ids:" + val);
         // 变化后 持续加载附件
         this.loadData(this.ids);
+      },
+      fileListArr: {
+        handler(val) {
+          for (let i in val) {
+            let same = false
+            for (let a in this.fileList) {
+              if (this.fileList[a].id === val[i].id) {
+                same = true
+              }
+            }
+            if (!same) {
+              this.fileList.push(val[i])
+            }
+          }
+        },
+        deep: true
       },
       fileList: {
         handler(val) {

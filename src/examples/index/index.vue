@@ -1,171 +1,17 @@
 <template>
   <div id="examples">
-    <!--    <yo-header title="标题">-->
-    <!--      <yo-toolbar :showAutoback="true">-->
-    <!--        <yo-button :type="type2">默认按钮</yo-button>-->
-    <!--        <yo-button :type="type1">主要按钮</yo-button>-->
-    <!--        <yo-button :type="type6">危险按钮</yo-button>-->
-    <!--      </yo-toolbar>-->
-    <!--    </yo-header>-->
-    <!--    -->
-    <!--    <yo-img :ids.sync="imgs" :apiUrl="apiUrl"></yo-img>-->
-    <!--    <yo-img :ids.sync="Files2" :apiUrl="apiUrl"></yo-img>-->
-
-    <!-- <yo-menu :width="250"></yo-menu> -->
-    <!-- <yo-detail-col :rowData="rowData" :label_width="100"></yo-detail-col> -->
-    <!-- <yo-table
-            :tableData="[]"
-            :border="true"
-            :displayData="reportData"
-            :pageData="{ index: 1, size: 10 }"
-          ></yo-table> -->
-
-    <!-- <yo-file :uploadType="1" :ids.sync="Files" :apiUrl="apiUrl"></yo-file>
-    <yo-file :uploadType="3" :ids.sync="Files" :apiUrl="apiUrl" img-viewer="YoPdfViewer"></yo-file>
-
-    <yo-file :uploadType="3" :ids.sync="Files2" :apiUrl="apiUrl"></yo-file> -->
-
-    <!-- <yo-input></yo-input>
-
-        <el-form>
-
-        <yo-enum EnumName="sssss" label="123" prop="234"></yo-enum>
-        <yo-city :api="''" :labelWidth="'120'" :label="'地址：'" @selectchange="selectchange()"></yo-city>
-    </el-form>-->
-
-    <!--    <yo-date-with-btn-->
-    <!--      :date="null"-->
-    <!--      :displayText="'直至项目结束'"-->
-    <!--    ></yo-date-with-btn>-->
-
-
-    <!--    <yo-file-->
-    <!--      :uploadType="3"-->
-    <!--      :ids.sync="formData.Files"-->
-    <!--      :apiUrl="apiUrl"-->
-    <!--      :isShowTip="false"-->
-    <!--      :fileLimit="10"-->
-    <!--      :isMultiple="true"-->
-    <!--      :allowAnonymous="true"-->
-    <!--      :fileType="2"-->
-    <!--      :isShowFileList="false"-->
-    <!--    ></yo-file>-->
-
         <yo-file
           :uploadType="3"
-          :ids.sync="formData.Files2"
+          :ids.sync="formData.Files"
           :apiUrl="apiUrl"
           :isShowTip="false"
-          :fileLimit="5"
+          :fileLimit="10"
           :isMultiple="true"
           :allowAnonymous="true"
-          :uploadBtnName="'批量导入'"
-        >
-        </yo-file>
-
-
-    <yo-content>
-      <yo-grid ref="YoGrid"
-               :quicksearchPlaceholder="'快速搜索公告编号'"
-               :requireData.sync="requireData"
-               :gridData="gridData"
-               :showPagination="true"
-               :paginationCallBack="paginationCallBack"
-               :isSearch="true"
-               :quickSearchVal="'AnncCode'"
-               :tabsAlign="'left'"
-               :unitGroup="true"
-               :unitAlign="'right'"
-               :needtabs="false">
-        <!--        <template slot="otherFormItem">-->
-        <!--          <el-col :span="8">-->
-        <!--            <yo-city-->
-        <!--              ref="myCity"-->
-        <!--              api="http://dev.hnyotech.com.cn:1010/baseapi/api/City/QueryList"-->
-        <!--              :city-code="gridData.params.CityCode"-->
-        <!--              @selectchange="selectCityCode"-->
-        <!--              label="地区"-->
-        <!--            ></yo-city>-->
-        <!--          </el-col>-->
-        <!--        </template>-->
-        <el-table ref="multipleTable" :data="requireData.Items" style="width: 100%">
-          <el-table-column
-            v-for="item in gridData.table"
-            :key="item.key"
-            :align="item.align"
-            :prop="item.key"
-            :label="item.label"
-            :min-width="item.width"
-            :show-overflow-tooltip="item.tooltip"
-          ></el-table-column>
-          <el-table-column align="center" label="操作">
-            <template slot-scope="scope">
-              <el-button
-                size="small"
-                type="info"
-                icon="el-icon-edit"
-                @click="addNewOrg(scope.$index, scope.row)"
-              >编辑
-              </el-button>
-              <el-button
-                size="small"
-                type="danger"
-                icon="el-icon-delete"
-                v-if="scope.row.Id.length>20"
-                @click="handleDelete(scope.$index, scope.row)"
-              >删除
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </yo-grid>
-    </yo-content>
-
-
-    <!-- <yo-button :type="type2" @click="showPdfViewer">弹出预览</yo-button> -->
-    <!--    <yo-dialog-viewer-->
-    <!--      title="测试一下"-->
-    <!--      v-if="showDialogViewer"-->
-    <!--      :on-close="closePdfViewer"-->
-    <!--      @onYoZooming="handleYoEvent1"-->
-    <!--      @onYoMoveing="handleYoEvent2"     -->
-    <!--      @onYoZoomEnd="handleYoEvent3"-->
-    <!--       @onYoMoveEnd="handleYoEvent4"-->
-    <!--       :custosm-canvas-class="{active: true}"-->
-    <!--    >-->
-    <!--      <div style="border:solid 1px red;">这里测试插槽</div>-->
-    <!--      <yo-content>-->
-    <!--        <yo-header title="标题">-->
-    <!--          <yo-toolbar :showAutoback="true">-->
-    <!--            <yo-button :type="type2">默认按钮</yo-button>-->
-    <!--            <yo-button :type="type1">主要按钮</yo-button>-->
-    <!--            <yo-button :type="type6">危险按钮</yo-button>-->
-    <!--          </yo-toolbar>-->
-    <!--        </yo-header>-->
-    <!--      </yo-content>-->
-    <!--    </yo-dialog-viewer>-->
-    <!--    <yo-dialog-viewer  v-if="false"   :on-close="closePdfViewer">-->
-    <!--        <embed src="http://localhost:50070/api/Attach/ShowPDF?id=k2037g5548pg0020123bc7v&sign=961a716d2ad7b7ace05ecb181ec1917a&timestamp=1583759031#view=FitH,top&" />-->
-    <!--    </yo-dialog-viewer>-->
-
-    <!--    <yo-file-->
-    <!--      :uploadType="3"-->
-    <!--      :ids.sync="formData.Files2"-->
-    <!--      :apiUrl="apiUrl"-->
-    <!--      :isShowTip="false"-->
-    <!--      :fileLimit="10"-->
-    <!--      :isMultiple="true"-->
-    <!--      :allowAnonymous="true"-->
-    <!--    ></yo-file>-->
-    <!--    <yo-file-->
-    <!--      :uploadType="3"-->
-    <!--      :ids.sync="formData.Files3"-->
-    <!--      :apiUrl="apiUrl"-->
-    <!--      :isShowTip="false"-->
-    <!--      :fileLimit="10"-->
-    <!--      :isMultiple="true"-->
-    <!--      :allowAnonymous="true"-->
-    <!--    ></yo-file>-->
+          :fileType="2"
+          :fileListArr="fileListArr"
+          :isShowFileList="false"
+        ></yo-file>
   </div>
 </template>
 <script>
@@ -206,6 +52,7 @@
     },
     data() {
       return {
+        fileListArr:[],
         formData: {
           Files: '',
           Files2: '',
@@ -396,6 +243,20 @@
           }
         ]
       };
+    },
+    mounted() {
+      this.fileListArr = [{
+        id: 'k206gb5342dm00a440ac8zt',
+        name: 'favicon.ico',
+        orgurl: '',
+        sign: '',
+        size: '',
+        status: '',
+        timestamp: '',
+        type: 'image/x-icon',
+        uid: new Date().getTime(),
+        url: ''
+      }]
     },
     methods: {
       pickerOptionsStart(date) {
