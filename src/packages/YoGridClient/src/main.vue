@@ -29,8 +29,8 @@
               </el-form-item>
             </el-col>
             <el-col :span="6" v-for="(item, index) in realData.formLabel" :key="index">
-              <yo-enum v-if="item.type==='enum'" :EnumName="item.enumName" size='small' :selValue.sync="realData.params[item.value]" :label="item.name" prop="none"></yo-enum>
-              <el-form-item v-else>
+              <el-form-item>
+                <yo-enum v-if="item.type==='enum'" :EnumName="item.enumName" size='small' :isNeedForm="false" :selValue.sync="realData.params[item.value]" :label="item.name" prop="none"></yo-enum>
                 <el-input
                   class="user-input"
                   v-if="item.type == 'input'"
