@@ -343,6 +343,9 @@ export default {
   padding: 3px 10px 4px 2px;
   background-color: #eee;
   border-radius: 2px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .file-item-img2:nth-of-type(2n) {
   margin-right: 0;
