@@ -57,36 +57,27 @@
     data() {
       return {
         tableDataList: {},
-        tableParamsArr:[]
+        tableParamsArr: []
       }
     },
-    created() {
-
+    mounted() {
+      this.tableDataList = this.tableData
+      this.tableParamsArr = this.tableParams
     },
     watch: {
       tableData: {
         handler(newval) {
           this.tableDataList = newval
         },
-        deep: true
+        deep: true,
+        immediate: true
       },
       tableParams: {
         handler(newval) {
           this.tableParamsArr = newval
-          this.$nextTick(function () {
-            if (this.numShow && this.tableParamsArr[0].label !== '序号') {
-              this.tableParamsArr.unshift({
-                key: '---',
-                label: '序号',
-                align: 'center',
-                formatter(row, column, cellValue, index) {
-                  return ((this.tableDataList.PageIndex - 1) * this.tableDataList.PageSize + 1) + Number(index) + 1
-                }
-              })
-            }
-          })
         },
-        deep: true
+        deep: true,
+        immediate: true
       }
     },
     mounted() {
