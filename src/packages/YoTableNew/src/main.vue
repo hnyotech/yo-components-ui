@@ -24,7 +24,7 @@
       label="序号"
     ></el-table-column>
     <slot name="tableBefore"></slot>
-    <yo-table-column v-for="(item,index) in tableParamsArr" :key="index"
+    <yo-table-column v-for="(item,index) in tableParamsArr" :key="RandomUniqueValue()"
                      :tableColumnParams="item"></yo-table-column>
     <slot name="tableAfter"></slot>
   </el-table>
