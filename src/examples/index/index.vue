@@ -1,17 +1,28 @@
 <template>
   <div id="examples">
-        <yo-file
-          :uploadType="3"
-          :ids.sync="formData.Files"
-          :apiUrl="apiUrl"
-          :isShowTip="false"
-          :fileLimit="10"
-          :isMultiple="true"
-          :allowAnonymous="true"
-          :fileType="2"
-          :fileListArr="fileListArr"
-          :isShowFileList="false"
-        ></yo-file>
+<!--        <yo-file-->
+<!--          :uploadType="3"-->
+<!--          :ids.sync="formData.Files"-->
+<!--          :apiUrl="apiUrl"-->
+<!--          :isShowTip="false"-->
+<!--          :fileLimit="10"-->
+<!--          :isMultiple="true"-->
+<!--          :allowAnonymous="true"-->
+<!--          :fileType="2"-->
+<!--          :fileListArr="fileListArr"-->
+<!--          :isShowFileList="false"-->
+<!--        ></yo-file>-->
+    <yo-grid
+      ref="yoGrid"
+      :gridData="gridData"
+      :requireData.sync="requireData"
+      :showQuick="false"
+      :isShowQuick="false"
+      :showPagination="true"
+      labelWidth="120px"
+    >
+      <yo-table-new :tableData.sync="requireData" :tableParams="gridData.table"></yo-table-new>
+    </yo-grid>
   </div>
 </template>
 <script>
@@ -30,6 +41,7 @@
   import YoDateWithBtn from "@/packages/YoDateWithBtn/src/main.vue";
   import YoDialogViewer from "@/packages/YoDialogViewer/src/main.vue";
   import YoTable from "@/packages/YoTable/src/main.vue";
+  import YoTableNew from "@/packages/YoTableNew/src/main.vue";
 
   export default {
     name: "examples",
@@ -48,7 +60,8 @@
       YoCity,
       YoInput,
       YoDialogViewer,
-      YoTable
+      YoTable,
+      YoTableNew
     },
     data() {
       return {
