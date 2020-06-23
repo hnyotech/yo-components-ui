@@ -10,18 +10,21 @@
       type="selection"
       key="selection"
       align="center"
-      v-show="IsNeedSelect"
+      :fixed="isHaveFixed?'left':false"
+      v-if="isNeedSelect"
       width="50">
     </el-table-column>
     <el-table-column
       type="index"
       width="50"
+      :fixed="isHaveFixed?'left':false"
+      v-if="numShow"
       :index="((tableDataList.PageIndex-1)*tableDataList.PageSize+1)"
       align="center"
       label="序号"
     ></el-table-column>
     <slot name="tableBefore"></slot>
-    <yo-table-column v-for="(item,index) in tableParamsArr" :key="RandomUniqueValue()"
+    <yo-table-column v-for="(item,index) in tableParamsArr" :key="index"
                      :tableColumnParams="item"></yo-table-column>
     <slot name="tableAfter"></slot>
   </el-table>
@@ -45,7 +48,11 @@
           return {}
         }
       },
-      IsNeedSelect: {
+      isHaveFixed: {
+        type: Boolean,
+        default: false
+      },
+      isNeedSelect: {
         type: Boolean,
         default: false
       },

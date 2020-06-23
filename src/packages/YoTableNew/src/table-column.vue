@@ -17,7 +17,7 @@
             <span v-else-if="paramsStatus(tableColumnParams.formatter)" v-html="tableColumnParams.formatter(scope.row, scope.column, scope.row[tableColumnParams.key], scope.$index)"></span>
             <span v-else v-html="scope.row[tableColumnParams.key]"></span>
         </template>
-        <yo-table-column v-for="(item,itemIndex) in tableColumnParams.children" :key="RandomUniqueValue()" :tableColumnParams="item"></yo-table-column>
+        <yo-table-column v-for="(item,itemIndex) in tableColumnParams.children" :key="itemIndex" :tableColumnParams="item"></yo-table-column>
     </el-table-column>
 </template>
 <script>

@@ -21,7 +21,7 @@
       :showPagination="true"
       labelWidth="120px"
     >
-      <yo-table-new :tableData.sync="requireData" :tableParams="gridData.table"></yo-table-new>
+      <yo-table-new :tableData.sync="requireData" :tableParams="gridData.table" :isHaveFixed="true"></yo-table-new>
     </yo-grid>
   </div>
 </template>
@@ -167,6 +167,7 @@
             {
               key: "Name",
               label: "名称",
+              fixed:'left',
               width: 100,
               align: "center",
               tooltip: false
@@ -174,6 +175,7 @@
             {
               key: "HostUrl",
               label: "HostUrl",
+              fixed:'left',
               width: 200,
               align: "left",
               tooltip: true
