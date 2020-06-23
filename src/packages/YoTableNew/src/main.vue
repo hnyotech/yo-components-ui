@@ -21,7 +21,7 @@
       label="序号"
     ></el-table-column>
     <slot name="tableBefore"></slot>
-    <yo-table-column v-for="(item,index) in tableParams" :key="RandomUniqueValue()"
+    <yo-table-column v-for="(item,index) in tableParamsArr" :key="RandomUniqueValue()"
                      :tableColumnParams="item"></yo-table-column>
     <slot name="tableAfter"></slot>
   </el-table>
@@ -56,7 +56,8 @@
     },
     data() {
       return {
-        tableDataList: {}
+        tableDataList: {},
+        tableParamsArr:[]
       }
     },
     created() {
@@ -66,6 +67,24 @@
       tableData: {
         handler(newval) {
           this.tableDataList = newval
+        },
+        deep: true
+      },
+      tableParams: {
+        handler(newval) {
+          this.tableParamsArr = newval
+          this.$nextTick(function () {
+            if (this.numShow && this.tableParamsArr[0].label !== '序号') {
+              this.tableParamsArr.unshift({
+                key: '---',
+                label: '序号',
+                align: 'center',
+                formatter(row, column, cellValue, index) {
+                  return ((this.tableDataList.PageIndex - 1) * this.tableDataList.PageSize + 1) + Number(index) + 1
+                }
+              })
+            }
+          })
         },
         deep: true
       }
