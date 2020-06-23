@@ -17,6 +17,7 @@
     <el-table-column
       type="index"
       width="50"
+      :key="RandomUniqueValue()"
       :fixed="isHaveFixed?'left':false"
       v-if="numShow"
       :index="((tableDataList.PageIndex-1)*tableDataList.PageSize+1)"
