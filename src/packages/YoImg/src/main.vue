@@ -346,6 +346,7 @@ export default {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  color: #666;
 }
 .file-item-img2:nth-of-type(2n) {
   margin-right: 0;
