@@ -10,13 +10,12 @@
       type="selection"
       key="selection"
       align="center"
-      v-if="IsNeedSelect"
+      v-show="IsNeedSelect"
       width="50">
     </el-table-column>
     <el-table-column
       type="index"
       width="50"
-      v-if="numShow"
       :index="((tableDataList.PageIndex-1)*tableDataList.PageSize+1)"
       align="center"
       label="序号"
