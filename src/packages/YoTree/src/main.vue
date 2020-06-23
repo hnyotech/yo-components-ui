@@ -118,6 +118,7 @@ export default {
     submitTree() {
       this.isShowTree = false
       this.$emit('update:isShow', false)
+      this.$emit('submitTree', this.treeData)
     },
     allCheckedChange(type) {
       let that = this
