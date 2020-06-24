@@ -57,17 +57,17 @@
         @mousedown="handleImgMouseDown"
       />
       <a href ref="download_a" target="_blank" v-show="false"></a>
-<!--      <div v-show="edgeShow" id="temppdf" style="width: 100%;height: 100%;">-->
-<!--        <embed-->
-<!--          v-if="isPdf"-->
-<!--          :src="realpdfSrc"-->
-<!--          :type="mimeType"-->
-<!--          class="el-image-viewer__img"-->
-<!--          :style="pdfStyle"-->
-<!--          @load="handlePdfLoad"-->
-<!--        />-->
-<!--      </div>-->
-      <iframe v-show="edgeShow" :style="pdfStyle" :src="realpdfSrc"></iframe>
+      <div v-show="edgeShow" id="temppdf" style="width: 100%;height: 100%;">
+        <embed
+          v-if="isPdf"
+          :src="realpdfSrc"
+          :type="mimeType"
+          class="el-image-viewer__img"
+          :style="pdfStyle"
+          @load="handlePdfLoad"
+        />
+      </div>
+<!--      <iframe v-show="edgeShow" :style="pdfStyle" :src="realpdfSrc"></iframe>-->
     </yo-dialog-viewer>
   </div>
 </template>
@@ -321,9 +321,9 @@
               if (resp.status == 200) {
                 that.realpdfSrc = that.pdfSrc;
                 that.$nextTick(function () {
-                  // let html = document.querySelector('#temppdf').innerHTML
-                  // document.querySelector('#temppdf').innerHTML = ''
-                  // document.querySelector('#temppdf').innerHTML = html
+                  let html = document.querySelector('#temppdf').innerHTML
+                  document.querySelector('#temppdf').innerHTML = '<span></span>'
+                  document.querySelector('#temppdf').innerHTML = html
                   this.edgeShow = true;
                 })
               } else if (resp.status == 204) {
