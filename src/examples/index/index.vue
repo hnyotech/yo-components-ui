@@ -1,28 +1,28 @@
 <template>
   <div id="examples">
-<!--        <yo-file-->
-<!--          :uploadType="3"-->
-<!--          :ids.sync="formData.Files"-->
-<!--          :apiUrl="apiUrl"-->
-<!--          :isShowTip="false"-->
-<!--          :fileLimit="10"-->
-<!--          :isMultiple="true"-->
-<!--          :allowAnonymous="true"-->
-<!--          :fileType="2"-->
-<!--          :fileListArr="fileListArr"-->
-<!--          :isShowFileList="false"-->
-<!--        ></yo-file>-->
-    <yo-grid
-      ref="yoGrid"
-      :gridData="gridData"
-      :requireData.sync="requireData"
-      :showQuick="false"
-      :isShowQuick="false"
-      :showPagination="true"
-      labelWidth="120px"
-    >
-      <yo-table-new :tableData.sync="requireData" :tableParams="gridData.table" :isHaveFixed="true"></yo-table-new>
-    </yo-grid>
+        <yo-file
+          :uploadType="3"
+          :ids.sync="formData.Files"
+          :apiUrl="apiUrl"
+          :isShowTip="false"
+          :fileLimit="10"
+          :isMultiple="true"
+          :allowAnonymous="true"
+          :fileType="2"
+          :fileListArr="fileListArr"
+          :isShowFileList="false"
+        ></yo-file>
+<!--    <yo-grid-->
+<!--      ref="yoGrid"-->
+<!--      :gridData="gridData"-->
+<!--      :requireData.sync="requireData"-->
+<!--      :showQuick="false"-->
+<!--      :isShowQuick="false"-->
+<!--      :showPagination="true"-->
+<!--      labelWidth="120px"-->
+<!--    >-->
+<!--      <yo-table-new :tableData.sync="requireData" :tableParams="gridData.table" :isHaveFixed="true"></yo-table-new>-->
+<!--    </yo-grid>-->
   </div>
 </template>
 <script>
