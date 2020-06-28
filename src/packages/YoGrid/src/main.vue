@@ -5,14 +5,14 @@
         <slot name="toolbar"></slot>
       </YoToolBar>
       <YoButton
-        type="primary"
+        plain
         size="medium"
         @click="handleCollapse"
         v-if="gridData.formLabel.length > 1"
         style="float: right;margin-left: 20px;margin-top: 6px;"
       >
-        <i class="el-icon-arrow-down" style="font-size:10px;"></i>
         高级搜索
+        <i class="el-icon-arrow-down" style="font-size:10px;"></i>
       </YoButton>
       <el-input
         :placeholder="quicksearchPlaceholder"
@@ -21,8 +21,10 @@
         style="float:right;width:20%;margin-top: 6px;"
         @keyup.enter="handleQuickSearchFromInput"
         :clearable="true"
+        prefix-icon="el-icon-search"
+        class="quick-input"
       >
-        <YoButton slot="append" icon="el-icon-search" @click="handleQuickSearch"></YoButton>
+        <YoButton class="quick-input-btn" slot="append" type="primary" @click="handleQuickSearch">搜索</YoButton>
       </el-input>
     </div>
     <div v-show="!defaultShowHidden && isShowQuick && isSearch" class="cos_hide_box">
@@ -594,3 +596,19 @@
     }
   };
 </script>
+<style>
+  .quick-input.el-input{
+    position: relative;
+  }
+
+  .quick-input.el-input .el-input__inner {
+
+  }
+
+  .quick-input.el-input .el-input-group__append .el-button.quick-input-btn {
+    color: #FEFEFE;
+    background-color: #365FA4;
+    border-color: #365FA4;
+    border-radius: 0 4px 4px 0;
+  }
+</style>

@@ -12,17 +12,18 @@
           :fileListArr="fileListArr"
           :isShowFileList="false"
         ></yo-file>
-<!--    <yo-grid-->
-<!--      ref="yoGrid"-->
-<!--      :gridData="gridData"-->
-<!--      :requireData.sync="requireData"-->
-<!--      :showQuick="false"-->
-<!--      :isShowQuick="false"-->
-<!--      :showPagination="true"-->
-<!--      labelWidth="120px"-->
-<!--    >-->
-<!--      <yo-table-new :tableData.sync="requireData" :tableParams="gridData.table" :isHaveFixed="true"></yo-table-new>-->
-<!--    </yo-grid>-->
+    <yo-grid
+      ref="yoGrid"
+      :gridData="gridData"
+      quicksearchPlaceholder="快速搜索项目名称"
+      :requireData.sync="requireData"
+      :showQuick="true"
+      :isShowQuick="true"
+      :showPagination="true"
+      labelWidth="120px"
+    >
+      <yo-table :tableData.sync="requireData" :displayData="gridData.table" :isHaveFixed="true"></yo-table>
+    </yo-grid>
   </div>
 </template>
 <script>

@@ -67,7 +67,7 @@
           @load="handlePdfLoad"
         />
       </div>
-<!--      <iframe v-show="edgeShow" :style="pdfStyle" :src="realpdfSrc"></iframe>-->
+      <!--      <iframe v-show="edgeShow" :style="pdfStyle" :src="realpdfSrc"></iframe>-->
     </yo-dialog-viewer>
   </div>
 </template>
@@ -319,13 +319,58 @@
             .get(that.src)
             .then(resp => {
               if (resp.status == 200) {
-                that.realpdfSrc = that.pdfSrc;
-                that.$nextTick(function () {
-                  let html = document.querySelector('#temppdf').innerHTML
-                  document.querySelector('#temppdf').innerHTML = '<span></span>'
-                  document.querySelector('#temppdf').innerHTML = html
-                  this.edgeShow = true;
-                })
+                // 下面代码都是处理IE浏览器的情况
+                if (window.ActiveXObject || "ActiveXObject" in window) {
+                  let flag = false
+                  //判断是否为IE浏览器，"ActiveXObject" in window判断是否为IE11
+                  //判断是否安装了adobe Reader
+                  for (x = 2; x < 10; x++) {
+                    try {
+                      let oAcro = eval("new ActiveXObject('PDF.PdfCtrl." + x + "');");
+                      if (oAcro) {
+                        flag = true;
+                      }
+                    } catch (e) {
+                      flag = false;
+                    }
+                  }
+                  try {
+                    let oAcro4 = new ActiveXObject('PDF.PdfCtrl.1');
+                    if (oAcro4) {
+                      flag = true;
+                    }
+                  } catch (e) {
+                    flag = false;
+                  }
+                  try {
+                    let oAcro7 = new ActiveXObject('AcroPDF.PDF.1');
+                    if (oAcro7) {
+                      flag = true;
+                    }
+                  } catch (e) {
+                    flag = false;
+                  }
+                  if (flag) {//支持
+                    that.realpdfSrc = that.pdfSrc;
+                    that.$nextTick(function () {
+                      let html = document.querySelector('#temppdf').innerHTML
+                      document.querySelector('#temppdf').innerHTML = '<span></span>'
+                      document.querySelector('#temppdf').innerHTML = html
+                      this.edgeShow = true;
+                    })
+                  } else {//不支持
+                    alert("尊敬的用户，对不起。您还没有安装PDF在线预览软件,为了方便在线预览PDF文档,请下载安装！");
+                    location = "http://ardownload.adobe.com/pub/adobe/reader/win/9.x/9.3/chs/AdbeRdr930_zh_CN.exe";
+                  }
+                } else {
+                  that.realpdfSrc = that.pdfSrc;
+                  that.$nextTick(function () {
+                    let html = document.querySelector('#temppdf').innerHTML
+                    document.querySelector('#temppdf').innerHTML = '<span></span>'
+                    document.querySelector('#temppdf').innerHTML = html
+                    this.edgeShow = true;
+                  })
+                }
               } else if (resp.status == 204) {
                 //接口主動返回的204 表示內容還沒有 友好提示
                 that.showerr("文件正在转码，请稍后再试...");
