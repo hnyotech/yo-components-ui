@@ -323,7 +323,7 @@
                   let flag = false
                   //判断是否为IE浏览器，"ActiveXObject" in window判断是否为IE11
                   //判断是否安装了adobe Reader
-                  for (x = 2; x < 10; x++) {
+                  for (let x = 2; x < 10; x++) {
                     try {
                       let oAcro = eval("new ActiveXObject('PDF.PdfCtrl." + x + "');");
                       if (oAcro) {
