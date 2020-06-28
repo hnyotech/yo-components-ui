@@ -76,7 +76,7 @@
         tabindex="0"
         class="el-upload-list__item is-success"
         v-for="item in fileList"
-        :key="item.uid"
+        :key="item.id"
       >
         <yo-row :gutter="20">
           <yo-col :span="12" class="left-content" style="position: relative;">
@@ -91,7 +91,7 @@
             <i class="el-icon-close-tip">按 delete 键可删除</i>
           </yo-col>
           <yo-col :span="12">
-            <el-input :id="item.id" size="mini" v-model.trim="item.name" @blur="changeName(item)"></el-input>
+            <el-input :id="item.id" size="mini" v-model.trim="item.name"></el-input>
           </yo-col>
         </yo-row>
       </li>
@@ -423,10 +423,6 @@
       }
     },
     methods: {
-      changeName: function (item) {
-        document.getElementById(item.id).focus()
-        return
-      },
       fileListContainId: function (id) {
         // 判断指定ID是否在fileList里面
         var that = this;
