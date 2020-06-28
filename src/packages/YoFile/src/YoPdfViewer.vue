@@ -316,7 +316,7 @@
           this.edgeShow = false;
           let instance = that.$http.create();
           instance
-            .options(that.src)
+            .get(that.src)
             .then(resp => {
               if (resp.status == 200) {
                 that.realpdfSrc = that.pdfSrc;
