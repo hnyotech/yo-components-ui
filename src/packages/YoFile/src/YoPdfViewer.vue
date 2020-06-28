@@ -315,8 +315,7 @@
           that.loading = true;
           this.edgeShow = false;
           let instance = that.$http.create();
-          instance
-            .get(that.src)
+          instance.options(that.src)
             .then(resp => {
               if (resp.status == 200) {
                 // 下面代码都是处理IE浏览器的情况
