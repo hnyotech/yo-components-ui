@@ -41,7 +41,7 @@
         @mousedown="handleImgMouseDown"
       />
       <a href ref="download_a" target="_blank" v-show="false"></a>
-      <div v-show="edgeShow && !isIE" id="temppdf" style="width: 100%;height: 100%;">
+      <div v-show="edgeShow" id="temppdf" style="width: 100%;height: 100%;">
         <embed
           v-if="isPdf"
           :src="realpdfSrc"
@@ -51,7 +51,6 @@
           @load="handlePdfLoad"
         />
       </div>
-      <iframe v-show="edgeShow && isIE" :style="pdfStyle" :src="realpdfSrc"></iframe>
     </yo-dialog-viewer>
   </div>
 </template>
@@ -225,7 +224,8 @@
         return style;
       },
       isPdf() {
-        return this.mimeType === "application/pdf";
+        // return this.mimeType === "application/pdf";
+        return this.isCanPreviewPDFType(this.mimeType);
       },
       isImg() {
         var ctypeArr = [
@@ -256,6 +256,21 @@
       }
     },
     methods: {
+      // 判断是可做PDF预览的 .doc/.docx之类
+      isCanPreviewPDFType(filetype) {
+        var ctypeArr = [
+          "application/pdf", //.pdf
+          "application/msword", //.doc|.docx
+          "application/vnd.ms-excel", //.xls|.xlsx
+          "application/vnd.ms-powerpoint" //ppt
+          // "text/plain" //.txt
+        ];
+        if (ctypeArr.indexOf(filetype) >= 0) {
+          return true;
+        } else {
+          return false;
+        }
+      },
       //显示错误提示
       showerr(msg) {
         var that = this;
@@ -295,7 +310,7 @@
       initSrc() {
         //測試pdf地址 沒問題才顯示
         let that = this;
-        if (that.isPdf) {
+        if (that.isCanPreviewPDFType(that.mimeType)) {
           that.loading = true;
           this.edgeShow = false;
           let instance = that.$http.create();
@@ -335,9 +350,7 @@
                   }
                   if (flag) {//支持
                     that.realpdfSrc = that.pdfSrc;
-                    that.$nextTick(function () {
-                      this.edgeShow = true;
-                    })
+                    that.edgeShow = true;
                   } else {//不支持
                     alert("尊敬的用户，对不起。您还没有安装PDF在线预览软件,为了方便在线预览PDF文档,请点击确定下载安装！");
                     location = "http://ardownload.adobe.com/pub/adobe/reader/win/9.x/9.3/chs/AdbeRdr930_zh_CN.exe";
@@ -348,7 +361,7 @@
                     let html = document.querySelector('#temppdf').innerHTML
                     document.querySelector('#temppdf').innerHTML = '<span></span>'
                     document.querySelector('#temppdf').innerHTML = html
-                    this.edgeShow = true;
+                    that.edgeShow = true;
                   })
                 }
               } else if (resp.status == 204) {

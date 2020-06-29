@@ -309,7 +309,6 @@
           return false;
         }
       },
-
       handlePreview: function (file) {
         if (!this.isPreviw) {
           return;
@@ -332,30 +331,28 @@
       },
       //预览PDF
       handlePreviewPdf(url, mimeType = "application/pdf", title = "") {
-        // console.log("预览PDF:"+file.url);
-        // console.log(file);
         let that = this;
         if (that.pdfdialogVisible) {
-          // console.log("已经打开了 先关闭 0.2后打开");
           that.pdfdialogVisible = false;
           that.pdfViewerSrc = "";
           setTimeout(() => {
             //不这么搞是不能重复打开的.by Z.C
-            that.pdfdialogVisible = true;
             that.pdfViewerSrc = url;
             that.mimeType = mimeType;
             that.pdfViewerTitle = title;
+            that.pdfdialogVisible = true;
           }, 200);
         } else {
-          that.pdfdialogVisible = true;
           that.pdfViewerSrc = url;
           that.mimeType = mimeType;
           that.pdfViewerTitle = title;
+          that.$nextTick(function () {
+            that.pdfdialogVisible = true;
+          })
         }
       },
       // 下载
       handleDownLoad: function (url, item) {
-        console.log(item)
         if (!this.isPreviw) {
           return;
         }
