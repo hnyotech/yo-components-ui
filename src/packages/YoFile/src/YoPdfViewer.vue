@@ -350,7 +350,12 @@
                   }
                   if (flag) {//支持
                     that.realpdfSrc = that.pdfSrc;
-                    that.edgeShow = true;
+                    that.$nextTick(function () {
+                      let html = document.querySelector('#temppdf').innerHTML
+                      document.querySelector('#temppdf').innerHTML = '<span></span>'
+                      document.querySelector('#temppdf').innerHTML = html
+                      that.edgeShow = true;
+                    })
                   } else {//不支持
                     alert("尊敬的用户，对不起。您还没有安装PDF在线预览软件,为了方便在线预览PDF文档,请点击确定下载安装！");
                     location = "http://ardownload.adobe.com/pub/adobe/reader/win/9.x/9.3/chs/AdbeRdr930_zh_CN.exe";
