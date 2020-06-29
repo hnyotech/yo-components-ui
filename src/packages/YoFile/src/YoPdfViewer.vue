@@ -22,22 +22,6 @@
       :custosm-canvas-class="{'yo-pad-viewer-custom-canvas': true}"
       :custosm-mask-class="{'yo-pad-viewer-custom-mask': true}"
     >
-      <!-- <template v-if="!isSingle">
-        <span
-          class="el-image-viewer__btn el-image-viewer__prev"
-          :class="{ 'pdf-is-disabled': isFirst }"
-          @click="prev"
-        >
-          <i class="el-icon-arrow-left" />
-        </span>
-        <span
-          class="el-image-viewer__btn el-image-viewer__next"
-          :class="{ 'pdf-is-disabled': isLast }"
-          @click="next"
-        >
-          <i class="el-icon-arrow-right" />
-        </span>
-      </template> -->
       <div v-if="isImg" class="el-image-viewer__btn el-image-viewer__actions">
         <div class="el-image-viewer__actions__inner">
           <i class="el-icon-zoom-out" @click="handleActions('zoomOut')"></i>
@@ -57,7 +41,7 @@
         @mousedown="handleImgMouseDown"
       />
       <a href ref="download_a" target="_blank" v-show="false"></a>
-      <div v-show="edgeShow" id="temppdf" style="width: 100%;height: 100%;">
+      <div v-show="edgeShow && !isIE" id="temppdf" style="width: 100%;height: 100%;">
         <embed
           v-if="isPdf"
           :src="realpdfSrc"
@@ -67,7 +51,7 @@
           @load="handlePdfLoad"
         />
       </div>
-      <!--      <iframe v-show="edgeShow" :style="pdfStyle" :src="realpdfSrc"></iframe>-->
+      <iframe v-show="edgeShow && isIE" :style="pdfStyle" :src="realpdfSrc"></iframe>
     </yo-dialog-viewer>
   </div>
 </template>
@@ -352,13 +336,10 @@
                   if (flag) {//支持
                     that.realpdfSrc = that.pdfSrc;
                     that.$nextTick(function () {
-                      let html = document.querySelector('#temppdf').innerHTML
-                      document.querySelector('#temppdf').innerHTML = '<span></span>'
-                      document.querySelector('#temppdf').innerHTML = html
                       this.edgeShow = true;
                     })
                   } else {//不支持
-                    alert("尊敬的用户，对不起。您还没有安装PDF在线预览软件,为了方便在线预览PDF文档,请下载安装！");
+                    alert("尊敬的用户，对不起。您还没有安装PDF在线预览软件,为了方便在线预览PDF文档,请点击确定下载安装！");
                     location = "http://ardownload.adobe.com/pub/adobe/reader/win/9.x/9.3/chs/AdbeRdr930_zh_CN.exe";
                   }
                 } else {
