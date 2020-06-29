@@ -115,7 +115,6 @@
   </div>
 </template>
 <script type="text/javascript">
-  import {Base64} from "js-base64";
   import YoImgViewer from "@/packages/YoImg/src/YoImageViewer";
   import YoPdfViewer from "@/packages/YoFile/src/YoPdfViewer";
   import YoRow from "@/packages/YoRow/src/main";

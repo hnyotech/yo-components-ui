@@ -12,7 +12,7 @@
         style="float: right;margin-left: 20px;margin-top: 6px;"
       >
         高级搜索
-        <i class="el-icon-arrow-down" style="font-size:10px;"></i>
+        <i class="el-icon-arrow-down" style="font-size:14px;"></i>
       </YoButton>
       <el-input
         :placeholder="quicksearchPlaceholder"

@@ -1,29 +1,39 @@
 <template>
   <div id="examples">
-        <yo-file
-          :uploadType="3"
-          :ids.sync="formData.Files"
-          :apiUrl="apiUrl"
-          :isShowTip="false"
-          :fileLimit="10"
-          :isMultiple="true"
-          :allowAnonymous="true"
-          :fileType="2"
-          :fileListArr="fileListArr"
-          :isShowFileList="false"
-        ></yo-file>
-    <yo-grid
-      ref="yoGrid"
-      :gridData="gridData"
-      quicksearchPlaceholder="快速搜索项目名称"
-      :requireData.sync="requireData"
-      :showQuick="true"
-      :isShowQuick="true"
-      :showPagination="true"
-      labelWidth="120px"
-    >
-      <yo-table :tableData.sync="requireData" :displayData="gridData.table" :isHaveFixed="true"></yo-table>
-    </yo-grid>
+    <!--        <yo-file-->
+    <!--          :uploadType="3"-->
+    <!--          :ids.sync="formData.Files"-->
+    <!--          :apiUrl="apiUrl"-->
+    <!--          :isShowTip="false"-->
+    <!--          :fileLimit="10"-->
+    <!--          :isMultiple="true"-->
+    <!--          :allowAnonymous="true"-->
+    <!--          :fileType="2"-->
+    <!--          :fileListArr="fileListArr"-->
+    <!--          :isShowFileList="false"-->
+    <!--        ></yo-file>-->
+    <!--    <yo-grid-->
+    <!--      ref="yoGrid"-->
+    <!--      :gridData="gridData"-->
+    <!--      quicksearchPlaceholder="快速搜索项目名称"-->
+    <!--      :requireData.sync="requireData"-->
+    <!--      :showQuick="true"-->
+    <!--      :isShowQuick="true"-->
+    <!--      :showPagination="true"-->
+    <!--      labelWidth="120px"-->
+    <!--    >-->
+    <!--      <yo-table :tableData.sync="requireData" :displayData="gridData.table" :isHaveFixed="true"></yo-table>-->
+    <!--    </yo-grid>-->
+    <el-row :gutter="40" v-for="item in fileList" :key="item.Id" class="margin-b-10">
+      <el-col :span="4">
+        <label
+          style="margin: 0 5px;display:inline-block;font-size:14px;color:#666;"
+        >{{ item.MaterialName }}</label>
+      </el-col>
+      <el-col :span="20">
+        <yo-img :ids.sync="item.Files" :apiUrl="apiUrl" class="imgWidth"></yo-img>
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script>
@@ -66,13 +76,13 @@
     },
     data() {
       return {
-        fileListArr:[],
+        fileList: [],
+        fileListArr: [],
         formData: {
           Files: '',
           Files2: '',
           Files3: ''
         },
-        apiUrl: '',
         imgs: 'k203i92608u600a4416e0cp,k202pg03351c00a441288i0',
         apiUrl: process.env.AttachAPI,
         showDialogViewer: false,
@@ -168,7 +178,7 @@
             {
               key: "Name",
               label: "名称",
-              fixed:'left',
+              fixed: 'left',
               width: 100,
               align: "center",
               tooltip: false
@@ -176,7 +186,7 @@
             {
               key: "HostUrl",
               label: "HostUrl",
-              fixed:'left',
+              fixed: 'left',
               width: 200,
               align: "left",
               tooltip: true
@@ -261,6 +271,7 @@
       };
     },
     mounted() {
+      this.getFindById()
       this.fileListArr = [{
         id: 'k206gb5342dm00a440ac8zt',
         name: 'favicon.ico',
@@ -275,6 +286,13 @@
       }]
     },
     methods: {
+      getFindById() {
+        this.$http.post('/api/Project/FindById?id=k206th0357pd001037df833').then(res => {
+          if(res){
+            this.fileList = res.ProjectAttachModelList
+          }
+        })
+      },
       pickerOptionsStart(date) {
         if (this.gridData.params.end === null) {
           return false
