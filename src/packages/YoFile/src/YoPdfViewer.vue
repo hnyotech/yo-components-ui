@@ -41,17 +41,17 @@
         @mousedown="handleImgMouseDown"
       />
       <a href ref="download_a" target="_blank" v-show="false"></a>
-      <div v-show="edgeShow && !isIE" id="temppdf" style="width: 100%;height: 100%;">
-        <embed
-          v-if="isPdf"
-          :src="realpdfSrc"
-          :type="mimeType"
-          class="el-image-viewer__img"
-          :style="pdfStyle"
-          @load="handlePdfLoad"
-        />
-      </div>
-      <iframe v-if="edgeShow && isPdf && isIE" :src="realpdfSrc" :style="pdfStyle"
+<!--      <div v-show="edgeShow && !isIE" id="temppdf" style="width: 100%;height: 100%;">-->
+<!--        <embed-->
+<!--          v-if="isPdf"-->
+<!--          :src="realpdfSrc"-->
+<!--          :type="mimeType"-->
+<!--          class="el-image-viewer__img"-->
+<!--          :style="pdfStyle"-->
+<!--          @load="handlePdfLoad"-->
+<!--        />-->
+<!--      </div>-->
+      <iframe v-if="edgeShow && isPdf" :src="realpdfSrc" :style="pdfStyle"
               class="el-image-viewer__img"></iframe>
     </yo-dialog-viewer>
   </div>
@@ -357,16 +357,17 @@
                     })
                   } else {//不支持
                     alert("尊敬的用户，对不起。您还没有安装PDF在线预览软件,为了方便在线预览PDF文档,请点击确定下载安装！");
-                    location = "http://ardownload.adobe.com/pub/adobe/reader/win/9.x/9.3/chs/AdbeRdr930_zh_CN.exe";
+                    location = "https://admdownload.adobe.com/bin/live/readerdc_cn_ha_crd_install.exe";
                   }
                 } else {
                   that.realpdfSrc = that.pdfSrc;
-                  that.$nextTick(function () {
-                    let html = document.querySelector('#temppdf').innerHTML
-                    document.querySelector('#temppdf').innerHTML = '<span></span>'
-                    document.querySelector('#temppdf').innerHTML = html
-                    that.edgeShow = true;
-                  })
+                  that.edgeShow = true;
+                  // that.$nextTick(function () {
+                  //   let html = document.querySelector('#temppdf').innerHTML
+                  //   document.querySelector('#temppdf').innerHTML = '<span></span>'
+                  //   document.querySelector('#temppdf').innerHTML = html
+                  //   that.edgeShow = true;
+                  // })
                 }
               } else if (resp.status == 204) {
                 //接口主動返回的204 表示內容還沒有 友好提示
