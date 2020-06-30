@@ -361,11 +361,11 @@
                   }
                 } else {
                   that.realpdfSrc = that.pdfSrc;
-                  let html = document.querySelector('#temppdf').innerHTML
-                  document.querySelector('#temppdf').innerHTML = '<span></span>'
-                  document.querySelector('#temppdf').innerHTML = html
-                  that.edgeShow = true;
                   that.$nextTick(function () {
+                    let html = document.querySelector('#temppdf').innerHTML
+                    document.querySelector('#temppdf').innerHTML = '<span></span>'
+                    document.querySelector('#temppdf').innerHTML = html
+                    that.edgeShow = true;
                   })
                 }
               } else if (resp.status == 204) {
