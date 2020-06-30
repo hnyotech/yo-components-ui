@@ -350,11 +350,13 @@
                   }
                   if (flag) {//支持
                     that.realpdfSrc = that.pdfSrc;
-                    that.$nextTick(function () {
-                      let html = document.querySelector('#temppdf').innerHTML
-                      document.querySelector('#temppdf').innerHTML = '<span></span>'
+                    let html = document.querySelector('#temppdf').innerHTML
+                    document.querySelector('#temppdf').innerHTML = '<span></span>'
+                    setTimeout(() => {
                       document.querySelector('#temppdf').innerHTML = html
                       that.edgeShow = true;
+                    }, 123)
+                    that.$nextTick(function () {
                     })
                   } else {//不支持
                     alert("尊敬的用户，对不起。您还没有安装PDF在线预览软件,为了方便在线预览PDF文档,请点击确定下载安装！");
@@ -362,12 +364,13 @@
                   }
                 } else {
                   that.realpdfSrc = that.pdfSrc;
-                  that.$nextTick(function () {
-                    let html = document.querySelector('#temppdf').innerHTML
-                    document.querySelector('#temppdf').innerHTML = '<span></span>'
-                    document.querySelector('#temppdf').innerHTML = html
-                    that.edgeShow = true;
-                  })
+                  that.edgeShow = true;
+                  // that.$nextTick(function () {
+                  //   let html = document.querySelector('#temppdf').innerHTML
+                  //   document.querySelector('#temppdf').innerHTML = '<span></span>'
+                  //   document.querySelector('#temppdf').innerHTML = html
+                  //   that.edgeShow = true;
+                  // })
                 }
               } else if (resp.status == 204) {
                 //接口主動返回的204 表示內容還沒有 友好提示
