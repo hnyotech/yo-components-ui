@@ -41,7 +41,7 @@
         @mousedown="handleImgMouseDown"
       />
       <a href ref="download_a" target="_blank" v-show="false"></a>
-      <div v-show="edgeShow" id="temppdf" style="width: 100%;height: 100%;">
+      <div v-show="edgeShow && !isIE" id="temppdf" style="width: 100%;height: 100%;">
         <embed
           v-if="isPdf"
           :src="realpdfSrc"
@@ -51,6 +51,8 @@
           @load="handlePdfLoad"
         />
       </div>
+      <iframe v-if="edgeShow && isPdf && isIE" :src="realpdfSrc" :style="pdfStyle"
+              class="el-image-viewer__img"></iframe>
     </yo-dialog-viewer>
   </div>
 </template>
@@ -350,12 +352,7 @@
                   }
                   if (flag) {//支持
                     that.realpdfSrc = that.pdfSrc;
-                    let html = document.querySelector('#temppdf').innerHTML
-                    document.querySelector('#temppdf').innerHTML = '<span></span>'
-                    setTimeout(() => {
-                      document.querySelector('#temppdf').innerHTML = html
-                      that.edgeShow = true;
-                    }, 123)
+                    that.edgeShow = true;
                     that.$nextTick(function () {
                     })
                   } else {//不支持
@@ -364,13 +361,12 @@
                   }
                 } else {
                   that.realpdfSrc = that.pdfSrc;
+                  let html = document.querySelector('#temppdf').innerHTML
+                  document.querySelector('#temppdf').innerHTML = '<span></span>'
+                  document.querySelector('#temppdf').innerHTML = html
                   that.edgeShow = true;
-                  // that.$nextTick(function () {
-                  //   let html = document.querySelector('#temppdf').innerHTML
-                  //   document.querySelector('#temppdf').innerHTML = '<span></span>'
-                  //   document.querySelector('#temppdf').innerHTML = html
-                  //   that.edgeShow = true;
-                  // })
+                  that.$nextTick(function () {
+                  })
                 }
               } else if (resp.status == 204) {
                 //接口主動返回的204 表示內容還沒有 友好提示
