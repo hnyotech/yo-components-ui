@@ -1,17 +1,17 @@
 <template>
   <div id="examples">
-    <!--        <yo-file-->
-    <!--          :uploadType="3"-->
-    <!--          :ids.sync="formData.Files"-->
-    <!--          :apiUrl="apiUrl"-->
-    <!--          :isShowTip="false"-->
-    <!--          :fileLimit="10"-->
-    <!--          :isMultiple="true"-->
-    <!--          :allowAnonymous="true"-->
-    <!--          :fileType="2"-->
-    <!--          :fileListArr="fileListArr"-->
-    <!--          :isShowFileList="false"-->
-    <!--        ></yo-file>-->
+            <yo-file
+              :uploadType="3"
+              :ids.sync="formData.Files"
+              :apiUrl="apiUrl"
+              :isShowTip="false"
+              :fileLimit="10"
+              :isMultiple="true"
+              :allowAnonymous="true"
+              :fileType="2"
+              :fileListArr="fileListArr"
+              :isShowFileList="false"
+            ></yo-file>
     <!--    <yo-grid-->
     <!--      ref="yoGrid"-->
     <!--      :gridData="gridData"-->
@@ -24,16 +24,16 @@
     <!--    >-->
     <!--      <yo-table :tableData.sync="requireData" :displayData="gridData.table" :isHaveFixed="true"></yo-table>-->
     <!--    </yo-grid>-->
-    <el-row :gutter="40" v-for="item in fileList" :key="item.Id" class="margin-b-10">
-      <el-col :span="4">
-        <label
-          style="margin: 0 5px;display:inline-block;font-size:14px;color:#666;"
-        >{{ item.MaterialName }}</label>
-      </el-col>
-      <el-col :span="20">
-        <yo-img :ids.sync="item.Files" :apiUrl="apiUrl" class="imgWidth"></yo-img>
-      </el-col>
-    </el-row>
+<!--    <el-row :gutter="40" v-for="item in fileList" :key="item.Id" class="margin-b-10">-->
+<!--      <el-col :span="4">-->
+<!--        <label-->
+<!--          style="margin: 0 5px;display:inline-block;font-size:14px;color:#666;"-->
+<!--        >{{ item.MaterialName }}</label>-->
+<!--      </el-col>-->
+<!--      <el-col :span="20">-->
+<!--        <yo-img :ids.sync="item.Files" :apiUrl="apiUrl" class="imgWidth"></yo-img>-->
+<!--      </el-col>-->
+<!--    </el-row>-->
   </div>
 </template>
 <script>

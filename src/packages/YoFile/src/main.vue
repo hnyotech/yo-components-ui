@@ -179,7 +179,7 @@
       fileExtension: {
         type: String,
         required: false,
-        default: ""
+        default: ".pdf,.png,.jpg,.jpeg,.gif,.word,.doc,.docx,.xls,.xlsx,.txt"
       },
       Extension: {
         type: Object,
@@ -355,7 +355,7 @@
       },
       // 允许的文件类型
       FileAccept: function () {
-        var acceptstr = "";
+        let acceptstr = "";
         if (this.fileExtension.length > 0) {
           acceptstr = this.fileExtension;
         } else {
@@ -736,17 +736,32 @@
           );
           return false;
         }
-        if (this.Extension.isCheckExtension === true) {
-          let index = file.name.lastIndexOf(".");
-          let suffix = file.name;
-          let str = suffix.substring(index, suffix.length);
-          let isLeagalFile = this.fileExtension.indexOf(str) === -1;
-          if (isLeagalFile === true) {
+        if (typeof file.name.toString().split(".") === 'object' && file.name.toString().split(".").length > 0) {
+          let temp = file.name.toString().split(".")
+          if (['exe', 'bat', 'msi', 'dll', 'sh', 'js', 'sql'].indexOf(temp[temp.length - 1]) === -1) {
+            if (this.Extension.isCheckExtension === true) {
+              let index = file.name.lastIndexOf(".");
+              let suffix = file.name;
+              let str = suffix.substring(index, suffix.length);
+              let isLeagalFile = this.fileExtension.indexOf(str) === -1;
+              if (isLeagalFile === true) {
+                this.$message.error(
+                  `您选择的文件格式不正确，请上传${this.Extension.formation}格式文件！`
+                );
+              }
+              return !isLeagalFile;
+            }
+          } else {
             this.$message.error(
-              `您选择的文件格式不正确，请上传${this.Extension.formation}格式文件！`
+              `您选择的文件格式无法上传，请重新上传！`
             );
+            return false
           }
-          return !isLeagalFile;
+        } else {
+          this.$message.error(
+            `您选择的文件格式无法识别，请重新上传！`
+          );
+          return false
         }
       },
       beforeRemove: function (file, fileList) {
