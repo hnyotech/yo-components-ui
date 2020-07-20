@@ -797,6 +797,16 @@
         // 自定义上传 ,否则无法获取当前用户--暂时先不用,因为无法获取正确的状态
         //  return;
         var form = new FormData();
+        console.log(param.file)
+        for(let a in param.file.name.toString()){
+          console.log(param.file.name[a])
+        }
+        if (window.ActiveXObject || 'ActiveXObject' in window) {
+          console.log(param.file.name)
+          if(param.file.name && param.file.name.indexOf('\\') !=-1){
+
+          }
+        }
         form.append("file", param.file);
         form.append("exData", param.file.uid);
         if (that.allowAnonymous) {
