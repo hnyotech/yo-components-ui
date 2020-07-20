@@ -797,14 +797,8 @@
         // 自定义上传 ,否则无法获取当前用户--暂时先不用,因为无法获取正确的状态
         //  return;
         var form = new FormData();
-        console.log(param.file)
-        if (window.ActiveXObject || 'ActiveXObject' in window) {
-          console.log(param.file.name)
-          if(param.file.name && param.file.name.indexOf('\\') !=-1){
-
-          }
-        }
         form.append("file", param.file);
+        form.append("filename", param.file.name);
         form.append("exData", param.file.uid);
         if (that.allowAnonymous) {
           // 匿名附件
@@ -814,7 +808,6 @@
           // TODO:附加信息
         }
         //   that.$refs.upload.clearFiles();//
-        console.log(form)
         that.$http
           .post(param.action, form, {
             headers: {
@@ -828,7 +821,7 @@
             }
           })
           .then(response => {
-            console.log(response);
+            // console.log(response);
             var item = {};
             item.id = response.id;
             item.sign = response.sign;
