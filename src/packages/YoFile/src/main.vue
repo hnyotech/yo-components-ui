@@ -798,9 +798,6 @@
         //  return;
         var form = new FormData();
         console.log(param.file)
-        for(let a in param.file.name.toString()){
-          console.log(param.file.name[a])
-        }
         if (window.ActiveXObject || 'ActiveXObject' in window) {
           console.log(param.file.name)
           if(param.file.name && param.file.name.indexOf('\\') !=-1){
@@ -817,6 +814,7 @@
           // TODO:附加信息
         }
         //   that.$refs.upload.clearFiles();//
+        console.log(form)
         that.$http
           .post(param.action, form, {
             headers: {
@@ -830,7 +828,7 @@
             }
           })
           .then(response => {
-            // console.log("upload success:" + response.id);
+            console.log(response);
             var item = {};
             item.id = response.id;
             item.sign = response.sign;
