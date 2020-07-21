@@ -230,7 +230,7 @@
         default: "YoImgViewer",
         validator: function (value) {
           if (value) {
-            var has = ["YoImgViewer", "YoPdfViewer"].indexOf(value) !== -1;
+            let has = ["YoImgViewer", "YoPdfViewer"].indexOf(value) !== -1;
             if (!has) {
               // console.error("props参数必须匹配下面的值之一:['YoImgViewer','YoPdfViewer']")
             }
@@ -280,6 +280,11 @@
       },
       fileListArr: {
         handler(val) {
+          if (val && val.length === 0) {
+            this.fileList = []
+            this.showFileList = []
+            sessionStorage.removeItem(this.StorageKey)
+          }
           for (let i in val) {
             let same = false
             for (let a in this.fileList) {
@@ -296,6 +301,7 @@
       },
       fileList: {
         handler(val) {
+          this.fileList = val;
           this.$emit('update:fileList', val);
         },
         deep: true,
@@ -310,7 +316,7 @@
     computed: {
       AllfileList: function () {
         // 所有附件
-        var allList = [];
+        let allList = [];
         if (this.fileListOrg != null && this.fileListOrg.length > 0) {
           allList = allList.concat(this.fileListOrg);
         }
@@ -328,7 +334,7 @@
       },
       ExData: function () {
         // 附加信息
-        var param = {};
+        let param = {};
         param.test = "admin";
         if (this.exData != null) {
           Object.assign(param, this.exData);
@@ -369,7 +375,7 @@
       },
       // 显示的 提示语
       Tip: function () {
-        var tipStr = "";
+        let tipStr = "";
         if (this.FileAccept.length > 0) {
           tipStr += "只能上传 " + this.FileAccept + " 类型的文件,";
         }
@@ -377,7 +383,7 @@
           tipStr += "允许上传最多" + this.FileLimit + "个文件,";
         }
         if (this.fileSize > 0) {
-          var sizeStr = this.fileSize + "B,";
+          let sizeStr = this.fileSize + "B,";
           if (this.fileSize < 1024) {
           } else if (this.fileSize < 1024 * 1024) {
             sizeStr = Math.round(this.fileSize / 1024, 2) + "KB,";
@@ -424,8 +430,8 @@
     methods: {
       fileListContainId: function (id) {
         // 判断指定ID是否在fileList里面
-        var that = this;
-        for (var i = 0; i < that.showFileList.length; i++) {
+        let that = this;
+        for (let i = 0; i < that.showFileList.length; i++) {
           if (that.showFileList[i].id === id) {
             return true;
           }
@@ -433,7 +439,7 @@
         return false;
       },
       loadData: function (ids) {
-        var that = this;
+        let that = this;
         if (ids == null || ids === undefined || ids.length === 0) {
           that.showFileList = [];
           that.fileList = [];
@@ -442,8 +448,8 @@
           that.singleFile = {};
           return false;
         }
-        var idArr = ids.split(",");
-        var loadId = [];
+        let idArr = ids.split(",");
+        let loadId = [];
         // 先判断id 是否加载过了
         idArr.forEach(function (id) {
           if (!that.fileListContainId(id)) {
@@ -453,17 +459,15 @@
         if (loadId.length === 0) {
           return false;
         }
-        var newIds = loadId.join(",");
-        // console.log(process.env.API);
-        // console.log(this.apiUrl)
+        let newIds = loadId.join(",");
 
-        var param = {};
+        let param = {};
         param["ids"] = newIds;
         that.$http
           .post(that.apiUrl + "/api/Attach/GetAttachs", param)
           .then(resp => {
             resp.forEach(function (file) {
-              var item = {};
+              let item = {};
               item.id = file.id;
               item.sign = file.sign;
               item.timestamp = file.timestamp;
@@ -538,8 +542,8 @@
       },
       //添加到預覽緩存組中
       AddSrcCache: function (item) {
-        var id = item.id;
-        var src = item.orgurl;
+        let id = item.id;
+        let src = item.orgurl;
         let that = this;
         let cacheData = JSON.parse(sessionStorage.getItem(that.StorageKey));
         if (!cacheData) {
@@ -547,7 +551,7 @@
           cacheData[that.group] = {};
         }
         //保存
-        var obj = cacheData[that.group];
+        let obj = cacheData[that.group];
         if (!obj) {
           obj = new Object();
         }
@@ -557,10 +561,9 @@
         sessionStorage.setItem(that.StorageKey, JSON.stringify(cacheData));
       },
       RemoveSrcCache: function (item) {
-        var id = item.id;
-        var src = item.orgurl;
+        let id = item.id;
+        let src = item.orgurl;
         let that = this;
-        // console.log(item)
         for (let a in that.fileList) {
           if (that.fileList[a].id == item.id) {
             that.fileList.splice(a, 1)
@@ -570,9 +573,8 @@
 
         let cacheData = JSON.parse(sessionStorage.getItem(that.StorageKey));
         if (cacheData) {
-          var obj = cacheData[that.group];
+          let obj = cacheData[that.group];
           if (obj) {
-            // console.log(obj[id]);
             if (obj[id]) {
               delete obj[id];
               cacheData[that.group] = obj;
@@ -580,7 +582,6 @@
             }
           }
         }
-        // console.log(that.fileList)
       },
       //獲取地址所在index
       GetIndexByCache: function (id) {
@@ -590,7 +591,7 @@
           let obj = cacheData[that.group];
           if (obj) {
             let i = 0;
-            for (var key in obj) {
+            for (let key in obj) {
               if (key == id) {
                 return i;
               }
@@ -614,7 +615,7 @@
         if (cacheData) {
           let obj = cacheData[that.group];
           if (obj) {
-            for (var a in obj) {
+            for (let a in obj) {
               list.push(obj[a].src);
               titleArr.push(obj[a].title);
             }
@@ -625,7 +626,7 @@
       },
       // 判断是否图片
       isImgType: function (filetype) {
-        var ctypeArr = [
+        let ctypeArr = [
           "image/png",
           "image/jpeg",
           "image/gif",
@@ -641,7 +642,7 @@
       },
       // 判断是可做PDF预览的 .doc/.docx之类
       isCanPreviewPDFType: function (filetype) {
-        var ctypeArr = [
+        let ctypeArr = [
           "application/pdf", //.pdf
           "application/msword", //.doc|.docx
           "application/vnd.ms-excel", //.xls|.xlsx
@@ -656,8 +657,6 @@
       },
       onPreview: function (file) {
         // 点击文件列表中已上传的文件时的钩子
-        //   console.log("onPreview:");
-        // console.log(file)
         if (this.isImgType(file.type) || this.isCanPreviewPDFType(file.type)) {
           this.handlePreview(file);
         } else {
@@ -668,11 +667,11 @@
       onRemove: function (file, fileList) {
         if (file && file.status === "success") {
           // 文件列表移除文件时的钩子
-          var that = this;
+          let that = this;
           if (that.readOnly) {
             return;
           }
-          var delFile =
+          let delFile =
             this.delInd !== "" ? that.showFileList[this.delInd] : file;
           if (this.delInd === 0) {
             delFile = that.showFileList[0];
@@ -689,7 +688,6 @@
               delFile.timestamp
             )
             .then(resp => {
-              // console.log("remove file " + delFile.id);
               // 移除列表
               if (that.uploadType === 1) {
                 that.imageUrl = "";
@@ -709,13 +707,10 @@
         }
       },
       onChange: function (file, fileList) {
-        // console.log(file, fileList)
         // 文件状态改变时的钩子，添加文件、上传成功和上传失败时都会被调用
       },
       beforeUpload: function (file) {
         // 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
-        // console.log("beforeUpload..");
-        // console.log(file)
         let sameFileName = false
         for (let a in this.fileList) {
           if (this.fileList[a].name == file.name) {
@@ -736,8 +731,8 @@
           );
           return false;
         }
-        if (typeof file.name.toString().split(".") === 'object' && file.name.toString().split(".").length > 0) {
-          let temp = file.name.toString().split(".")
+        let temp = file.name.toString().split(".")
+        if (typeof temp === 'object' && temp.length > 0) {
           if (['exe', 'bat', 'msi', 'dll', 'sh', 'js', 'sql'].indexOf(temp[temp.length - 1]) === -1) {
             if (this.Extension.isCheckExtension === true) {
               let index = file.name.lastIndexOf(".");
@@ -784,7 +779,6 @@
       },
       onExceed: function (files, fileList) {
         // 文件超出个数限制时的钩子
-        // console.log("onExceed..");
         if (this.uploadType === 1) {
           return true;
         } else {
@@ -793,10 +787,10 @@
         }
       },
       httpRequest: function (param) {
-        var that = this;
+        let that = this;
         // 自定义上传 ,否则无法获取当前用户--暂时先不用,因为无法获取正确的状态
         //  return;
-        var form = new FormData();
+        let form = new FormData();
         form.append("file", param.file);
         form.append("filename", param.file.name);
         form.append("exData", param.file.uid);
@@ -821,8 +815,7 @@
             }
           })
           .then(response => {
-            // console.log(response);
-            var item = {};
+            let item = {};
             item.id = response.id;
             item.sign = response.sign;
             item.timestamp = response.timestamp;
@@ -902,7 +895,7 @@
           });
       },
       handleRemove: function (file) {
-        var that = this;
+        let that = this;
         that.onRemove(file, null);
         that.imageUrl = "";
         // astec
@@ -923,7 +916,6 @@
         if (that.AllfileList && that.AllfileList.length > 0 && file.name) {
           that.AllfileList.forEach(function (item) {
             if (item.name == file.name) {
-              console.log(item);
               that.handlePreview(item.orgurl, item, name);
             }
           });
@@ -944,8 +936,6 @@
       },
       //预览PDF
       handlePreviewPdf: function (url, mimeType = "application/pdf", title = "") {
-        // console.log("预览PDF:"+file.url);
-        // console.log(file);
         let that = this;
         if (that.pdfdialogVisible) {
           // console.log("已经打开了 先关闭 0.2后打开");
@@ -975,9 +965,9 @@
         this.pdfViewerSrc = "";
       },
       handleId: function () {
-        var that = this;
+        let that = this;
         // 回调IDs用
-        var newIds = "";
+        let newIds = "";
         if (that.uploadType === 1) {
           newIds = that.singleFile.id;
         } else {
