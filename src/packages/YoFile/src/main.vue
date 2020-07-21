@@ -819,7 +819,12 @@
             item.id = response.id;
             item.sign = response.sign;
             item.timestamp = response.timestamp;
-            item.name = response.name;
+            let resFileName = response.name;
+            let resFileNameArr = response.name.split("\\");
+            if (resFileName && resFileNameArr && resFileNameArr.length > 0) {
+              resFileName = resFileNameArr[resFileNameArr.length - 1]
+            }
+            item.name = resFileName;
             item.size = response.size;
             item.type = response.type;
             if (that.isImgType(item.type)) {
