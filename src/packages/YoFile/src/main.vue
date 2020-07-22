@@ -791,7 +791,7 @@
         // 自定义上传 ,否则无法获取当前用户--暂时先不用,因为无法获取正确的状态
         //  return;
         let form = new FormData();
-        form.append("file", param.file);
+        form.append("file", param.file, param.file.name);
         form.append("filename", param.file.name);
         form.append("exData", param.file.uid);
         if (that.allowAnonymous) {
