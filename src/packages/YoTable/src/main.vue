@@ -31,7 +31,6 @@
       :prop="item.key"
       :label="item.label"
       :min-width="item.width"
-      :width="item.staticwidth?item.staticwidth:'auto'"
       :show-overflow-tooltip="item.tooltip"
     >
       <!-- :min-width="item.label.length*30" -->
@@ -197,6 +196,7 @@ export default {
 </script>
 <style scoped>
 .otw {
+  display: inline;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
