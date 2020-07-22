@@ -31,6 +31,7 @@
       :prop="item.key"
       :label="item.label"
       :min-width="item.width"
+      :width="item.staticwidth?item.staticwidth:'auto'"
       :show-overflow-tooltip="item.tooltip"
     >
       <!-- :min-width="item.label.length*30" -->
