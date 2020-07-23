@@ -196,6 +196,7 @@ export default {
 </script>
 <style scoped>
 .otw {
+  display: inline;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
