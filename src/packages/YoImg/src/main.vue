@@ -378,7 +378,7 @@
 </script>
 <style scope>
   .text {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .file-item-img {
