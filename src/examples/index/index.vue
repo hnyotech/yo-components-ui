@@ -5,7 +5,7 @@
       :ids.sync="formData.Files"
       :apiUrl="apiUrl"
       :isShowTip="false"
-      :fileLimit="10"
+      :fileLimit="1"
       :isMultiple="true"
       :allowAnonymous="true"
       :fileType="2"
