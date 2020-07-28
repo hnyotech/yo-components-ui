@@ -531,7 +531,8 @@
     cursor: default;
   }
 
-  #app div.el-image-viewer__mask {
+  #app div.el-image-viewer__mask,
+  #aic_body div.el-image-viewer__mask {
     position: fixed;
     width: 100%;
     height: 100%;

@@ -36,7 +36,7 @@
       :on-remove="onRemove"
       :on-preview="onPreview"
       :http-request="httpRequest"
-      :disabled="readOnly"
+      :disabled="readOnly||fileList.length >= fileLimit"
     >
       <!--<template v-if="uploadType==1">
         <i class="el-icon-plus avatar-uploader-icon"></i>
@@ -909,7 +909,7 @@
         //     that.onRemove(file, null)
         //   })
       },
-      uploadBtn() {
+      uploadBtn(event) {
         if (this.fileList.length >= this.fileLimit) {
           return false;
         }
