@@ -1,10 +1,10 @@
 <template>
   <el-table
     :data="tableDataList.Items"
-    :fit="true"
     :highlight-current-row="true"
     @selection-change="handleSelectionChange"
-    style="width: 100%"
+    :fit="true"
+    style="width: 99.99%;"
   >
     <el-table-column
       type="selection"
@@ -25,7 +25,7 @@
       label="序号"
     ></el-table-column>
     <slot name="tableBefore"></slot>
-    <yo-table-column v-for="(item,index) in tableParamsArr" :key="RandomUniqueValue()"
+    <yo-table-column v-for="(item) in tableParamsArr" :key="RandomUniqueValue()"
                      :tableColumnParams="item"></yo-table-column>
     <slot name="tableAfter"></slot>
   </el-table>
