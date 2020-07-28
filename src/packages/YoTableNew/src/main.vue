@@ -1,10 +1,13 @@
 <template>
   <el-table
     :data="tableDataList.Items"
-    :highlight-current-row="true"
     @selection-change="handleSelectionChange"
+    style="width: 100%;"
+    :border="border"
+    :highlight-current-row="true"
     :fit="true"
-    style="width: 99.99%;"
+    :header-cell-style="headerCellStyle"
+    :class="border ? 'yo-border-table' : 'yo-table'"
   >
     <el-table-column
       type="selection"
@@ -49,6 +52,12 @@
           return {}
         }
       },
+      headerCellStyle: {
+        type: Object,
+        default: () => {
+          return {}
+        }
+      },
       isHaveFixed: {
         type: Boolean,
         default: false
@@ -60,6 +69,10 @@
       numShow: {
         type: Boolean,
         default: true
+      },
+      border: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
