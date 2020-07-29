@@ -1,31 +1,32 @@
 <template>
   <div id="examples">
-    <yo-file
-      :uploadType="3"
-      :ids.sync="formData.Files"
-      :apiUrl="apiUrl"
-      :isShowTip="false"
-      :fileLimit="1"
-      :isMultiple="true"
-      :allowAnonymous="true"
-      :fileType="2"
-      :fileList.sync="fileList"
-      :fileListArr="fileListArr"
-      :isShowFileList="false"
-    ></yo-file>
-    <el-button @click="cleanFileList">清除filelist</el-button>
-    <!--    <yo-grid-->
-    <!--      ref="yoGrid"-->
-    <!--      :gridData="gridData"-->
-    <!--      quicksearchPlaceholder="快速搜索项目名称"-->
-    <!--      :requireData.sync="requireData"-->
-    <!--      :showQuick="true"-->
-    <!--      :isShowQuick="true"-->
-    <!--      :showPagination="true"-->
-    <!--      labelWidth="120px"-->
-    <!--    >-->
-    <!--      <yo-table :tableData.sync="requireData" :displayData="gridData.table" :isHaveFixed="true"></yo-table>-->
-    <!--    </yo-grid>-->
+    <!--    <yo-file-->
+    <!--      :uploadType="3"-->
+    <!--      :ids.sync="formData.Files"-->
+    <!--      :apiUrl="apiUrl"-->
+    <!--      :isShowTip="false"-->
+    <!--      :fileLimit="10"-->
+    <!--      :isMultiple="true"-->
+    <!--      :allowAnonymous="true"-->
+    <!--      :fileType="2"-->
+    <!--      :fileList.sync="fileList"-->
+    <!--      :fileListArr="fileListArr"-->
+    <!--      :isShowFileList="false"-->
+    <!--    ></yo-file>-->
+    <!--    <el-button @click="cleanFileList">清除filelist</el-button>-->
+    <yo-grid
+      ref="yoGrid"
+      :gridData="gridData"
+      quicksearchPlaceholder="快速搜索项目名称"
+      :requireData.sync="requireData"
+      :showQuick="true"
+      :isShowQuick="true"
+      :showPagination="true"
+      labelWidth="120px"
+    >
+      <yo-table-new border :header-cell-style="headerCellStyle" :tableData.sync="requireData"
+                    :tableParams="gridData.table" :isHaveFixed="true"></yo-table-new>
+    </yo-grid>
     <!--    <el-row :gutter="40" v-for="item in fileList" :key="item.Id" class="margin-b-10">-->
     <!--      <el-col :span="4">-->
     <!--        <label-->
@@ -78,6 +79,9 @@
     },
     data() {
       return {
+        headerCellStyle: {
+          color: 'red'
+        },
         fileList: [],
         fileListArr: [],
         formData: {

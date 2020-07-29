@@ -1,10 +1,13 @@
 <template>
   <el-table
     :data="tableDataList.Items"
-    :fit="true"
-    :highlight-current-row="true"
     @selection-change="handleSelectionChange"
-    style="width: 100%"
+    style="width: 100%;"
+    :border="border"
+    :highlight-current-row="true"
+    :fit="true"
+    :header-cell-style="headerCellStyle"
+    :class="border ? 'yo-border-table' : 'yo-table'"
   >
     <el-table-column
       type="selection"
@@ -25,7 +28,7 @@
       label="序号"
     ></el-table-column>
     <slot name="tableBefore"></slot>
-    <yo-table-column v-for="(item,index) in tableParamsArr" :key="RandomUniqueValue()"
+    <yo-table-column v-for="(item) in tableParamsArr" :key="RandomUniqueValue()"
                      :tableColumnParams="item"></yo-table-column>
     <slot name="tableAfter"></slot>
   </el-table>
@@ -49,6 +52,12 @@
           return {}
         }
       },
+      headerCellStyle: {
+        type: Object,
+        default: () => {
+          return {}
+        }
+      },
       isHaveFixed: {
         type: Boolean,
         default: false
@@ -60,6 +69,10 @@
       numShow: {
         type: Boolean,
         default: true
+      },
+      border: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
