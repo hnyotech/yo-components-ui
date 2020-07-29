@@ -36,7 +36,7 @@
       :on-remove="onRemove"
       :on-preview="onPreview"
       :http-request="httpRequest"
-      :disabled="readOnly||fileList.length >= fileLimit"
+      :disabled="readOnly||(fileList.length >= fileLimit&&fileLimit>0)"
     >
       <!--<template v-if="uploadType==1">
         <i class="el-icon-plus avatar-uploader-icon"></i>
