@@ -113,7 +113,7 @@
     </ul>
     <div class="table-box" v-loading="loading">
       <slot></slot>
-      <div class="page-ination">
+      <div class="page-ination" v-if="showPagination">
         <el-pagination
           background
           @size-change="handleSizeChange"

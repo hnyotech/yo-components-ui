@@ -1,19 +1,19 @@
 <template>
   <div id="examples">
-    <!--    <yo-file-->
-    <!--      :uploadType="3"-->
-    <!--      :ids.sync="formData.Files"-->
-    <!--      :apiUrl="apiUrl"-->
-    <!--      :isShowTip="false"-->
-    <!--      :fileLimit="10"-->
-    <!--      :isMultiple="true"-->
-    <!--      :allowAnonymous="true"-->
-    <!--      :fileType="2"-->
-    <!--      :fileList.sync="fileList"-->
-    <!--      :fileListArr="fileListArr"-->
-    <!--      :isShowFileList="false"-->
-    <!--    ></yo-file>-->
-    <!--    <el-button @click="cleanFileList">清除filelist</el-button>-->
+       <yo-file
+         :uploadType="3"
+         :ids.sync="formData.Files"
+         :apiUrl="apiUrl"
+         :isShowTip="false"
+         :fileLimit="10"
+         :isMultiple="true"
+         :allowAnonymous="true"
+         :fileType="2"
+         :fileList.sync="fileList"
+         :fileListArr="fileListArr"
+         :isShowFileList="false"
+       ></yo-file>
+       <el-button @click="cleanFileList">清除filelist</el-button>
     <yo-grid
       ref="yoGrid"
       :gridData="gridData"
@@ -85,7 +85,7 @@
         fileList: [],
         fileListArr: [],
         formData: {
-          Files: '',
+          Files: 'k207ta59359000a441fd47n',
           Files2: '',
           Files3: ''
         },
