@@ -255,8 +255,6 @@
         SubjectTypeIdsBusinessTypeIds: [] // 业务类型
       };
     },
-    beforeCreate() {
-    },
     created: function () {
       this.oldParams = JSON.parse(JSON.stringify(this.realData.params))
     },
@@ -267,7 +265,9 @@
       if (this.realData.IsNeedSubjectType) {
         this.getSubjectTypeIds()
       }
-      this.seesionParams()
+      if (!this.IsNotNeedSaveParams) {
+        this.seesionParams()
+      }
       this.urlParams()
       if (this.realData.params.hasOwnProperty("YoGridCollapse")) {
         this.defaultShowHidden = this.realData.params.YoGridCollapse;
@@ -276,7 +276,6 @@
       }
       this.allowSearch("isPage");
     },
-    computed: {},
     props: {
       labelSuffix: {
         type: String,
@@ -512,6 +511,10 @@
               }
               this.searchLoading = false;
               this.reLoading = false;
+              that.PageIndex = that.realData.params.PageIndex;
+              that.PageSize = that.realData.params.PageSize;
+              that.TotalCount = res.TotalCount;
+              that.requireData = res;
               if (!that.IsNotNeedSaveParams) {
                 let key = that.$route.name;
                 // console.log(key)
@@ -531,18 +534,9 @@
                     paramsList.push(obj);
                   }
                 }
-              }
-              that.PageIndex = that.realData.params.PageIndex;
-              that.PageSize = that.realData.params.PageSize;
-              that.TotalCount = res.TotalCount;
-              that.requireData = res;
-              // sessionStorage.setItem('paramsList',JSON.stringify(paramsList))
-              if (!that.IsNotNeedSaveParams) {
                 that.$store.commit("UPDATE_PARAMSlIST", paramsList);
               }
-              // resolve(res);
               that.$emit("update:requireData", res);
-              // this.loading = false;
             })
             .catch(() => {
               this.searchLoading = false;
@@ -597,7 +591,7 @@
   };
 </script>
 <style>
-  .quick-input.el-input{
+  .quick-input.el-input {
     position: relative;
   }
 
