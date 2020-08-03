@@ -1,17 +1,18 @@
 <template>
   <div id="examples">
+    <yo-img :ids.sync="formData.Files" :apiUrl="apiUrl" class="imgWidth"></yo-img>
        <yo-file
          :uploadType="3"
          :ids.sync="formData.Files"
          :apiUrl="apiUrl"
          :isShowTip="false"
-         :fileLimit="10"
+         :fileLimit="1"
          :isMultiple="true"
          :allowAnonymous="true"
-         :fileType="2"
+         :fileType="1"
          :fileList.sync="fileList"
          :fileListArr="fileListArr"
-         :isShowFileList="false"
+         :isShowFileList="true"
        ></yo-file>
        <el-button @click="cleanFileList">清除filelist</el-button>
     <yo-grid

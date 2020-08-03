@@ -284,9 +284,9 @@
           "image/jpeg",
           "image/gif",
           "image/tiff",
-          "image/x-icon",
-          "application/x-bmp",
-          "application/octet-stream"
+          "image/x-icon"
+          // "application/x-bmp",
+          // "application/octet-stream"
         ];
         if (ctypeArr.indexOf(filetype) >= 0) {
           return true;
