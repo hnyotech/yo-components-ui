@@ -5,6 +5,9 @@
     :border="border"
     :show-summary="showSummary"
     :summary-method="summaryMethod"
+    :row-key="rowKey"
+    default-expand-all
+    :tree-props="treeProps"
     @selection-change="handleSelectionChange"
     class="yo-table"
     :class="border ? 'yo-border-table' : ''"
@@ -92,6 +95,18 @@ export default {
       required: false,
       default: () => {
         return [];
+      }
+    },
+    rowKey: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    treeProps: {
+      type: Object,
+      required: false,
+      default: () => {
+        return {};
       }
     },
     IsNeedSelect: {

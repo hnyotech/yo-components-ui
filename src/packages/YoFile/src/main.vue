@@ -67,16 +67,16 @@
         <div
           slot="trigger"
           v-if="fileLimit>0&&showFileList.length>=fileLimit&&!readOnly"
-          class="el-button el-button--primary el-button--small is-disabled u-btn-s"
+          class="el-button el-button--primary el-button--small is-disabled u-btn-s btn-height"
         >{{uploadBtnName}}</div>
         <div
           v-if="fileLimit>0&&showFileList.length>=fileLimit&&!readOnly"
-          class="el-button el-button--primary el-button--small is-disabled"
+          class="el-button el-button--primary el-button--small is-disabled btn-height"
         >{{uploadBtnName}}</div>
         <div
           slot="trigger"
           v-if="fileLimit>0&&showFileList.length<fileLimit&&!readOnly"
-          class="el-button el-button--primary el-button--small"
+          class="el-button el-button--primary el-button--small btn-height"
         >{{uploadBtnName}}</div>
       </template>
       <!-- <div v-if="IsShowTip" slot="tip" class="el-upload__tip">{{Tip}}</div> -->
@@ -1017,6 +1017,9 @@ export default {
 };
 </script>
 <style>
+.btn-height {
+  height: 32px;
+}
 .avatar-uploader .el-upload {
   border-radius: 6px;
   cursor: pointer;
