@@ -35,7 +35,7 @@
     >
       <!-- :min-width="item.label.length*30" -->
       <template slot-scope="scope">
-        <div v-if="item.type === 'multKey'">
+        <div v-if="item.type === 'multKey'" class="otw">
           <span v-for="(subitem,index) in item.keys" :key="index">
             {{scope.row[subitem]}}
             <span
@@ -43,7 +43,7 @@
             >{{item.separateSymbol}}</span>
           </span>
         </div>
-        <div v-if="item.type === 'date'">
+        <div v-if="item.type === 'date'" class="otw">
           <span v-for="(subitem,index) in item.keys" :key="index">
             {{datefmt(scope.row[subitem], item.format)}}
             <span
@@ -53,6 +53,7 @@
         </div>
         <div
           v-if="item.type === 'normal' || item.type === undefined"
+          class="otw"
         >{{scope.row[item.key]}}</div>
       </template>
     </el-table-column>
