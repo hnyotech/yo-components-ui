@@ -173,7 +173,6 @@ export default {
       searchLoading: false,
       loading: false,
       realData: this.gridData,
-      ViewStateIndex: 0,
       AnncClientViewState: [
         {Value: 70, Description: '已审核'},
         {Value: 80, Description: '未审核'}
@@ -275,7 +274,6 @@ export default {
     },
     // 选择视图状态时
     choseViewState(value) {
-      // this.ViewStateIndex = index
       this.realData.params.PageIndex = 1
       this.realData.params[this.realData.ViewStateKey] = value
       this.searchData()
@@ -298,7 +296,6 @@ export default {
       if (this.isReserveParam.is) {
         this.isReserveParam.Params.forEach((element) => {
           this.realData.params[element.Name] = element.Value
-          // this.ViewStateIndex = 0
         })
       }
       this.getList()
@@ -318,19 +315,6 @@ export default {
     getList() {
       let that = this
       let paramsList = that.$store.getters.paramsList
-      if (paramsList) {
-        for (let index = 0; index < paramsList.length; index++) {
-          if (paramsList[index].hasOwnProperty(this.$route.name)) {
-            if (
-              paramsList[index][this.$route.name].hasOwnProperty('ViewStateIndex')
-            ) {
-              console.log(paramsList[index][this.$route.name].ViewStateIndex)
-              this.ViewStateIndex =
-                paramsList[index][this.$route.name].ViewStateIndex
-            }
-          }
-        }
-      }
       that.loading = true
       let tempRes = {
         PageIndex: 1,
@@ -356,9 +340,6 @@ export default {
               // console.log(key)
               let obj = {}
               obj[key] = that.realData.params
-              if (that.realData.ViewStateKey) {
-                obj[key]['ViewStateIndex'] = that.ViewStateIndex
-              }
               if (paramsList.length === 0) {
                 paramsList.push(obj)
               } else {
