@@ -348,6 +348,9 @@ export default {
               // console.log(key)
               let obj = {};
               obj[key] = that.realData.params;
+              if(that.realData.ViewStateKey) {
+                obj[key]['ViewStateIndex'] = that.ViewStateIndex
+              }
               if (paramsList.length === 0) {
                 paramsList.push(obj);
               } else {
@@ -362,6 +365,7 @@ export default {
                   paramsList.push(obj);
                 }
               }
+              
               that.$store.commit("UPDATE_PARAMSlIST", paramsList);
             }
             that.$emit("update:requireData", tempRes);
