@@ -261,6 +261,8 @@ export default {
           this.realData.params[key] = 1
         } else if (key === 'PageSize') {
           this.realData.params[key] = 10
+        } else if (this.realData.ViewStateKey === key){
+          
         } else {
           this.realData.params[key] = ''
         }
