@@ -30,7 +30,15 @@
             </el-col>
             <el-col :span="6" v-for="(item, index) in realData.formLabel" :key="index">
               <el-form-item>
-                <yo-enum v-if="item.type==='enum'" :EnumName="item.enumName" size='small' :isNeedForm="false" :selValue.sync="realData.params[item.value]" :label="item.name" prop="none"></yo-enum>
+                <yo-enum
+                  v-if="item.type==='enum'"
+                  :EnumName="item.enumName"
+                  size="small"
+                  :isNeedForm="false"
+                  :selValue.sync="realData.params[item.value]"
+                  :label="item.name"
+                  prop="none"
+                ></yo-enum>
                 <el-input
                   class="user-input"
                   v-if="item.type == 'input'"
@@ -130,34 +138,39 @@
 </template>
 <script>
 export default {
-  name: 'YoGridClient',
+  name: "YoGridClient",
   props: {
     showPagination: {
       type: Boolean,
       default: true,
-      required: false
+      required: false,
     }, // 是否显示分页
     gridData: {
       type: Object,
       default: function () {
         return {
-          formLabel: []
-        }
+          formLabel: [],
+        };
       },
-      required: false
+      required: false,
+    },
+    IsNotNeedSaveParams: {
+      type: Boolean,
+      default: false,
+      required: false,
     },
     isReserveParam: {
       type: Object,
       default: function () {
         return {
           is: false,
-          Params: []
-        }
+          Params: [],
+        };
       },
-      required: false
-    }
+      required: false,
+    },
   },
-  data () {
+  data() {
     return {
       reLoading: false,
       searchLoading: false,
@@ -165,161 +178,204 @@ export default {
       realData: this.gridData,
       ViewStateIndex: 0,
       AnncClientViewState: [
-        { Value: 70, Description: '已审核' },
-        { Value: 80, Description: '未审核' }
+        { Value: 70, Description: "已审核" },
+        { Value: 80, Description: "未审核" },
       ], // 视图状态
       Expend: false,
       showFold: false,
-      title: '签约管理',
+      title: "签约管理",
       States: [], // 状态枚举
       searchForm: {
-        AnncCode: '',
-        AnncName: '',
-        BiddingName: '',
-        BiddingCode: '',
+        AnncCode: "",
+        AnncName: "",
+        BiddingName: "",
+        BiddingCode: "",
         State: null,
         IsBuyer: false,
         IsSaler: false,
         PageIndex: 1,
-        PageSize: 10
+        PageSize: 10,
       },
       requireData: {
         PageIndex: 1,
         PageSize: 10,
-        TotalCount: 0
+        TotalCount: 0,
       },
       BusinessTypeIds: [], // 标的类型
-      RefoldList: []
-    }
+      RefoldList: [],
+    };
   },
-  created () {
+  created() {
     if (
       this.realData.formLabel.length > 3 &&
       this.realData.IsNeedBusiness === true
     ) {
-      this.showFold = true
+      this.showFold = true;
       this.RefoldList = this.realData.formLabel.splice(
         3,
         this.realData.formLabel.length - 3
-      )
+      );
     } else if (
       this.realData.formLabel.length > 4 &&
       this.realData.IsNeedBusiness !== true
     ) {
-      this.showFold = true
+      this.showFold = true;
       this.RefoldList = this.realData.formLabel.splice(
         4,
         this.realData.formLabel.length - 4
-      )
+      );
     } else {
-      this.showFold = false
+      this.showFold = false;
     }
     if (this.realData.IsNeedBusiness) {
-      this.getBusinessPT()
+      this.getBusinessPT();
     }
-    this.getList()
+    this.getList();
+  },
+  mounted() {
+    if (!this.IsNotNeedSaveParams) {
+      this.seesionParams();
+    }
   },
   methods: {
-    getBusinessPT () {
-      let that = this
+    seesionParams() {
+      let paramsList = this.$store.getters.paramsList;
+      for (let i = 0; i < paramsList.length; i++) {
+        if (paramsList[i][this.$route.name]) {
+          for (let a in this.realData.params) {
+            if (paramsList[i][this.$route.name][a]) {
+              this.$set(
+                this.realData.params,
+                a,
+                paramsList[i][this.$route.name][a]
+              );
+            }
+          }
+        }
+      }
+    },
+    getBusinessPT() {
+      let that = this;
       that.$http
         .post(
-          '/api/TradingOrgApi/QueryBusinessTypeList?tradingOrgId=' + this.OrgId
+          "/api/TradingOrgApi/QueryBusinessTypeList?tradingOrgId=" + this.OrgId
         )
-        .then(res => {
-          that.BusinessTypeIds = res
-        })
+        .then((res) => {
+          that.BusinessTypeIds = res;
+        });
     },
-    foldbtn () {
-      this.Expend = !this.Expend
+    foldbtn() {
+      this.Expend = !this.Expend;
       if (this.Expend) {
         this.realData.formLabel = this.realData.formLabel.concat(
           this.RefoldList
-        )
+        );
       } else {
         if (this.realData.IsNeedBusiness === true) {
-          this.realData.formLabel.splice(3, this.realData.formLabel.length - 3)
+          this.realData.formLabel.splice(3, this.realData.formLabel.length - 3);
         } else {
-          this.realData.formLabel.splice(4, this.realData.formLabel.length - 4)
+          this.realData.formLabel.splice(4, this.realData.formLabel.length - 4);
         }
       }
     },
     // 选择视图状态时
-    choseViewState (index, value) {
-      this.ViewStateIndex = index
-      this.realData.params.PageIndex = 1
-      this.realData.params[this.realData.ViewStateKey] = value
-      this.searchData()
+    choseViewState(index, value) {
+      this.ViewStateIndex = index;
+      this.realData.params.PageIndex = 1;
+      this.realData.params[this.realData.ViewStateKey] = value;
+      this.searchData();
     },
-    searchData () {
-      this.getList()
+    searchData() {
+      this.getList();
     },
-    resetData () {
-      this.reLoading = true
+    resetData() {
+      this.reLoading = true;
       for (var key in this.realData.params) {
-        if (key === 'PageIndex') {
-          this.realData.params[key] = 1
-        } else if (key === 'PageSize') {
-          this.realData.params[key] = 10
-        } else if (this.realData.ViewStateKey === key){
-          
+        if (key === "PageIndex") {
+          this.realData.params[key] = 1;
+        } else if (key === "PageSize") {
+          this.realData.params[key] = 10;
+        } else if (this.realData.ViewStateKey === key) {
         } else {
-          this.realData.params[key] = ''
+          this.realData.params[key] = "";
         }
       }
       if (this.isReserveParam.is) {
-        this.isReserveParam.Params.forEach(element => {
-          this.realData.params[element.Name] = element.Value
+        this.isReserveParam.Params.forEach((element) => {
+          this.realData.params[element.Name] = element.Value;
           // this.ViewStateIndex = 0
-        })
+        });
       }
-      this.getList()
+      this.getList();
     },
-    clearData (data) {
-      this.realData.params.data = null
+    clearData(data) {
+      this.realData.params.data = null;
     },
-    handleSizeChange (val) {
-      this.realData.params.PageSize = val
-      this.getList()
+    handleSizeChange(val) {
+      this.realData.params.PageSize = val;
+      this.getList();
     },
-    handleCurrentChange (val) {
-      this.realData.params.PageIndex = val
-      this.getList()
+    handleCurrentChange(val) {
+      this.realData.params.PageIndex = val;
+      this.getList();
     },
-    // 获取合同列表数据
-    getList () {
-      var that = this
-      that.loading = true
+    // 获取列表数据
+    getList() {
+      var that = this;
+      let paramsList = that.$store.getters.paramsList;
+      that.loading = true;
       let tempRes = {
         PageIndex: 1,
         PageSize: 10,
         TotalCount: 0,
         ExtData: null,
-        Items: []
-      }
+        Items: [],
+      };
       if (that.realData.api) {
         that.$http
           .post(that.realData.api, that.realData.params)
-          .then(res => {
-            that.loading = false
-            that.reLoading = false
-            that.searchLoading = false
+          .then((res) => {
+            that.loading = false;
+            that.reLoading = false;
+            that.searchLoading = false;
             if (res) {
-              tempRes = res
+              tempRes = res;
             }
-            that.requireData = tempRes
-            that.$emit('update:requireData', tempRes)
+            that.requireData = tempRes;
+
+            if (!that.IsNotNeedSaveParams) {
+              let key = that.$route.name;
+              // console.log(key)
+              let obj = {};
+              obj[key] = that.realData.params;
+              if (paramsList.length === 0) {
+                paramsList.push(obj);
+              } else {
+                let flag = false;
+                for (let val in paramsList) {
+                  if (paramsList[val].hasOwnProperty(key)) {
+                    paramsList[val][key] = that.gridData.params;
+                    flag = true;
+                  }
+                }
+                if (!flag) {
+                  paramsList.push(obj);
+                }
+              }
+              that.$store.commit("UPDATE_PARAMSlIST", paramsList);
+            }
+            that.$emit("update:requireData", tempRes);
           })
           .catch(() => {
-            that.loading = false
-            that.reLoading = false
-            that.searchLoading = false
-            that.$emit('update:requireData', tempRes)
-          })
+            that.loading = false;
+            that.reLoading = false;
+            that.searchLoading = false;
+            that.$emit("update:requireData", tempRes);
+          });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style scoped>
 .search-form-box {
