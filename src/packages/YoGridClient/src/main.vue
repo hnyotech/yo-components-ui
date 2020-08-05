@@ -268,7 +268,7 @@ export default {
       if (this.isReserveParam.is) {
         this.isReserveParam.Params.forEach(element => {
           this.realData.params[element.Name] = element.Value
-          this.ViewStateIndex = 0
+          // this.ViewStateIndex = 0
         })
       }
       this.getList()
