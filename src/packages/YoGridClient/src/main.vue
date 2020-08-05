@@ -323,6 +323,18 @@ export default {
     getList() {
       var that = this;
       let paramsList = that.$store.getters.paramsList;
+      if (paramsList) {
+        for (let index = 0; index < paramsList.length; index++) {
+          if (paramsList[i].hasOwnProperty(this.$route.name)) {
+            if (
+              paramsList[i][this.$route.name].hasOwnProperty("ViewStateIndex")
+            ) {
+              this.ViewStateIndex =
+                paramsList[i][this.$route.name].ViewStateIndex;
+            }
+          }
+        }
+      }
       that.loading = true;
       let tempRes = {
         PageIndex: 1,
@@ -348,8 +360,8 @@ export default {
               // console.log(key)
               let obj = {};
               obj[key] = that.realData.params;
-              if(that.realData.ViewStateKey) {
-                obj[key]['ViewStateIndex'] = that.ViewStateIndex
+              if (that.realData.ViewStateKey) {
+                obj[key]["ViewStateIndex"] = that.ViewStateIndex;
               }
               if (paramsList.length === 0) {
                 paramsList.push(obj);
@@ -365,7 +377,7 @@ export default {
                   paramsList.push(obj);
                 }
               }
-              
+
               that.$store.commit("UPDATE_PARAMSlIST", paramsList);
             }
             that.$emit("update:requireData", tempRes);
