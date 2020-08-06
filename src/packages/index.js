@@ -13,8 +13,6 @@ import MyEntityLookup from '../packages/lookup/src/lookup';
 import MyEntitySelectDialog from '../packages/lookup/src/lookup-dialog';
 import MyMultiEntitySelectDialog from '../packages/lookup/src/lookup-multi-dialog';
 import YoFile from '../packages/YoFile/src/main';
-// import MyEnum from '@/components/common/MyEnum';
-// import AsiasEditor from '../packages/asiaseditor/src/main';
 import AsiasDetailCol from '../packages/asiasdetailcol/src/main';
 import YoImg from '../packages/YoImg/src/main';
 import AsiasApproveRecord from '../packages/asiasapproverecord/src/main';
@@ -52,9 +50,7 @@ const components = [
   MyEntityLookup,
   MyEntitySelectDialog,
   MyMultiEntitySelectDialog,
-  // MyEnum,np
   YoFile,
-  // AsiasEditor,
   AsiasDetailCol,
   YoImg,
   AsiasApproveRecord,
@@ -102,9 +98,7 @@ const yoComponents ={
   MyEntityLookup,
   MyEntitySelectDialog,
   MyMultiEntitySelectDialog,
-  // MyEnum,np
   YoFile,
-  // AsiasEditor,
   AsiasDetailCol,
   YoImg,
   AsiasApproveRecord,

@@ -88,12 +88,12 @@
       },
       getCodeInit() {
         const oauthServer = this.sso
-        const codeVerifier = this.$store.getters.oauth2_code_verifier
+        let codeVerifier = this.$store.getters.oauth2_code_verifier
         window.localStorage.setItem('temp_ie', new Date().getTime())
         if (window.ActiveXObject || 'ActiveXObject' in window) {
           codeVerifier = window.localStorage.getItem('UPDATE_OAUTH2_CODE_VERIFIER')
         }
-        const originState = this.$store.getters.oauth2_state
+        let originState = this.$store.getters.oauth2_state
         if (window.ActiveXObject || 'ActiveXObject' in window) {
           originState = window.localStorage.getItem('UPDATE_OAUTH2_STATE')
         }
