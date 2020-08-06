@@ -45,6 +45,11 @@
 
     },
     mounted: function () {
+      this.api = process.env.API
+      this.sso = process.env.sso
+      this.clientId = process.env.sso_cleint_id
+      this.loginCallBack = process.env.sso_logincallback
+      alert(this.api, this.sso, this.clientId, this.loginCallBack)
       let url = this.$route
       if (url.path === '/login' || url.name === 'login' || url.name === 'login2') {
         this.loginInit()
