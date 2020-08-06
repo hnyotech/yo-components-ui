@@ -49,7 +49,7 @@
       this.sso = process.env.sso
       this.clientId = process.env.sso_cleint_id
       this.loginCallBack = process.env.sso_logincallback
-      alert(this.api, this.sso, this.clientId, this.loginCallBack)
+      alert(process.env.API + '---' + process.env.sso + '---' + process.env.sso_cleint_id + '---' + process.env.sso_logincallback)
       let url = this.$route
       if (url.path === '/login' || url.name === 'login' || url.name === 'login2') {
         this.loginInit()
