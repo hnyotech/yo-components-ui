@@ -16,16 +16,22 @@
         Host: '',
         Redirect: '',
 
-        api: process.env.API,
-        sso: process.env.sso,
-        clientId: process.env.sso_cleint_id,
-        loginCallBack: process.env.sso_logincallback
+        api: this.env.API,
+        sso: this.env.sso,
+        clientId: this.env.sso_cleint_id,
+        loginCallBack: this.env.sso_logincallback
       }
     },
     props: {
       type: {
         type: String,
         default: 'client'
+      },
+      env: {
+        type: Object,
+        default: () => {
+          return {}
+        }
       }
     },
     watch: {
@@ -45,11 +51,10 @@
 
     },
     mounted: function () {
-      this.api = process.env.API
-      this.sso = process.env.sso
-      this.clientId = process.env.sso_cleint_id
-      this.loginCallBack = process.env.sso_logincallback
-      alert(process.env.API + '---' + process.env.sso + '---' + process.env.sso_cleint_id + '---' + process.env.sso_logincallback)
+      this.api = this.env.API
+      this.sso = this.env.sso
+      this.clientId = this.env.sso_cleint_id
+      this.loginCallBack = this.env.sso_logincallback
       let url = this.$route
       if (url.path === '/login' || url.name === 'login' || url.name === 'login2') {
         this.loginInit()
