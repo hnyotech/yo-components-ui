@@ -161,25 +161,41 @@
               this.$auth.logout()// 这里补一个退出登录，不能单纯用下面的清掉登录信息 因为sso那边记录这登录状态 2020-03-06
               throw new Error('登录失败.')
             }
-            const user = {
-              loginName: res.LoginName,
-              userId: res.UserId,
-              userName: res.UserName,
-              Logo: res.Logo,
-              SystemName: res.SystemName,
-              nickName: res.NickName,
-              departName: res.DeptName,
-              departId: res.DepartmentId,
-              TradingOrgId: res.TradingOrgId
-            }
-            // 缓存用户信息
-            this.$store.commit('UPDATE_USER', user)
-            if (res.DefaultPageHost && res.DefaultPageUrl) {
-              window.location.href = res.DefaultPageHost + '#' + res.DefaultPageUrl
-            } else {
-              this.$router.push({
-                path: this.Redirect || '/home'
-              })
+            if (this.type === 'admin') {
+              const user = {
+                loginName: res.LoginName,
+                userId: res.UserId,
+                userName: res.UserName,
+                Logo: res.Logo,
+                SystemName: res.SystemName,
+                nickName: res.NickName,
+                departName: res.DeptName,
+                departId: res.DepartmentId,
+                TradingOrgId: res.TradingOrgId
+              }
+              // 缓存用户信息
+              this.$store.commit('UPDATE_USER', user)
+              if (res.DefaultPageHost && res.DefaultPageUrl) {
+                window.location.href = res.DefaultPageHost + '#' + res.DefaultPageUrl
+              } else {
+                this.$router.push({
+                  path: this.Redirect || '/'
+                })
+              }
+            } else if (this.type === 'client') {
+              let user = res
+              this.$store.commit('UPDATE_USER', user)
+              if (res.MemberType) {
+                if (res.State <= 30) {
+                  this.$router.push({name: 'userUnAuth'})
+                } else {
+                  this.$router.push({name: 'userDetail'})
+                }
+              } else {
+                that.$router.push({
+                  path: this.Redirect || '/'
+                })
+              }
             }
           })
         })
