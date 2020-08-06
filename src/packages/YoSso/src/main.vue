@@ -29,23 +29,28 @@
       }
     },
     watch: {
-      $route: {
-        handler: function (val) {
-          if (val.path === '/login' && val.name === 'login') {
-            this.loginInit()
-          } else if (val.path === '/GetCode' && val.name === 'getcode') {
-            this.getCodeInit()
-          }
-        },
-        deep: true,
-        immediate: true
-      }
+      // $route: {
+      //   handler: function (val) {
+      //     if (val.path === '/login' && val.name === 'login') {
+      //       this.loginInit()
+      //     } else if (val.path === '/GetCode' && val.name === 'getcode') {
+      //       this.getCodeInit()
+      //     }
+      //   },
+      //   deep: true,
+      //   immediate: true
+      // }
     },
     created() {
 
     },
     mounted: function () {
-
+      let url = this.$route
+      if (url.path === '/login' || url.name === 'login' || url.name === 'login2') {
+        this.loginInit()
+      } else if (url.path === '/GetCode' || url.name === 'getcode') {
+        this.getCodeInit()
+      }
     },
     methods: {
       loginInit() {
