@@ -34,27 +34,15 @@
         }
       }
     },
-    watch: {
-      // $route: {
-      //   handler: function (val) {
-      //     if (val.path === '/login' && val.name === 'login') {
-      //       this.loginInit()
-      //     } else if (val.path === '/GetCode' && val.name === 'getcode') {
-      //       this.getCodeInit()
-      //     }
-      //   },
-      //   deep: true,
-      //   immediate: true
-      // }
-    },
+    watch: {},
     created() {
-
     },
     mounted: function () {
       this.api = this.env.API
       this.sso = this.env.sso
       this.clientId = this.env.sso_cleint_id
       this.loginCallBack = this.env.sso_logincallback
+      debugger
       let url = this.$route
       if (url.path === '/login' || url.name === 'login' || url.name === 'login2') {
         this.loginInit()
