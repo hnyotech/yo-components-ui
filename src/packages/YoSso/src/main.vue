@@ -42,7 +42,6 @@
       this.sso = this.env.sso
       this.clientId = this.env.sso_cleint_id
       this.loginCallBack = this.env.sso_logincallback
-      debugger
       let url = this.$route
       if (url.path === '/login' || url.name === 'login' || url.name === 'login2') {
         this.loginInit()
