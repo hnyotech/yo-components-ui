@@ -80,8 +80,8 @@
         codeChallenge = hash.array()
         codeChallenge = base64url(codeChallenge)
 
-        window.localStorage.setItem('UPDATE_OAUTH2_CODE_VERIFIER', codeVerifier)
-        window.localStorage.setItem('UPDATE_OAUTH2_STATE', state)
+        window.localStorage.setItem(this.type + 'UPDATE_OAUTH2_CODE_VERIFIER', codeVerifier)
+        window.localStorage.setItem(this.type + 'UPDATE_OAUTH2_STATE', state)
 
         this.$store.commit('UPDATE_OAUTH2_CODE_VERIFIER', codeVerifier)
         this.$store.commit('UPDATE_OAUTH2_STATE', state)
@@ -93,11 +93,11 @@
         let codeVerifier = this.$store.getters.oauth2_code_verifier
         window.localStorage.setItem('temp_ie', new Date().getTime())
         if (window.ActiveXObject || 'ActiveXObject' in window) {
-          codeVerifier = window.localStorage.getItem('UPDATE_OAUTH2_CODE_VERIFIER')
+          codeVerifier = window.localStorage.getItem(this.type + 'UPDATE_OAUTH2_CODE_VERIFIER')
         }
         let originState = this.$store.getters.oauth2_state
         if (window.ActiveXObject || 'ActiveXObject' in window) {
-          originState = window.localStorage.getItem('UPDATE_OAUTH2_STATE')
+          originState = window.localStorage.getItem(this.type + 'UPDATE_OAUTH2_STATE')
         }
         const {code, state, error} = this.$route.query
         const arr = [oauthServer, codeVerifier, originState, code, state]
@@ -140,8 +140,8 @@
             getUserInfoUrl = '/api/UserApi/GetUserInfo?webBusinessType=' + this.WebBusinessType
           }
           this.$http.post(getUserInfoUrl).then(res => {
-            window.localStorage.removeItem('UPDATE_OAUTH2_CODE_VERIFIER')
-            window.localStorage.removeItem('UPDATE_OAUTH2_STATE')
+            window.localStorage.removeItem(this.type + 'UPDATE_OAUTH2_CODE_VERIFIER')
+            window.localStorage.removeItem(this.type + 'UPDATE_OAUTH2_STATE')
             window.localStorage.removeItem('temp_ie')
             if (window.astec.isNullOrWhiteSpace(res) || window.astec.isNullOrWhiteSpace(res.UserId)) {
               this.$store.commit('UPDATE_AUTH', {})
