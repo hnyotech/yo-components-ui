@@ -179,7 +179,7 @@
                   this.$router.push({name: 'userDetail'})
                 }
               } else {
-                that.$router.push({
+                this.$router.push({
                   path: this.Redirect || '/'
                 })
               }
