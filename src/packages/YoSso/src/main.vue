@@ -134,7 +134,7 @@
       getCode(callbackurl, postContent) {
         this.$http.post(callbackurl, postContent).then(res => {
           this.$auth._storeSSOToken(res)
-          localStorage.setItem('id_token', res.data.id_token)
+          localStorage.setItem('id_token_' + this.type, res.data.id_token)
           let getUserInfoUrl = '/api/User/GetUserInfo'
           if (this.type === 'client') {
             getUserInfoUrl = '/api/UserApi/GetUserInfo?webBusinessType=' + this.WebBusinessType
