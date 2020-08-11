@@ -51,6 +51,7 @@
     },
     methods: {
       loginInit() {
+        debugger
         this.Host = window.location.host
         this.Redirect = this.$route.query.redirect
         let redirectToHome = false
@@ -89,6 +90,7 @@
         window.location.href = `${this.sso}/adfs/oauth2/authorize?response_type=code&client_id=${this.clientId}&code_challenge=${codeChallenge}&code_challenge_method=S256&scope=openid%20offline_access&redirect_uri=${encodeURIComponent(window.location.href.split('#')[0] + this.loginCallBack)}&state=${encodeURIComponent(state)}`
       },
       getCodeInit() {
+        debugger
         const oauthServer = this.sso
         let codeVerifier = this.$store.getters.oauth2_code_verifier
         window.localStorage.setItem('temp_ie', new Date().getTime())
