@@ -164,6 +164,9 @@
               }
               // 缓存用户信息
               this.$store.commit('UPDATE_USER', user)
+              alert(res.DefaultPageHost)
+              alert(res.DefaultPageUrl)
+              alert(this.Redirect)
               if (res.DefaultPageHost && res.DefaultPageUrl) {
                 window.location.href = res.DefaultPageHost + '#' + res.DefaultPageUrl
               } else {
