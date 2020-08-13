@@ -13,13 +13,7 @@
     :class="border ? 'yo-border-table' : ''"
     style="width: 100%;"
   >
-    <el-table-column
-      type="selection"
-      key="selection"
-      align="center"
-      v-if="IsNeedSelect"
-      width="50">
-    </el-table-column>
+    <el-table-column type="selection" key="selection" align="center" v-if="IsNeedSelect" width="50"></el-table-column>
     <el-table-column
       type="index"
       width="50"
@@ -54,6 +48,7 @@
             >{{item.separateSymbol}}</span>
           </span>
         </div>
+        <div v-if="item.type === 'money'" class="otw">{{numberTurn(scope.row[item.key])}}</div>
         <div
           v-if="item.type === 'normal' || item.type === undefined"
           class="otw"
@@ -70,59 +65,59 @@ export default {
     tableData: {
       type: Object,
       required: true,
-      default: function() {
+      default: function () {
         return {
-          PageIndex:1,
-          PageSize:10,
-          Items: []
+          PageIndex: 1,
+          PageSize: 10,
+          Items: [],
         };
-      }
+      },
     },
     displayData: {
       type: Array,
       required: true,
-      default: function() {
+      default: function () {
         return [];
-      }
+      },
     },
     showSummary: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     summaryMethod: {
       type: Function,
       required: false,
       default: () => {
         return [];
-      }
+      },
     },
     rowKey: {
       type: String,
       required: false,
-      default: ''
+      default: "",
     },
     treeProps: {
       type: Object,
       required: false,
       default: () => {
         return {};
-      }
+      },
     },
     IsNeedSelect: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     border: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      isLoading2: false
+      isLoading2: false,
       // requireData: {
       //   Item: []
       // },
@@ -203,10 +198,44 @@ export default {
     };
   },
   methods: {
-    handleSelectionChange (val) {
-      this.$emit('selectChange', val)
-    }
-  }
+    handleSelectionChange(val) {
+      this.$emit("selectChange", val);
+    },
+
+    numberTurn(num) {
+      var result = [];
+      var counter = 0;
+      var arr;
+      var arr2;
+      if (
+        num !== "undefined" &&
+        num !== null &&
+        num !== "" &&
+        num !== undefined
+      ) {
+        if (num.toString().indexOf(".")) {
+          arr = num.toString().split(".");
+          arr2 = arr[1];
+        }
+        var arr1 = (arr[0] || 0).toString().split("");
+        for (var i = arr1.length - 1; i >= 0; i--) {
+          counter++;
+          result.unshift(arr1[i]);
+          if (!(counter % 3) && i !== 0) {
+            result.unshift(",");
+          }
+        }
+        if (arr2) {
+          return result.join("") + "." + arr2;
+        } else {
+          return result.join("");
+        }
+      }
+      if (num === 0) {
+        return 0;
+      }
+    },
+  },
 };
 </script>
 <style scoped>
