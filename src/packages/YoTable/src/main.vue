@@ -29,6 +29,7 @@
       :label="item.label"
       :min-width="item.width"
       :show-overflow-tooltip="item.tooltip"
+      :formatter="formatter"
     >
       <!-- :min-width="item.label.length*30" -->
       <template slot-scope="scope">
@@ -91,6 +92,11 @@ export default {
       default: () => {
         return [];
       },
+    },
+    formatter: {
+      type: Function,
+      required: false,
+      default: () => {}
     },
     rowKey: {
       type: String,
