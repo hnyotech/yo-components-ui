@@ -106,7 +106,7 @@
             <i class="el-icon-close-tip">按 delete 键可删除</i>
           </yo-col>
           <yo-col :span="12">
-            <el-input :id="item.id" size="mini" v-model.trim="item.name"></el-input>
+            <el-input :id="item.id" size="mini" v-model.trim="item.name" @blur="ChangeName(item)"></el-input>
           </yo-col>
         </yo-row>
       </li>
@@ -444,6 +444,12 @@ export default {
     },
   },
   methods: {
+    ChangeName (row) {
+      let that = this
+      that.$http.post(that.apiUrl + '/api/Base/UpdateAttachDisplayname?id=' + row.id + '&filename=' + row.name).then(res => {}).catch((err) => {
+        astec.showErrorToast(err.Message)
+      })
+    },
     fileListContainId: function (id) {
       // 判断指定ID是否在fileList里面
       let that = this;
