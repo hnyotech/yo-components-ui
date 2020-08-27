@@ -446,7 +446,7 @@ export default {
   methods: {
     ChangeName (row) {
       let that = this
-      that.$http.post(that.apiUrl + '/api/Base/UpdateAttachDisplayname?id=' + row.id + '&filename=' + row.name).then(res => {}).catch((err) => {
+      that.$http.post(that.apiUrl + '/api/SysAttach/UpdateAttachDisplayname', [{attachid: row.id,displayname:row.name}]).then(res => {}).catch((err) => {
         astec.showErrorToast(err.Message)
       })
     },
