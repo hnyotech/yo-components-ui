@@ -51,7 +51,6 @@
     },
     methods: {
       loginInit() {
-        debugger
         this.Host = window.location.host
         this.Redirect = this.$route.query.redirect
         let redirectToHome = false
@@ -65,8 +64,12 @@
           redirectToHome = true
         }
         if (auth && auth.isLoggedIn && user && user.userId) {
-          if (redirectToHome) {
-            this.$router.push({path: '/'})
+          if(window.localStorage.getItem('DefaultPageHostDefaultPageUrl')){
+            window.location.href = window.localStorage.getItem('DefaultPageHostDefaultPageUrl')
+          }else {
+            if (redirectToHome) {
+              this.$router.push({path: '/'})
+            }
           }
         } else {
           this.authorize()
@@ -165,6 +168,7 @@
               // 缓存用户信息
               this.$store.commit('UPDATE_USER', user)
               if (res.DefaultPageHost && res.DefaultPageUrl) {
+                window.localStorage.setItem('DefaultPageHostDefaultPageUrl', res.DefaultPageHost + '#' + res.DefaultPageUrl)
                 window.location.href = res.DefaultPageHost + '#' + res.DefaultPageUrl
               } else {
                 this.$router.push({
