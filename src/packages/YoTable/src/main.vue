@@ -40,6 +40,12 @@
             >{{item.separateSymbol}}</span>
           </span>
         </div>
+        <div v-if="item.type === 'moneymultKey'" class="otw">
+          <span v-if="scope.row[item.keys[0]]">
+            {{numberTurn(scope.row[item.keys[0]])}}
+            {{item.keys[1].fix?item.keys[1].key:scope.row[item.keys[1].key]}}
+          </span>
+        </div>
         <div v-if="item.type === 'date'" class="otw">
           <span v-for="(subitem,index) in item.keys" :key="index">
             {{datefmt(scope.row[subitem], item.format)}}
@@ -60,7 +66,7 @@
 </template>
 <script>
 export default {
-  name: "YoTable",
+  name: 'YoTable',
   props: {
     tableData: {
       type: Object,
@@ -69,55 +75,55 @@ export default {
         return {
           PageIndex: 1,
           PageSize: 10,
-          Items: [],
-        };
-      },
+          Items: []
+        }
+      }
     },
     displayData: {
       type: Array,
       required: true,
       default: function () {
-        return [];
-      },
+        return []
+      }
     },
     showSummary: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     summaryMethod: {
       type: Function,
       required: false,
       default: () => {
-        return [];
-      },
+        return []
+      }
     },
     rowKey: {
       type: String,
       required: false,
-      default: "",
+      default: ''
     },
     treeProps: {
       type: Object,
       required: false,
       default: () => {
-        return {};
-      },
+        return {}
+      }
     },
     IsNeedSelect: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     border: {
       type: Boolean,
       required: false,
-      default: false,
-    },
+      default: false
+    }
   },
-  data() {
+  data () {
     return {
-      isLoading2: false,
+      isLoading2: false
       // requireData: {
       //   Item: []
       // },
@@ -195,48 +201,48 @@ export default {
       //     }
       //   ]
       // }
-    };
+    }
   },
   methods: {
-    handleSelectionChange(val) {
-      this.$emit("selectChange", val);
+    handleSelectionChange (val) {
+      this.$emit('selectChange', val)
     },
 
-    numberTurn(num) {
-      var result = [];
-      var counter = 0;
-      var arr;
-      var arr2;
+    numberTurn (num) {
+      var result = []
+      var counter = 0
+      var arr
+      var arr2
       if (
-        num !== "undefined" &&
+        num !== 'undefined' &&
         num !== null &&
-        num !== "" &&
+        num !== '' &&
         num !== undefined
       ) {
-        if (num.toString().indexOf(".")) {
-          arr = num.toString().split(".");
-          arr2 = arr[1];
+        if (num.toString().indexOf('.')) {
+          arr = num.toString().split('.')
+          arr2 = arr[1]
         }
-        var arr1 = (arr[0] || 0).toString().split("");
+        var arr1 = (arr[0] || 0).toString().split('')
         for (var i = arr1.length - 1; i >= 0; i--) {
-          counter++;
-          result.unshift(arr1[i]);
+          counter++
+          result.unshift(arr1[i])
           if (!(counter % 3) && i !== 0) {
-            result.unshift(",");
+            result.unshift(',')
           }
         }
         if (arr2) {
-          return result.join("") + "." + arr2;
+          return result.join('') + '.' + arr2
         } else {
-          return result.join("");
+          return result.join('')
         }
       }
       if (num === 0) {
-        return 0;
+        return 0
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 <style scoped>
 .otw {
