@@ -45,6 +45,7 @@
             {{numberTurn(scope.row[item.keys[0]])}}
             {{item.keys[1].fix?item.keys[1].key:scope.row[item.keys[1].key]}}
           </span>
+          <span v-else>--</span>
         </div>
         <div v-if="item.type === 'date'" class="otw">
           <span v-for="(subitem,index) in item.keys" :key="index">
