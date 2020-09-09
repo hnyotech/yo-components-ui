@@ -43,6 +43,7 @@
                  class="calendar"
                  @handlePrevMonth="handlePrevMonth"
                  @handleNextMonth="handleNextMonth"></yo-calendar>
+    <el-button @click="changetest">test</el-button>
   </div>
 </template>
 <script>
@@ -352,6 +353,9 @@
       // ]
     },
     methods: {
+      changetest() {
+        this.$set(this.calendarArr, 'biddArr', [])
+      },
       handleClickDay() {
       },
       handlePrevMonth(data) {

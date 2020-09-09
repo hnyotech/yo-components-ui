@@ -60,6 +60,16 @@
     props: {
       options: Object
     },
+    watch: {
+      options: {
+        handler(newval) {
+          this.options = newval
+          this.$set(this.headOptions, 'biddArr', newval.biddArr)
+        },
+        deep: true,
+        immediate: true
+      }
+    },
     components: {
       calendarHeader
     },
@@ -100,11 +110,6 @@
         let startTime = currentFirstDay - (weekDay - 1) * 24 * 60 * 60 * 1000;
 
         let monthDayNum = 42;
-        // if (weekDay == 5 || weekDay == 6){
-        //   monthDayNum = 42
-        // }else {
-        //   monthDayNum = 35
-        // };
 
         for (let i = 0; i < monthDayNum; i++) {
           let day = new Date(startTime + i * 24 * 60 * 60 * 1000).getDate();
@@ -117,7 +122,6 @@
             clickDay: false,
           })
         }
-        ;
 
         this.headOptions.date = `${utils.englishMonth(month)} ${year}`;
         return calendatArr
