@@ -6,7 +6,6 @@
       @handleNextMonth='handleNextMonth'
       @handleToday='handleToday'
     />
-    ..
     <ul class="calendar-week clear">
       <li v-for="(item, index) in calendarTitleArr" :key="index" class="week-item">{{item}}</li>
     </ul>
@@ -167,7 +166,7 @@
         prevMonth.setMonth(prevMonth.getMonth() - 1);
         this.time = utils.getNewDate(prevMonth);
         this.headOptions.date = `${utils.englishMonth(this.time.month)} ${this.time.year}`;
-        this.$emit('handlePrevMonth');
+        this.$emit('handlePrevMonth', {year: this.time.year, month: Number(this.time.month) + 1});
       },
       // 下一个月
       handleNextMonth() {
@@ -175,7 +174,7 @@
         nextMonth.setMonth(nextMonth.getMonth() + 1);
         this.time = utils.getNewDate(nextMonth);
         this.headOptions.date = `${utils.englishMonth(this.time.month)} ${this.time.year}`;
-        this.$emit('handleNextMonth');
+        this.$emit('handleNextMonth', {year: this.time.year, month: Number(this.time.month) + 1});
       },
       // 点击回到今天
       handleToday() {
@@ -201,7 +200,7 @@
 
 <style lang="less">
   .cc-calendar {
-    padding: 20px 20px;
+    padding: 0px 10px 0 10px;
     width: 100%;
     height: 100%;
     background: #ffffff;
@@ -271,6 +270,7 @@
           display: none;
           position: absolute;
           width: 200px;
+          height: inherit;
           top: -10px;
           z-index: 99;
           padding: 10px 10px;

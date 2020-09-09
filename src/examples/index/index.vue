@@ -354,10 +354,11 @@
     methods: {
       handleClickDay() {
       },
-      handlePrevMonth() {
+      handlePrevMonth(data) {
+        console.log(data)
       },
-      handleNextMonth() {
-
+      handleNextMonth(data) {
+        console.log(data)
       },
       cleanFileList() {
         this.fileListArr = []
