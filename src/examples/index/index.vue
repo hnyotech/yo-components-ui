@@ -1,33 +1,33 @@
 <template>
   <div id="examples">
-    <yo-img :ids.sync="formData.Files" :apiUrl="apiUrl" class="imgWidth"></yo-img>
-       <yo-file
-         :uploadType="3"
-         :ids.sync="formData.Files"
-         :apiUrl="apiUrl"
-         :isShowTip="false"
-         :fileLimit="1"
-         :isMultiple="true"
-         :allowAnonymous="true"
-         :fileType="1"
-         :fileList.sync="fileList"
-         :fileListArr="fileListArr"
-         :isShowFileList="true"
-       ></yo-file>
-       <el-button @click="cleanFileList">清除filelist</el-button>
-    <yo-grid
-      ref="yoGrid"
-      :gridData="gridData"
-      quicksearchPlaceholder="快速搜索项目名称"
-      :requireData.sync="requireData"
-      :showQuick="true"
-      :isShowQuick="true"
-      :showPagination="true"
-      labelWidth="120px"
-    >
-      <yo-table-new border :header-cell-style="headerCellStyle" :tableData.sync="requireData"
-                    :tableParams="gridData.table" :isHaveFixed="true"></yo-table-new>
-    </yo-grid>
+    <!--    <yo-img :ids.sync="formData.Files" :apiUrl="apiUrl" class="imgWidth"></yo-img>-->
+    <!--       <yo-file-->
+    <!--         :uploadType="3"-->
+    <!--         :ids.sync="formData.Files"-->
+    <!--         :apiUrl="apiUrl"-->
+    <!--         :isShowTip="false"-->
+    <!--         :fileLimit="1"-->
+    <!--         :isMultiple="true"-->
+    <!--         :allowAnonymous="true"-->
+    <!--         :fileType="1"-->
+    <!--         :fileList.sync="fileList"-->
+    <!--         :fileListArr="fileListArr"-->
+    <!--         :isShowFileList="true"-->
+    <!--       ></yo-file>-->
+    <!--       <el-button @click="cleanFileList">清除filelist</el-button>-->
+    <!--    <yo-grid-->
+    <!--      ref="yoGrid"-->
+    <!--      :gridData="gridData"-->
+    <!--      quicksearchPlaceholder="快速搜索项目名称"-->
+    <!--      :requireData.sync="requireData"-->
+    <!--      :showQuick="true"-->
+    <!--      :isShowQuick="true"-->
+    <!--      :showPagination="true"-->
+    <!--      labelWidth="120px"-->
+    <!--    >-->
+    <!--      <yo-table-new border :header-cell-style="headerCellStyle" :tableData.sync="requireData"-->
+    <!--                    :tableParams="gridData.table" :isHaveFixed="true"></yo-table-new>-->
+    <!--    </yo-grid>-->
     <!--    <el-row :gutter="40" v-for="item in fileList" :key="item.Id" class="margin-b-10">-->
     <!--      <el-col :span="4">-->
     <!--        <label-->
@@ -38,6 +38,11 @@
     <!--        <yo-img :ids.sync="item.Files" :apiUrl="apiUrl" class="imgWidth"></yo-img>-->
     <!--      </el-col>-->
     <!--    </el-row>-->
+
+    <yo-calendar :options="calendarArr"
+                 class="calendar"
+                 @handlePrevMonth="handlePrevMonth"
+                 @handleNextMonth="handleNextMonth"></yo-calendar>
   </div>
 </template>
 <script>
@@ -57,6 +62,7 @@
   import YoDialogViewer from "@/packages/YoDialogViewer/src/main.vue";
   import YoTable from "@/packages/YoTable/src/main.vue";
   import YoTableNew from "@/packages/YoTableNew/src/main.vue";
+  import YoCalendar from '@/packages/YoCalendar/src/main.vue'
 
   export default {
     name: "examples",
@@ -76,10 +82,53 @@
       YoInput,
       YoDialogViewer,
       YoTable,
-      YoTableNew
+      YoTableNew,
+      YoCalendar
     },
     data() {
       return {
+        calendarArr: {
+          biddArr: [
+            {
+              BeginDate: "2020-07-27",
+              BiddingQueryModelList: [
+                {
+                  BeginDate: "2020-07-27 21:03:24",
+                  BeginTime: "21:03",
+                  Id: "17607",
+                  Name: "FJWZ320101200002卖家1废旧物资2次"
+                }
+              ]
+            },
+            {
+              BeginDate: "2020-07-23",
+              BiddingQueryModelList: [
+                {
+                  BeginDate: "2020-07-27 21:03:24",
+                  BeginTime: "11:03",
+                  Id: "17607",
+                  Name: "FJWZ320101200002卖家1废旧物资2次"
+                },
+                {
+                  BeginDate: "2020-07-27 21:03:24",
+                  BeginTime: "09:03",
+                  Id: "17607",
+                  Name: "FJWZ320101200002卖家1废旧物资2次"
+                }
+              ]
+            }
+          ],
+          type: 'combination',
+          headStyle: {
+            todayBtn: 'right',
+            combination: 'center',
+            checkBtn: 'right',
+          },
+          viewStyle: {
+            day: 'right'
+          },
+          calendarData: []
+        },
         headerCellStyle: {
           color: 'red'
         },
@@ -286,7 +335,7 @@
       }
     },
     mounted() {
-      this.getFindById()
+      // this.getFindById()
       // this.fileListArr = [
       //   {
       //   id: 'k206gb5342dm00a440ac8zt',
@@ -303,6 +352,13 @@
       // ]
     },
     methods: {
+      handleClickDay() {
+      },
+      handlePrevMonth() {
+      },
+      handleNextMonth() {
+
+      },
       cleanFileList() {
         this.fileListArr = []
       },

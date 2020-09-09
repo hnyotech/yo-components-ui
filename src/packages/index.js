@@ -36,6 +36,7 @@ import YoDialogViewer from "../packages/YoDialogViewer/src/main.vue";
 import YoTableNew from '../packages/YoTableNew/src/main';
 import YoTree from "../packages/YoTree/src/main.vue";
 import YoSso from "../packages/YoSso/src/main.vue";
+import YoCalendar from "../packages/YoCalendar/src/main"
 const components = [
   YoButton,
   YoHeader,
@@ -73,6 +74,7 @@ const components = [
   YoTableNew,
   YoTree,
   YoSso,
+  YoCalendar
 ];
 const install = function(Vue, opts = {}) {
   components.forEach(component => {
@@ -121,5 +123,6 @@ const yoComponents ={
   YoTableNew,
   YoTree,
   YoSso,
+  YoCalendar
 }
 export default yoComponents;
