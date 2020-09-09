@@ -270,10 +270,10 @@
           display: none;
           position: absolute;
           width: 200px;
-          height: inherit;
+          height: auto;
           top: -10px;
           z-index: 99;
-          padding: 10px 10px;
+          padding: 10px 10px 0px 10px;
           color: #ffffff;
           background-color: #333333;
           box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.4);
@@ -298,6 +298,7 @@
             }
 
             .bidd-name {
+              margin-top: 4px;
               margin-bottom: 20px;
               display: flex;
               justify-content: flex-start;
