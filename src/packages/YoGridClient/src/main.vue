@@ -1,5 +1,5 @@
 <template>
-  <div class="form-box">
+  <div class="form-box"  @keyup.enter="searchData" @submit.prevent>
     <el-form
       :model="realData.params"
       ref="searchForm"
