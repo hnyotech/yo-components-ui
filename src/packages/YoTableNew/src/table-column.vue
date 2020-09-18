@@ -1,7 +1,7 @@
 <template>
   <!--            :width="columnWidth(tableColumnParams.width)"-->
   <el-table-column
-    v-if="paramsStatus(tableColumnParams.key)"
+    v-if="paramsStatus(tableColumnParams.key) && !paramsStatus(tableColumnParams.isHide)"
     :prop="tableColumnParams.key"
     :label="tableColumnParams.label || tableColumnParams.key"
     :min-width="columnWidth(tableColumnParams.width) || labelHead(tableColumnParams.label || tableColumnParams.key)"
