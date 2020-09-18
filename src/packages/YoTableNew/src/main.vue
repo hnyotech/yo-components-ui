@@ -22,8 +22,17 @@
       width="50"
       :key="RandomUniqueValue()"
       :fixed="isHaveFixed?'left':false"
-      v-if="numShow"
+      v-if="numShow && tableDataList.PageIndex && tableDataList.PageSize"
       :index="((tableDataList.PageIndex-1)*tableDataList.PageSize+1)"
+      align="center"
+      label="序号"
+    ></el-table-column>
+    <el-table-column
+      type="index"
+      width="50"
+      :key="RandomUniqueValue()"
+      :fixed="isHaveFixed?'left':false"
+      v-if="numShow && !(tableDataList.PageIndex && tableDataList.PageSize)"
       align="center"
       label="序号"
     ></el-table-column>
