@@ -42,7 +42,11 @@
     <yo-calendar :options="calendarArr"
                  class="calendar"
                  @handlePrevMonth="handlePrevMonth"
-                 @handleNextMonth="handleNextMonth"></yo-calendar>
+                 @handleNextMonth="handleNextMonth">
+      <template slot="more">
+        <span>查看更多</span>
+      </template>
+    </yo-calendar>
     <el-button @click="changetest">test</el-button>
   </div>
 </template>

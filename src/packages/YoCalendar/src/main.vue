@@ -43,6 +43,7 @@
           </div>
           <span
             :class="(new Date(item.date).getDay() === 0 ? 7 : new Date(item.date).getDay())>3?'sanjiao right':'sanjiao left'"></span>
+          <slot name="more"></slot>
         </div>
       </li>
     </ul>
