@@ -53,7 +53,7 @@
       apiUrl: {
         type: String,
         required: false,
-        default: process.env.API
+        default: process.env.AttachAPI || process.env.API
       },
       isPreviw: {
         type: Boolean,
