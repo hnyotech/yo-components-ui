@@ -307,10 +307,8 @@
 }
 
 /*  遮罩 */
-#app div.el-image-viewer__mask,
 body div.el-image-viewer__mask,
-html div.el-image-viewer__mask,
-#aic_body div.el-image-viewer__mask {
+html div.el-image-viewer__mask{
   position: fixed;
   width: 100%;
   height: 100%;
@@ -318,11 +316,12 @@ html div.el-image-viewer__mask,
   left: 0;
   bottom: 0;
   right: 0;
-  opacity: .5;
+  opacity: .49;
   background: #000;
   z-index: 999;
 }
-#app span.el-image-viewer__close{
+html span.el-image-viewer__close,
+body span.el-image-viewer__close{
   z-index: 9999;
   position: fixed;
   color: #fff;
