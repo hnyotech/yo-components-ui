@@ -308,6 +308,8 @@
 
 /*  遮罩 */
 #app div.el-image-viewer__mask,
+body div.el-image-viewer__mask,
+html div.el-image-viewer__mask,
 #aic_body div.el-image-viewer__mask {
   position: fixed;
   width: 100%;
