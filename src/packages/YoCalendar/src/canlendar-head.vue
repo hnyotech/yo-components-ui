@@ -2,6 +2,7 @@
   <div class="calendar-header clear">
     <div class="calendar-box" v-if="this.headOptions.type == 'combination'">
       <div class="calendar-content" :style="{'text-align': this.headStyle.combination}">
+        <span class="calendar-title">竞价日程</span>
         <span class="calendar-prev" @click="handlePrevMonth">&lt;</span>
         <span class="calendar-headDate"> {{this.headOptions.date}} </span>
         <span class="calendar-next" @click="handleNextMonth">&gt;</span>
@@ -60,10 +61,14 @@
       height: 32px;
       line-height: 32px;
       .calendar-content {
+        overflow: hidden;
         width: 100%;
-        span{
-          /*display: block;*/
-          /*float: left;*/
+        .calendar-title{
+          float: left;
+          height: 32px;
+          line-height: 32px;
+          color: #292929;
+          font-size: 16px;
         }
         .calendar-prev,
         .calendar-next {
