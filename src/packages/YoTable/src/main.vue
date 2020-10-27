@@ -11,13 +11,19 @@
     @selection-change="handleSelectionChange"
     class="yo-table"
     :class="border ? 'yo-border-table' : ''"
-    style="width: 100%;"
+    style="width: 100%"
   >
-    <el-table-column type="selection" key="selection" align="center" v-if="IsNeedSelect" width="50"></el-table-column>
+    <el-table-column
+      type="selection"
+      key="selection"
+      align="center"
+      v-if="IsNeedSelect"
+      width="50"
+    ></el-table-column>
     <el-table-column
       type="index"
       width="50"
-      :index="((tableData.PageIndex-1)*tableData.PageSize+1)"
+      :index="(tableData.PageIndex - 1) * tableData.PageSize + 1"
       align="center"
       label="序号"
     ></el-table-column>
@@ -33,33 +39,45 @@
       <!-- :min-width="item.label.length*30" -->
       <template slot-scope="scope">
         <div v-if="item.type === 'multKey'" class="otw">
-          <span v-for="(subitem,index) in item.keys" :key="index">
-            {{scope.row[subitem]}}
+          <span v-for="(subitem, index) in item.keys" :key="index">
+            {{ scope.row[subitem] }}
             <span
-              v-if="scope.row[subitem]!==null&&item.keys.length!==index+1"
-            >{{item.separateSymbol}}</span>
+              v-if="
+                scope.row[subitem] !== null && item.keys.length !== index + 1
+              "
+            >{{ item.separateSymbol }}</span
+            >
           </span>
         </div>
         <div v-if="item.type === 'moneymultKey'" class="otw">
           <span v-if="scope.row[item.keys[0]]">
-            {{numberTurn(scope.row[item.keys[0]])}}
-            {{item.keys[1].fix?item.keys[1].key:scope.row[item.keys[1].key]}}
+            {{ numberTurn(scope.row[item.keys[0]]) }}
+            {{
+              item.keys[1].fix ? item.keys[1].key : scope.row[item.keys[1].key]
+            }}
           </span>
           <span v-else>--</span>
         </div>
         <div v-if="item.type === 'date'" class="otw">
-          <span v-for="(subitem,index) in item.keys" :key="index">
-            {{datefmt(scope.row[subitem], item.format)}}
+          <span v-for="(subitem, index) in item.keys" :key="index">
+            {{ datefmt(scope.row[subitem], item.format) }}
             <span
-              v-if="scope.row[subitem]!==null&&item.keys.length!==index+1"
-            >{{item.separateSymbol}}</span>
+              v-if="
+                scope.row[subitem] !== null && item.keys.length !== index + 1
+              "
+            >{{ item.separateSymbol }}</span
+            >
           </span>
         </div>
-        <div v-if="item.type === 'money'" class="otw">{{numberTurn(scope.row[item.key])}}</div>
+        <div v-if="item.type === 'money'" class="otw">
+          {{ numberTurn(scope.row[item.key]) }}
+        </div>
         <div
           v-if="item.type === 'normal' || item.type === undefined"
           class="otw"
-        >{{scope.row[item.key]}}</div>
+        >
+          {{ scope.row[item.key] }}
+        </div>
       </template>
     </el-table-column>
     <slot></slot>
@@ -67,7 +85,7 @@
 </template>
 <script>
 export default {
-  name: 'YoTable',
+  name: "YoTable",
   props: {
     tableData: {
       type: Object,
@@ -76,55 +94,55 @@ export default {
         return {
           PageIndex: 1,
           PageSize: 10,
-          Items: []
-        }
-      }
+          Items: [],
+        };
+      },
     },
     displayData: {
       type: Array,
       required: true,
       default: function () {
-        return []
-      }
+        return [];
+      },
     },
     showSummary: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     summaryMethod: {
       type: Function,
       required: false,
       default: () => {
-        return []
-      }
+        return [];
+      },
     },
     rowKey: {
       type: String,
       required: false,
-      default: ''
+      default: "",
     },
     treeProps: {
       type: Object,
       required: false,
       default: () => {
-        return {}
-      }
+        return {};
+      },
     },
     IsNeedSelect: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     border: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
-      isLoading2: false
+      isLoading2: false,
       // requireData: {
       //   Item: []
       // },
@@ -202,30 +220,34 @@ export default {
       //     }
       //   ]
       // }
-    }
+    };
   },
   methods: {
-    handleSelectionChange (val) {
-      this.$emit('selectChange', val)
+    handleSelectionChange(val) {
+      this.$emit("selectChange", val);
     },
 
-    numberTurn (num) {
-      var result = []
-      var counter = 0
-      var arr
-      var arr2
+    numberTurn(num) {
+      let result = []
+      let counter = 0
+      let arr
+      let arr2
       if (
         num !== 'undefined' &&
         num !== null &&
         num !== '' &&
         num !== undefined
       ) {
+        let numTemp = num
+        if (numTemp.indexOf('-') > -1 || numTemp.indexOf('+') > -1) {
+          num = num.substr(1)
+        }
         if (num.toString().indexOf('.')) {
           arr = num.toString().split('.')
           arr2 = arr[1]
         }
-        var arr1 = (arr[0] || 0).toString().split('')
-        for (var i = arr1.length - 1; i >= 0; i--) {
+        let arr1 = (arr[0] || 0).toString().split('')
+        for (let i = arr1.length - 1; i >= 0; i--) {
           counter++
           result.unshift(arr1[i])
           if (!(counter % 3) && i !== 0) {
@@ -233,17 +255,29 @@ export default {
           }
         }
         if (arr2) {
-          return result.join('') + '.' + arr2
+          if (numTemp.indexOf('-') > -1) {
+            return '-' + result.join('') + '.' + arr2
+          } else if (numTemp.indexOf('+') > -1) {
+            return '+' + result.join('') + '.' + arr2
+          } else {
+            return result.join('') + '.' + arr2
+          }
         } else {
-          return result.join('')
+          if (numTemp.indexOf('-') > -1) {
+            return '-' + result.join('')
+          } else if (numTemp.indexOf('+') > -1) {
+            return '+' + result.join('')
+          } else {
+            return result.join('')
+          }
         }
       }
       if (num === 0) {
         return 0
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style scoped>
 .otw {
@@ -252,6 +286,7 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 /* .yo-table.el-table--border td, .yo-table.el-table--border th, .yo-table >>> .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
     border-right: 0;
 }
