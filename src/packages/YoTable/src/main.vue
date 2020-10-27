@@ -239,6 +239,7 @@ export default {
         num !== undefined
       ) {
         let numTemp = num
+        numTemp = numTemp.toString()
         if (numTemp.indexOf('-') > -1 || numTemp.indexOf('+') > -1) {
           num = num.substr(1)
         }
