@@ -15,19 +15,19 @@
     <!--         :isShowFileList="true"-->
     <!--       ></yo-file>-->
     <!--       <el-button @click="cleanFileList">清除filelist</el-button>-->
-    <!--    <yo-grid-->
-    <!--      ref="yoGrid"-->
-    <!--      :gridData="gridData"-->
-    <!--      quicksearchPlaceholder="快速搜索项目名称"-->
-    <!--      :requireData.sync="requireData"-->
-    <!--      :showQuick="true"-->
-    <!--      :isShowQuick="true"-->
-    <!--      :showPagination="true"-->
-    <!--      labelWidth="120px"-->
-    <!--    >-->
-    <!--      <yo-table-new border :header-cell-style="headerCellStyle" :tableData.sync="requireData"-->
-    <!--                    :tableParams="gridData.table" :isHaveFixed="true"></yo-table-new>-->
-    <!--    </yo-grid>-->
+       <yo-grid
+         ref="yoGrid"
+         :gridData="gridData"
+         quicksearchPlaceholder="快速搜索项目名称"
+         :requireData.sync="requireData"
+         :showQuick="true"
+         :isShowQuick="true"
+         :showPagination="true"
+         labelWidth="120px"
+       >
+         <yo-table border :header-cell-style="headerCellStyle" :tableData.sync="requireData"
+                       :displayData="gridData.table" :isHaveFixed="true"></yo-table>
+       </yo-grid>
     <!--    <el-row :gutter="40" v-for="item in fileList" :key="item.Id" class="margin-b-10">-->
     <!--      <el-col :span="4">-->
     <!--        <label-->
@@ -39,14 +39,14 @@
     <!--      </el-col>-->
     <!--    </el-row>-->
 
-    <yo-calendar :options="calendarArr"
+    <!-- <yo-calendar :options="calendarArr"
                  class="calendar"
                  @handlePrevMonth="handlePrevMonth"
                  @handleNextMonth="handleNextMonth">
       <template slot="more">
         <span>查看更多</span>
       </template>
-    </yo-calendar>
+    </yo-calendar> -->
     <el-button @click="changetest">test</el-button>
   </div>
 </template>
@@ -67,7 +67,7 @@
   import YoDialogViewer from "@/packages/YoDialogViewer/src/main.vue";
   import YoTable from "@/packages/YoTable/src/main.vue";
   import YoTableNew from "@/packages/YoTableNew/src/main.vue";
-  import YoCalendar from '@/packages/YoCalendar/src/main.vue'
+  // import YoCalendar from '@/packages/YoCalendar/src/main.vue'
 
   export default {
     name: "examples",
@@ -88,7 +88,7 @@
       YoDialogViewer,
       YoTable,
       YoTableNew,
-      YoCalendar
+      // YoCalendar
     },
     data() {
       return {
@@ -196,7 +196,7 @@
           ]
         ],
         requireData: {
-          Item: []
+          Items: []
         },
         gridData: {
           // IsNeedSubjectType: true,
@@ -263,6 +263,14 @@
               key: "CreateTime",
               label: "创建时间",
               align: "center",
+              width: 100,
+              tooltip: false
+            },
+            {
+              key: "Counter",
+              label: "jishu",
+              align: "center",
+              type: 'money',
               width: 100,
               tooltip: false
             }
@@ -332,6 +340,12 @@
       };
     },
     watch: {
+      
+    'requireData.Items': function (params) {
+      params.forEach(e => {
+        e.Counter = '-1000'
+      })
+    },
       fileList: {
         handler: function (val) {
           // console.log(val)

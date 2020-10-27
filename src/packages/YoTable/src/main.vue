@@ -51,7 +51,7 @@
         </div>
         <div v-if="item.type === 'moneymultKey'" class="otw">
           <span v-if="scope.row[item.keys[0]]">
-            {{ numberTurn(scope.row[item.keys[0]]) }}
+            {{ numTurn(scope.row[item.keys[0]]) }}
             {{
               item.keys[1].fix ? item.keys[1].key : scope.row[item.keys[1].key]
             }}
@@ -70,7 +70,7 @@
           </span>
         </div>
         <div v-if="item.type === 'money'" class="otw">
-          {{ numberTurn(scope.row[item.key]) }}
+          {{ numTurn(scope.row[item.key]) }}
         </div>
         <div
           v-if="item.type === 'normal' || item.type === undefined"
@@ -227,7 +227,7 @@ export default {
       this.$emit("selectChange", val);
     },
 
-    numberTurn(num) {
+    numTurn(num) {
       let result = []
       let counter = 0
       let arr
@@ -241,7 +241,7 @@ export default {
         let numTemp = num
         numTemp = numTemp.toString()
         if (numTemp.indexOf('-') > -1 || numTemp.indexOf('+') > -1) {
-          num = num.substr(1)
+          num = num.toString().substr(1)
         }
         if (num.toString().indexOf('.')) {
           arr = num.toString().split('.')
