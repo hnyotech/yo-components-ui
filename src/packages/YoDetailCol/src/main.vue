@@ -11,12 +11,12 @@
           ></label>
           <div
             class="value_w"
-            :style="{'width': 'calc(100% - ' + (li.labelW ? li.labelW : l_w) + ' )'}" v-if="li.htmlVaule" v-html="' ' + li.htmlVaule"
+            :style="{'width': 'calc(100% - ' + (li.labelW ? li.labelW : l_w) + ' )'}" v-html="((li.htmlVaule)?li.htmlVaule:li.value?li.value:'')"
           ></div>
-          <div
-            class="value_w"
-            :style="{'width': 'calc(100% - ' + (li.labelW ? li.labelW : l_w) + ' )'}" v-else
-          >&nbsp;{{li.value}}</div>
+<!--          <div-->
+<!--            class="value_w"-->
+<!--            :style="{'width': 'calc(100% - ' + (li.labelW ? li.labelW : l_w) + ' )'}" v-else-->
+<!--          >&nbsp;{{li.value}}</div>-->
         </div>
       </el-col>
     </el-row>
