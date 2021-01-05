@@ -17,7 +17,7 @@
         "tonpm": "npm run build && npm version patch && npm publish"
     },
     "dependencies": {
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "base64url": "^3.0.1",
         "crypto": "^1.0.1",
         "element-ui": "^2.11.1",
